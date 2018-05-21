@@ -30,6 +30,7 @@ public class TriggerCheck : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("exit");
+        other.gameObject.GetComponent<Animator>().SetTrigger("Normal"); // ※ 실행 중에 GetComponent ※
         StageInfo.text = string.Empty;
         stageLoad.StageNumber = null;
     }
