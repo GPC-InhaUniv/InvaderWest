@@ -23,13 +23,13 @@ public class TEmp_StageManager : MonoBehaviour {
     {
         for (int i = 0; i < stageClearInfos.Length; i++)
         {
-            Imgs[NextStage].color = new Color(255, 255, 255, 255); // 투명
+            Imgs[NextStage - 1].color = new Color(255, 255, 255, 255); // 투명
             if (stageClearInfos[i])
                 Imgs[i].sprite = BoomImg;
             else // stageClearInfos[i] = false
                 Imgs[i].sprite = LockImg;
         }
-        Imgs[NextStage].color = new Color(0, 0, 0, 0); // 투명
+        Imgs[NextStage - 1].color = new Color(0, 0, 0, 0); // 투명
     }
 
     void SetWarRateText()

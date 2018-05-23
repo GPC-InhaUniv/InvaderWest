@@ -21,9 +21,9 @@ public class Enemy : MonoBehaviour {
         enemyBase = new EnemyModel();
     }
 
-    public Enemy InvaderFactory(Direction dir, Vector3 destination)
-    {
-        GameObject newObj = Instantiate(Invader);
-    }
+    //public Enemy InvaderFactory(Direction dir, Vector3 destination)
+    //{
+    //    GameObject newObj = Instantiate(Invader);
+    //}
     
 }

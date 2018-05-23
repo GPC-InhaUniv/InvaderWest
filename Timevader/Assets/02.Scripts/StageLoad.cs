@@ -15,6 +15,7 @@ public class StageLoad : MonoBehaviour {
 
     public void LoadStage()
     {
+        Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + tempStageManager.NextStage);
         if (StageNumber == tempStageManager.NextStage)
         {
             SceneManager.LoadScene("Stage" + StageNumber);
