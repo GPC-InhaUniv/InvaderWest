@@ -15,7 +15,7 @@ public class StageLoad : MonoBehaviour {
 
     public void LoadStage()
     {
-        if (StageNumber == tempStageManager.NextStage + 1) // 배열[0]부터 시작
+        if (StageNumber == tempStageManager.NextStage)
         {
             SceneManager.LoadScene("Stage" + StageNumber);
         }
