@@ -4,10 +4,12 @@ using UnityEngine;
 
 public enum Direction
 {
-    Line,
-    Circle, // 특정 좌표를 기준으로 회전
-    Zigzag, // 지그재그
-    //diagonal Line // 대각선
+    Line_LeftToRight,
+    Line_RightToLeft,
+    Circle_Clockwise, // 특정 좌표를 기준으로 회전
+    Circle_CounterClockwise,
+    Zigzag_LeftToRight, // 지그재그
+    Zigzag_RightToLeft,
 }
 
 public enum InvaderType
@@ -25,25 +27,44 @@ public enum ItemList
 }
 /*  FlyWeghit Pattern
  *  GameManager에 배치할 것 */
-public abstract class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    int hp;
-    float moveSpeed;
-    string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
+    protected int hp;
+    protected float moveSpeed;
+    protected Direction moveDirection;
+    public Direction MoveDirection { set { moveDirection = value; } }
+    protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
     //float attackRate; // Attacking만
 
-    public abstract void Move();
+    public void Move()
+    {
+
+    }
     //public abstract void Attack(); // Attacking만
-    public abstract void GetDemage();
-    public abstract void Explode();
-    public abstract void DropItem();
-    public abstract void Wrecked(); /* 우주선이 파괴되면 잔해가 되어 아래로 점점 떨어진다. 
-                                     * 플레이어나 우주선에 닿으면 데미지를 준다. 파괴되지 않는다. */
+    public void GetDemage()
+    {
+
+    }
+    public void Explode()
+    {
+
+    }
+    public void DropItem()
+    {
+
+    }
+    /* 우주선이 파괴되면 잔해가 되어 아래로 점점 떨어진다. 
+     * 플레이어나 우주선에 닿으면 데미지를 준다. 파괴되지 않는다. */
+    public void Wrecked() 
+    {
+
+    }
 
     public void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.tag == "BackGround")
+        if (collision.gameObject.tag == "BackGround")
         {
+            // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
             this.gameObject.SetActive(false);
         }
     }

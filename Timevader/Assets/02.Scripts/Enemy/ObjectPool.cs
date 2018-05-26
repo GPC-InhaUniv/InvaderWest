@@ -7,36 +7,43 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour {
 
     public GameObject PooledObject;
-    public int PoolCount = 28;
+    public int PoolSize = 21;
+    public bool CanIncreaseSize = true; // pool Size 자동 증가
     List<GameObject> pool;
 
     private void Start()
     {
         pool = new List<GameObject>();
-        for (int i = 0; i < PoolCount; i++)
+        for (int i = 0; i < PoolSize; i++)
         {
             GameObject obj = Instantiate(PooledObject);
             obj.SetActive(false);
             pool.Add(obj);
         }
+        Debug.Log("pool 생성 완료");
+
     }
 
     public GameObject GetFromPool()
     {
-        for (int i = 0; i < PoolCount; i++)
+        Debug.Log("GetFromPool 실행");
+        for (int i = 0; i < PoolSize; i++)
         {
             if(!pool[i].activeInHierarchy)
             {
                 return pool[i];
             }
         }
+
+        if(CanIncreaseSize)
+        {
+            // pool의 오브젝트가 모두 사용중이면 pool 사이즈를 증가시킨다.
+            GameObject obj = Instantiate(PooledObject);
+            pool.Add(obj);
+            return obj;
+        }
+
         Debug.Log("Pool에 남은 enemy가 부족합니다.");
         return null;
     }
-
-    public void ReturnToPool(GameObject obj)
-    {
-        obj.SetActive(false);
-    }
-
 }

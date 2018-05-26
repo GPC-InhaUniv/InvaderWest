@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 public class StageLoad : MonoBehaviour {
 
     public int? StageNumber;
-    public TEmp_StageManager tempStageManager;
+    public StageManager stageManager;
 
     private void Start()
     {
-        tempStageManager = FindObjectOfType<TEmp_StageManager>();
+        stageManager = FindObjectOfType<StageManager>();
     }
 
     public void LoadStage()
     {
-        Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + tempStageManager.NextStage);
-        if (StageNumber == tempStageManager.NextStage)
+        Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + stageManager.NextStage);
+        if (StageNumber == stageManager.NextStage)
         {
             SceneManager.LoadScene("Stage" + StageNumber);
         }

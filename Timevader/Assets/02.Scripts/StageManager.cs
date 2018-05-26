@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TEmp_StageManager : MonoBehaviour {
+public class StageManager : MonoBehaviour {
 
     public Sprite BoomImg, LockImg;
     public Image[] Imgs; // 각 스테이지의 서브 이미지
