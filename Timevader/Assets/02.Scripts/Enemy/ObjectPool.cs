@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour {
     public GameObject PooledObject;
     public int PoolSize = 21;
     public bool CanIncreaseSize = true; // pool Size 자동 증가
-    List<GameObject> pool;
+    List<GameObject> pool; // 여유가 있으면 activeInHieracrchy 쓰지말고 queue로 할 것
 
     private void Start()
     {
