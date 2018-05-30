@@ -29,8 +29,10 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    protected int hp;
-    protected float moveSpeed;
+
+    protected int maxHeight, moveHeight;
+    protected int sign;
+
     protected Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };

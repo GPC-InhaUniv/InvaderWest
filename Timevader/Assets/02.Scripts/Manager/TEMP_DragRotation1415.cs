@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DragRotation : MonoBehaviour {
+public class DragRotation1415 : MonoBehaviour {
 
-    public GameObject Earth;
+    public Image Earth;
     public Text StageInfo;
-    public GameObject[] Invaders;
+    public Image[] Invaders;
 
     public GraphicRaycaster gr;
     PointerEventData ped;
@@ -16,19 +16,22 @@ public class DragRotation : MonoBehaviour {
 
     public float RotateSpeed = 1f;
 
+    private void Start()
+    {
+        ped = new PointerEventData(null);
+    }
+
     // Update is called once per frame
-    void FixedUpdate() {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+    void Update () {
+        ped.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        gr.Raycast(ped, results);
+        if (results.Count != 0 && results[0].gameObject.tag == "TouchAble")
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
-            {
-                // 지구 회전
-                Debug.Log("Raycast Hit");
-                ClickDrag();
-                //TouchSlide();
-            }
+            // 지구 회전
+            Debug.Log("Raycast Hit");
+            ClickDrag();
+            //TouchSlide();
         }
     }
     
@@ -43,15 +46,16 @@ public class DragRotation : MonoBehaviour {
         if (Input.GetMouseButton(0))
         {
             Debug.Log("Drag");
+
             float dragValue = (prevPoint.x - Input.mousePosition.x) / 5 - (prevPoint.y - Input.mousePosition.y);
             // r^2 = x^2 + y^2
             Vector3 rotatePower = new Vector3(0, 0, dragValue );
 
             //Debug.Log("roat" + dragValue);
-            Earth.transform.Rotate(rotatePower / 2 * RotateSpeed);
+            Earth.transform.Rotate(rotatePower / 2 * RotateSpeed * Time.deltaTime);
             for (int i = 0; i < Invaders.Length; i++)
             {
-                Invaders[i].transform.Rotate(-1 * rotatePower / 2 * RotateSpeed); // 반대로 회전
+                Invaders[i].transform.Rotate(-1 * rotatePower / 2 * RotateSpeed * Time.deltaTime); // 반대로 회전
             }
             prevPoint = Input.mousePosition;
         }
