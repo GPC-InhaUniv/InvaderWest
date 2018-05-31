@@ -13,13 +13,49 @@ public class StoreFacade : MonoBehaviour {
     public Image MyInventroy3;
 
     public Text MyInventoryExplain;
+    //스크롤 관련//
+    public ScrollRect ItemScrollRect;
+    public Text ItemExplain;
 
-    public ScrollRect ShopItem;
+
+    private void Start()
+    {
+        ItemExplain.text = "Item1 is helping player";
+        MyInventoryExplain.text = " ";
+        MyFuel.text = AccountInfo.Instance.Fuel;
+
+        Debug.Log(AccountInfo.Instance.Fuel);
+    }
+
+    public void ChangeValue()
+    {
+        if (ItemScrollRect.horizontalNormalizedPosition < 0.15f)
+        {
+            ItemExplain.text = "Item1 is helping player";
+        }
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.15f && ItemScrollRect.horizontalNormalizedPosition < 0.5)
+        {
+            ItemExplain.text = "Item2 is addingmissile";
+        }
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.5f && ItemScrollRect.horizontalNormalizedPosition < 0.85)
+        {
+            ItemExplain.text = "Item3 is RaptorPlayership";
+        }
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.85)
+        {
+            ItemExplain.text = "Item4 is hawkeyeplayership";
+        }
+        //0.15
+        //0.5
+        //0.85
+
+        //Debug.Log(ItemScrollRect.horizontalNormalizedPosition);
+
+    }
 
     public void Update()
     {
-        ShopItem.horizontalNormalizedPosition = 0.5f;
-        Debug.Log(ShopItem.horizontalNormalizedPosition);
+
     }
 
     public void BuyAddMissileitem()

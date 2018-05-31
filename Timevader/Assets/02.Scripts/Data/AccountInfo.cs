@@ -31,6 +31,9 @@ public class AccountInfo : MonoBehaviour
     //    set { myMonoey = value; }
     //}
 
+
+    public string Fuel, Crystal, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
+
     private void Awake()
     {
         if (instance != this)
@@ -109,6 +112,8 @@ public class AccountInfo : MonoBehaviour
         //돈확인하기//
         //UpdateMyMoney();
 
+        GetUserData();
+
     }
     ////실험으로 만들어본것//
     //public static void UpdateMyMoney()
@@ -131,7 +136,7 @@ public class AccountInfo : MonoBehaviour
             Data = new Dictionary<string, string>()
             {
                 //재화//
-                {"Gas" , "0" },
+                {"Fuel" , "0" },
                 {"Crystal" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileitem" , "0" },
@@ -157,6 +162,8 @@ public class AccountInfo : MonoBehaviour
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
+        GetUserData();
+
     }
 
     ////버튼으로 데이타 저장 실험//
@@ -166,13 +173,13 @@ public class AccountInfo : MonoBehaviour
     //}
 
     //재화 데이타 변경 함수// 
-    public static void ChangeGasData(int gas)
+    public static void ChangeFuelData(int fuel)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"Gas", ""+gas+""},
+                {"Fuel", ""+fuel+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
@@ -318,14 +325,15 @@ public class AccountInfo : MonoBehaviour
     {
         result.DataVersion = 1;
         Debug.Log("Got user data:");
-        if (!result.Data.ContainsKey("Gas"))
+        if (!result.Data.ContainsKey("Fuel"))
         {
             Debug.Log("Now Creating Data");
             SetUserData();
+
         }
         else
         {
-            Debug.Log("Gas: " + result.Data["Gas"].Value);
+            Debug.Log("Fuel: " + result.Data["Fuel"].Value);
             Debug.Log("Crystal: " + result.Data["Crystal"].Value);
             Debug.Log("AddMissileitem: " + result.Data["AddMissileitem"].Value);
             Debug.Log("Assistantitem: " + result.Data["Assistantitem"].Value);
@@ -337,7 +345,18 @@ public class AccountInfo : MonoBehaviour
             Debug.Log("BestScore: " + result.Data["BestScore"].Value);
             Debug.Log("RestTime: " + result.Data["RestTime"].Value);
             Debug.Log("NextStage: " + result.Data["NextStage"].Value);
-        }
+
+            instance.Fuel = result.Data["Fuel"].Value;
+            instance.Crystal = result.Data["Crystal"].Value;
+            instance.AddMissileitem = result.Data["AddMissileitem"].Value;
+            instance.Assistantitem = result.Data["Assistantitem"].Value;
+            instance.LastBombitem = result.Data["LastBombitem"].Value;
+            instance.Raptor = result.Data["Raptor"].Value;
+            instance.BlackHawk = result.Data["BlackHawk"].Value;
+            instance.BestScore = result.Data["BestScore"].Value;
+            instance.RestTime = result.Data["RestTime"].Value;
+            instance.NextStage = result.Data["NextStage"].Value;
+}
     }
 
     ////버튼으로 저장한 데이타 출력//

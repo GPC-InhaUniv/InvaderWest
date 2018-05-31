@@ -5,13 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GamsSceneManger : MonoBehaviour {
 
-    GamsSceneManger gamsSceneManger = new GamsSceneManger();
 
 
     private void Awake()
     {
-        if (gamsSceneManger != this)
-            gamsSceneManger = this;
 
         DontDestroyOnLoad(gameObject);
     }
