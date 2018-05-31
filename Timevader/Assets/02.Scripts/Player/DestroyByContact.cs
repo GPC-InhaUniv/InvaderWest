@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistroyByContact : MonoBehaviour {
+public class DestroyByContact : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         Destroy(other.gameObject);
