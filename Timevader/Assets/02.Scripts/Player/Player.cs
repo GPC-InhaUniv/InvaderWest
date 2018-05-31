@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
     {
         myTime = myTime + Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && myTime > nextFire)
+        if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
             Instantiate(Shot, ShotSpawn.position, ShotSpawn.rotation);
