@@ -42,16 +42,18 @@ public class Spawner : MonoBehaviour {
 
     private IEnumerator Stage1()
     {
-        //yield return new WaitForSeconds(1.0f);
+        
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Normal, SpawnPoint[0].position, Direction.Line_LeftToRight);
+            SpawnEnemy(InvaderType.Normal, SpawnPoint[0].position, Direction.Circle_CounterClockwise);
+            yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(3.0f);
 
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, SpawnPoint[1].position, Direction.Line_RightToLeft);
+            SpawnEnemy(InvaderType.Attacking, SpawnPoint[1].position, Direction.Zigzag_RightToLeft);
+            yield return new WaitForSeconds(0.5f);
         }
     }
     private IEnumerator Stage2()

@@ -29,20 +29,13 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-
-    protected int maxHeight, moveHeight;
-    protected int sign;
-
-    protected Direction moveDirection;
-    public Direction MoveDirection { set { moveDirection = value; } }
+    protected int MAXSETA = 360;
+    protected float moveHeight = 1f; // Zigzag
+    protected float radius = 3f; // Circle
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
-    //float attackRate; // Attacking만
 
-    public void Move()
-    {
-
-    }
-    //public abstract void Attack(); // Attacking만
+    virtual public void Move() { }
+    virtual public void Init() { }
     public void GetDemage()
     {
 
@@ -61,18 +54,17 @@ public class Enemy : MonoBehaviour
     {
 
     }
-
-    public void OnCollisionExit(Collision collision)
+    
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.tag == "BackGround")
-        {
+        if (other.gameObject.tag == "BackGround")
             OutofScreen();
-        }
     }
 
     public void OutofScreen()
     {
         // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
+        Init();
         this.gameObject.SetActive(false);
     }
 }
