@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DragRotation : MonoBehaviour {
 
-    public GameObject Earth;
+    public GameObject Earth, Cloud;
     public Text StageInfo;
     public GameObject[] Invaders;
 
@@ -24,12 +24,15 @@ public class DragRotation : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
             {
+                Debug.Log(hit.collider.tag);
                 // 지구 회전
                 Debug.Log("Raycast Hit");
                 ClickDrag();
                 //TouchSlide();
             }
         }
+        if (Input.GetMouseButtonUp(0))
+            prevPoint = Input.mousePosition;
     }
     
     void ClickDrag()
@@ -49,6 +52,7 @@ public class DragRotation : MonoBehaviour {
 
             //Debug.Log("roat" + dragValue);
             Earth.transform.Rotate(rotatePower / 2 * RotateSpeed);
+            Cloud.transform.Rotate(rotatePower / 2 * RotateSpeed / 2); // 느리게 회전
             for (int i = 0; i < Invaders.Length; i++)
             {
                 Invaders[i].transform.Rotate(-1 * rotatePower / 2 * RotateSpeed); // 반대로 회전
