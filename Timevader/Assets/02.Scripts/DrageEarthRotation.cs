@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DrageEarthRotation : MonoBehaviour {
 
+    //지구를 돌리는
     public GameObject Earth;
 
     Vector3 prevPoint;
 
-    public GraphicRaycaster GraphicRayScreen;
-    PointerEventData pointerEventData;
+    float ConditionRotation;
+    
 
     [Range(-0.5f,5f)]
-    public float RotateSpeed = 1f;
+    public float RotateSpeed;
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
+            Debug.Log("클릭");
+            
+            if (Physics.Raycast(ray, out hit))
             {
                 // 지구 회전
                 Debug.Log("Raycast Hit");
@@ -31,6 +35,14 @@ public class DrageEarthRotation : MonoBehaviour {
                 //TouchSlide();
             }
         }
+    }
+    private void Start()
+    {
+        ConditionRotation = 0.90f;
+    }
+    void Update()
+    {
+        NextScene();
     }
 
 
@@ -71,6 +83,16 @@ public class DrageEarthRotation : MonoBehaviour {
 
             Earth.transform.Rotate(rotatePower / 2 * RotateSpeed * Time.deltaTime);
             prevPoint = Input.GetTouch(0).position;
+        }
+    }
+
+    void NextScene()
+    {
+        Debug.Log(Earth.transform.rotation.z);
+        if(Earth.transform.rotation.z < -ConditionRotation || Earth.transform.rotation.z > ConditionRotation)
+        {
+            Debug.Log("다음 씬으로");
+            SceneManager.LoadScene("Main");
         }
     }
 }
