@@ -8,13 +8,22 @@ public class AttackingEnemy : Enemy{
     float attackPower = 5.0f;
     float moveSpeed = 5.0f;
     int seta = 0;
-    int curveRate = 6;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
 
     private void FixedUpdate()
     {
         Move();
+        StartCoroutine(Attack());
+    }
+
+    private IEnumerator Attack()
+    {
+        GameObject shot =  missilePool.GetFromPool();
+        shot.transform.position = transform.position;
+        shot.transform.rotation = Quaternion.identity;
+        shot.SetActive(true);
+        yield return new WaitForSeconds(attackRate);
     }
 
     override public void Move()
@@ -42,6 +51,21 @@ public class AttackingEnemy : Enemy{
                 break;
             default: break;
         }
+    }
+
+    override public void MoveCircle(bool sign)
+    {
+        //            Circlewise : CounterClockwise 
+        seta = (sign) ? seta -= 1 : seta += 1;
+        if (seta > MAXSETA) seta %= MAXSETA;
+
+        float de2Rad = circleSpeed * seta * Mathf.Deg2Rad;
+        float sinValue = Mathf.Sin(de2Rad);
+        float cosValue = Mathf.Cos(de2Rad);
+
+        float x = cosValue * radius;
+        float y = sinValue * radius;
+        transform.Translate(new Vector3(x, y, 0) * circleSpeed / 2 * Time.deltaTime);
     }
 
     override public void Init()
