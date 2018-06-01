@@ -32,7 +32,7 @@ public class AccountInfo : MonoBehaviour
     //}
 
 
-    public string Fuel, Crystal, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
+    public string Fuel, Time, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
 
     private void Awake()
     {
@@ -137,7 +137,7 @@ public class AccountInfo : MonoBehaviour
             {
                 //재화//
                 {"Fuel" , "0" },
-                {"Crystal" , "0" },
+                {"Time" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileitem" , "0" },
                 {"Assistantitem" , "0" },
@@ -184,13 +184,13 @@ public class AccountInfo : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
     }
-    public static void ChangeCrystalData(int crystal)
+    public static void ChangeTimeData(int time)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"Crystal", ""+crystal+""},
+                {"Time", ""+time+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
@@ -333,21 +333,21 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-            Debug.Log("Fuel: " + result.Data["Fuel"].Value);
-            Debug.Log("Crystal: " + result.Data["Crystal"].Value);
-            Debug.Log("AddMissileitem: " + result.Data["AddMissileitem"].Value);
-            Debug.Log("Assistantitem: " + result.Data["Assistantitem"].Value);
-            Debug.Log("LastBombitem: " + result.Data["LastBombitem"].Value);
-            Debug.Log("Raptor: " + result.Data["Raptor"].Value);
-            //Debug.Log("Thunderblot: " + result.Data["Thunderblot"].Value);
-            //Debug.Log("Spirit: " + result.Data["Spirit"].Value);
-            Debug.Log("BlackHawk: " + result.Data["BlackHawk"].Value);
-            Debug.Log("BestScore: " + result.Data["BestScore"].Value);
-            Debug.Log("RestTime: " + result.Data["RestTime"].Value);
-            Debug.Log("NextStage: " + result.Data["NextStage"].Value);
+            //Debug.Log("Fuel: " + result.Data["Fuel"].Value);
+            //Debug.Log("Time: " + result.Data["Time"].Value);
+            //Debug.Log("AddMissileitem: " + result.Data["AddMissileitem"].Value);
+            //Debug.Log("Assistantitem: " + result.Data["Assistantitem"].Value);
+            //Debug.Log("LastBombitem: " + result.Data["LastBombitem"].Value);
+            //Debug.Log("Raptor: " + result.Data["Raptor"].Value);
+            ////Debug.Log("Thunderblot: " + result.Data["Thunderblot"].Value);
+            ////Debug.Log("Spirit: " + result.Data["Spirit"].Value);
+            //Debug.Log("BlackHawk: " + result.Data["BlackHawk"].Value);
+            //Debug.Log("BestScore: " + result.Data["BestScore"].Value);
+            //Debug.Log("RestTime: " + result.Data["RestTime"].Value);
+            //Debug.Log("NextStage: " + result.Data["NextStage"].Value);
 
             instance.Fuel = result.Data["Fuel"].Value;
-            instance.Crystal = result.Data["Crystal"].Value;
+            instance.Time = result.Data["Time"].Value;
             instance.AddMissileitem = result.Data["AddMissileitem"].Value;
             instance.Assistantitem = result.Data["Assistantitem"].Value;
             instance.LastBombitem = result.Data["LastBombitem"].Value;
