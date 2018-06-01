@@ -14,4 +14,9 @@ public class Mover : MonoBehaviour {
         rigidbody.velocity = transform.up * speed;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.tag);
+    }
+
 }
