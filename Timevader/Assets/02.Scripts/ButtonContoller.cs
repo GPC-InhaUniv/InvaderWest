@@ -15,6 +15,14 @@ public class ButtonContoller : MonoBehaviour {
     }
     public void ChangeSceneByStageSelect()
     {
-        SceneManager.LoadScene("StageSelect_First");
+        SceneManager.LoadScene("StageSelect");
+    }
+    public void ChangeSceneByMain()
+    {
+        SceneManager.LoadScene("Main");
+    }
+    public void ChangeSceneByIntro()
+    {
+        SceneManager.LoadScene("Intro");
     }
 }

@@ -24,6 +24,8 @@ public class StoreFacade : MonoBehaviour {
         MyInventoryExplain.text = " ";
         MyFuel.text = AccountInfo.Instance.Fuel;
 
+        MyInventroy1.gameObject.SetActive(false);
+
         Debug.Log(AccountInfo.Instance.Fuel);
     }
 

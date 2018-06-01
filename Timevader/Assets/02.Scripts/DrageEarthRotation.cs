@@ -12,11 +12,12 @@ public class DrageEarthRotation : MonoBehaviour {
 
     Vector3 prevPoint;
 
-    float ConditionRotation;
-    
 
+    private float ConditionRotation;
+    
+    [SerializeField]
     [Range(-0.5f,5f)]
-    public float RotateSpeed;
+    private float rotateSpeed;
 
 
     void FixedUpdate()
@@ -62,7 +63,7 @@ public class DrageEarthRotation : MonoBehaviour {
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
             //Debug.Log("roat" + dragValue);
-            Earth.transform.Rotate(rotatePower / 2 * RotateSpeed);
+            Earth.transform.Rotate(rotatePower / 2 * rotateSpeed);
             prevPoint = Input.mousePosition;
         }
     }
@@ -81,7 +82,7 @@ public class DrageEarthRotation : MonoBehaviour {
             float dragValue = (prevPoint.x - Input.GetTouch(0).position.x) / 5 - (prevPoint.y - Input.GetTouch(0).position.y);
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
-            Earth.transform.Rotate(rotatePower / 2 * RotateSpeed * Time.deltaTime);
+            Earth.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime);
             prevPoint = Input.GetTouch(0).position;
         }
     }
