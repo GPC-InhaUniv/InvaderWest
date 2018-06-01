@@ -29,12 +29,30 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
+    public GameObject missile;
+    public ObjectPool missilePool;
+    
     protected int MAXSETA = 360;
-    protected float moveHeight = 1f; // Zigzag
-    protected float radius = 3f; // Circle
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
+    protected int curveRate;
+    protected float moveHeight; // Zigzag
+    protected float radius; // Circle
+    protected float circleSpeed;
+    
+    private void Start()
+    {
+        missilePool = new ObjectPool(); // 스크립트 컴포넌트 추가안됨?? 어떻게 추가하지?
+        missilePool.SetObject(missile);
+
+        curveRate = 6;
+        moveHeight = 1f; // Zigzag
+        radius = 4f; // Circle
+        circleSpeed = 6f;
+    }
+
     virtual public void Move() { }
+    virtual public void MoveCircle(bool sign) { }
     virtual public void Init() { }
     public void GetDemage()
     {

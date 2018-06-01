@@ -12,6 +12,11 @@ public class Spawner : MonoBehaviour {
     void Start()
     {
         factory = FindObjectOfType<EnemyFactory>();
+        StartSpawn();
+    }
+
+    void StartSpawn()
+    {
         switch (StageLevel)
         {
             case 1: StartCoroutine("Stage1"); break;
@@ -45,16 +50,25 @@ public class Spawner : MonoBehaviour {
         
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Normal, SpawnPoint[0].position, Direction.Circle_CounterClockwise);
+            SpawnEnemy(InvaderType.Normal, SpawnPoint[0].position, Direction.Zigzag_LeftToRight);
             yield return new WaitForSeconds(0.5f);
         }
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(0.7f);
 
         for (int i = 0; i < SpawnCount; i++)
         {
             SpawnEnemy(InvaderType.Attacking, SpawnPoint[1].position, Direction.Zigzag_RightToLeft);
             yield return new WaitForSeconds(0.5f);
         }
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < SpawnCount; i++)
+        {
+            SpawnEnemy(InvaderType.Normal, SpawnPoint[2].position, Direction.Circle_Clockwise);
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return new WaitForSeconds(2.0f);
+        StartSpawn();
     }
     private IEnumerator Stage2()
     {

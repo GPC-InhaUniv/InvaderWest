@@ -24,6 +24,11 @@ public class ObjectPool : MonoBehaviour {
 
     }
 
+    public void SetObject(GameObject obj)
+    {
+        PooledObject = obj;
+    }
+
     public GameObject GetFromPool()
     {
         Debug.Log("GetFromPool 실행");
