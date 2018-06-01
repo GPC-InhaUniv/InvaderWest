@@ -10,7 +10,6 @@ public class GamsSceneManger : MonoBehaviour {
     private void Awake()
     {
 
-        DontDestroyOnLoad(gameObject);
     }
 
     public void GoLogInScene()
