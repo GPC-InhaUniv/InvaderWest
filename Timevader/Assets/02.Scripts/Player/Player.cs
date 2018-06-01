@@ -12,12 +12,14 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private float speed;
+
     public Boundary Boundary;
 
     public GameObject Shot;
     public Transform ShotSpawn;
 
     public float fireDelta = 0.5f;
+
     private float nextFire = 0.5f;
     private float myTime = 0.0f;
 
