@@ -40,6 +40,8 @@ public class AccountInfo : MonoBehaviour
             instance = this;
 
         DontDestroyOnLoad(gameObject);
+
+        PlayerManager.Instance.PlayerShipNum = 5;
     }
 
     public static void Register(string username, string email, string password)
