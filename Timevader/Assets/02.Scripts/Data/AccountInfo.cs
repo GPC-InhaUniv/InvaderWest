@@ -4,8 +4,25 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 
+public interface ISubjectable
+{
+    void RegisterObserver(IObserverable o);
+    void RemoveObserver(IObserverable o);
+    void NotifyObservers();
+}
+public interface IObserverable
+{
+    void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem, int raptor,
+                    int blackHawk, int bestScore, int restTime, int nextStage);
+}
+public interface IDisplayable
+{
+    void DisPlay();
+}
 
-public class AccountInfo : MonoBehaviour
+
+
+public class AccountInfo : MonoBehaviour, ISubjectable
 {
     private static AccountInfo instance;
     public static AccountInfo Instance
@@ -32,7 +49,12 @@ public class AccountInfo : MonoBehaviour
     //}
 
 
+
     public string Fuel, Time, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
+    private int fuel, time, addMissileitem, assistantitem, lastBombitem, raptor, blackHawk, bestScore, restTime, nextStage;
+
+    List<IObserverable> observerList = new List<IObserverable>();
+
 
     private void Awake()
     {
@@ -41,7 +63,7 @@ public class AccountInfo : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        PlayerManager.Instance.PlayerShipNum = 5;
+        GamePlayManager.Instance.PlayerShipNum = 5;
     }
 
     public static void Register(string username, string email, string password)
@@ -164,8 +186,8 @@ public class AccountInfo : MonoBehaviour
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
-        GetUserData();
-
+        //GetUserData();
+        
     }
 
     ////버튼으로 데이타 저장 실험//
@@ -316,8 +338,6 @@ public class AccountInfo : MonoBehaviour
         GetUserDataRequest request = new GetUserDataRequest()
         {
             Keys = null
-
-
         };
 
         PlayFabClientAPI.GetUserData(request, OnGetUserData, ManagerFuncion.OnAPIError);
@@ -358,8 +378,60 @@ public class AccountInfo : MonoBehaviour
             instance.BestScore = result.Data["BestScore"].Value;
             instance.RestTime = result.Data["RestTime"].Value;
             instance.NextStage = result.Data["NextStage"].Value;
-}
+        }
     }
+
+    public void RegisterObserver(IObserverable o)
+    {
+        observerList.Add(o);
+    }
+
+    public void RemoveObserver(IObserverable o)
+    {
+
+        observerList.Remove(o);
+    }
+
+    public void NotifyObservers()
+    {
+        for (int i = 0; i < observerList.Count; i++)
+        {
+            observerList[i].UpdateData(fuel, time, addMissileitem, assistantitem, lastBombitem, raptor,
+                                       blackHawk, bestScore, restTime, nextStage);
+        }
+
+    }
+
+    public void MeasureChangedData()
+    {
+        //데이터 확인//
+        GetUserData();
+        //데이터 인트로 바꾸기//
+        ParseData();
+        //옵저버에게 알리기//
+        NotifyObservers();
+
+        Debug.Log("12344");
+
+    }
+
+
+    public void ParseData()
+    {
+        fuel = int.Parse(Fuel);
+        time = int.Parse(Time);
+        addMissileitem = int.Parse(AddMissileitem);
+        assistantitem = int.Parse(Assistantitem);
+        lastBombitem = int.Parse(LastBombitem);
+        raptor = int.Parse(Raptor);
+        blackHawk = int.Parse(BlackHawk);
+        bestScore = int.Parse(BestScore);
+        restTime = int.Parse(RestTime);
+        nextStage = int.Parse(NextStage);
+
+    }
+
+
 
     ////버튼으로 저장한 데이타 출력//
     //public void GetdataButton()

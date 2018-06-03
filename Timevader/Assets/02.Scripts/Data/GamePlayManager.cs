@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour {
+public class GamePlayManager : MonoBehaviour {
 
 
-    private static PlayerManager instance;
-    public static PlayerManager Instance
+    private static GamePlayManager instance;
+    public static GamePlayManager Instance
     {
         get { return instance; }
         set { instance = value; }
@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour {
     public void SelecPlayer()
     {
         Debug.Log(playerShipNum);
+        Debug.Log(PlayerShipNum);
     }
 
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-
 public class GameConstant
 {
     public static string CATALOG_VERISION = "1.0";
