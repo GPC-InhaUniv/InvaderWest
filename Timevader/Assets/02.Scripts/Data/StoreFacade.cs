@@ -26,7 +26,9 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
     public float horizonval;
 
     //옵저버 도전중///
+    [SerializeField]
     private int fuel, time, addMissileitem, assistantitem, lastBombitem, raptor, blackHawk, bestScore, restTime, nextStage;
+    private ISubjectable subjectable;
 
 
 
@@ -38,9 +40,9 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
 
         //CheckInventory();
         //여기서 부르질 않음//
+        AccountInfo.Instance.RegisterObserver(this);
         AccountInfo.Instance.MeasureChangedData();
         
-        Debug.Log("123213");
 
         ChangeValue();
 
@@ -54,6 +56,8 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
             if (addMissileitem ==0)
             {
+                BuyExPlainText.text = "Item1 is very good to you";
+
                 BuyButton.interactable = true;
             }
             else
@@ -68,6 +72,8 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
             if (assistantitem== 0)
             {
+                BuyExPlainText.text = "Item2 is very good to you";
+
                 BuyButton.interactable = true;
             }
             else
@@ -82,6 +88,8 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
             if (lastBombitem== 0)
             {
+                BuyExPlainText.text = "Item3 is very good to you";
+
                 BuyButton.interactable = true;
             }
             else
@@ -96,6 +104,8 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
             if (raptor == 0) 
             {
+                BuyExPlainText.text = "Item4 is very good to you";
+
                 BuyButton.interactable = true;
             }
             else
@@ -104,12 +114,14 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
                 BuyButton.interactable = false;
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.875)
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
         {
             ItemExplain.text = "Item5 is BlackHawk playership";
             ItemScrollRect.horizontalNormalizedPosition = 1.0f;
             if (blackHawk == 0)
             {
+                BuyExPlainText.text = "Item5 is very good to you";
+
                 BuyButton.interactable = true;
             }
             else
@@ -132,19 +144,19 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
         {
             BuyAddMissileitem(50);
         }
-        if (ItemScrollRect.horizontalNormalizedPosition == 0.25f)
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
             BuyAssistantitem(50);
         }
-        if (ItemScrollRect.horizontalNormalizedPosition == 0.5f)
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
         {
-            BuyAssistantitem(50);
+            BuyLastBombitem(50);
         }
-        if (ItemScrollRect.horizontalNormalizedPosition == 0.75f)
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
             BuyRaptor(50);
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.9f)
+        if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
         {
             BuyBlackHawk(50);
         }
@@ -235,8 +247,6 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
 
         DisPlay();
 
-        Debug.Log("3213");
-
     }
 
     public void DisPlay()
@@ -259,7 +269,6 @@ public class StoreFacade : MonoBehaviour ,IObserverable , IDisplayable {
         else
             MyInventroy3.gameObject.SetActive(true);
 
-        Debug.Log("12344");
 
     }
 }

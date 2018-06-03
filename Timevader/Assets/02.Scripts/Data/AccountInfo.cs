@@ -351,6 +351,7 @@ public class AccountInfo : MonoBehaviour, ISubjectable
         {
             Debug.Log("Now Creating Data");
             SetUserData();
+            Debug.Log("돈다");
 
         }
         else
@@ -378,6 +379,8 @@ public class AccountInfo : MonoBehaviour, ISubjectable
             instance.BestScore = result.Data["BestScore"].Value;
             instance.RestTime = result.Data["RestTime"].Value;
             instance.NextStage = result.Data["NextStage"].Value;
+
+            Debug.Log("1번");
         }
     }
 
@@ -428,6 +431,7 @@ public class AccountInfo : MonoBehaviour, ISubjectable
         bestScore = int.Parse(BestScore);
         restTime = int.Parse(RestTime);
         nextStage = int.Parse(NextStage);
+        Debug.Log("2번");
 
     }
 
