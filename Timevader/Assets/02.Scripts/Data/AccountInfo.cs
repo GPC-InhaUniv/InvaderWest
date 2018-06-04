@@ -4,25 +4,23 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 
-public interface ISubjectable
-{
-    void RegisterObserver(IObserverable o);
-    void RemoveObserver(IObserverable o);
-    void NotifyObservers();
-}
-public interface IObserverable
-{
-    void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem, int raptor,
-                    int blackHawk, int bestScore, int restTime, int nextStage);
-}
-public interface IDisplayable
-{
-    void DisPlay();
-}
+//public interface ISubjectable
+//{
+//    void RegisterObserver(IObserverable o);
+//    void RemoveObserver(IObserverable o);
+//    void NotifyObservers();
+//}
+//public interface IObserverable
+//{
+//    void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem, int raptor,
+//                    int blackHawk, int bestScore, int restTime, int nextStage);
+//}
+//public interface IDisplayable
+//{
+//    void DisPlay();
+//}
 
-
-
-public class AccountInfo : MonoBehaviour, ISubjectable
+public class AccountInfo : MonoBehaviour
 {
     private static AccountInfo instance;
     public static AccountInfo Instance
@@ -51,9 +49,7 @@ public class AccountInfo : MonoBehaviour, ISubjectable
 
 
     public string Fuel, Time, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
-    private int fuel, time, addMissileitem, assistantitem, lastBombitem, raptor, blackHawk, bestScore, restTime, nextStage;
 
-    List<IObserverable> observerList = new List<IObserverable>();
 
 
     private void Awake()
@@ -384,56 +380,55 @@ public class AccountInfo : MonoBehaviour, ISubjectable
         }
     }
 
-    public void RegisterObserver(IObserverable o)
-    {
-        observerList.Add(o);
-    }
+    //public void RegisterObserver(IObserverable o)
+    //{
+    //    observerList.Add(o);
+    //}
 
-    public void RemoveObserver(IObserverable o)
-    {
+    //public void RemoveObserver(IObserverable o)
+    //{
 
-        observerList.Remove(o);
-    }
+    //    observerList.Remove(o);
+    //}
 
-    public void NotifyObservers()
-    {
-        for (int i = 0; i < observerList.Count; i++)
-        {
-            observerList[i].UpdateData(fuel, time, addMissileitem, assistantitem, lastBombitem, raptor,
-                                       blackHawk, bestScore, restTime, nextStage);
-        }
+    //public void NotifyObservers()
+    //{
+    //    for (int i = 0; i < observerList.Count; i++)
+    //    {
+    //        observerList[i].UpdateData(fuel, time, addMissileitem, assistantitem, lastBombitem, raptor,
+    //                                   blackHawk, bestScore, restTime, nextStage);
+    //    }
 
-    }
+    //}
 
-    public void MeasureChangedData()
-    {
-        //데이터 확인//
-        GetUserData();
-        //데이터 인트로 바꾸기//
-        ParseData();
-        //옵저버에게 알리기//
-        NotifyObservers();
+    //public void MeasureChangedData()
+    //{
+    //    //데이터 확인//
+    //    GetUserData();
+    //    //데이터 인트로 바꾸기//
+    //    ParseData();
+    //    //옵저버에게 알리기//
+    //    NotifyObservers();
 
-        Debug.Log("12344");
+    //    Debug.Log("12344");
 
-    }
+    //}
 
+    //public void ParseData()
+    //{
+    //    fuel = int.Parse(Fuel);
+    //    time = int.Parse(Time);
+    //    addMissileitem = int.Parse(AddMissileitem);
+    //    assistantitem = int.Parse(Assistantitem);
+    //    lastBombitem = int.Parse(LastBombitem);
+    //    raptor = int.Parse(Raptor);
+    //    blackHawk = int.Parse(BlackHawk);
+    //    bestScore = int.Parse(BestScore);
+    //    restTime = int.Parse(RestTime);
+    //    nextStage = int.Parse(NextStage);
+    //    Debug.Log("2번");
 
-    public void ParseData()
-    {
-        fuel = int.Parse(Fuel);
-        time = int.Parse(Time);
-        addMissileitem = int.Parse(AddMissileitem);
-        assistantitem = int.Parse(Assistantitem);
-        lastBombitem = int.Parse(LastBombitem);
-        raptor = int.Parse(Raptor);
-        blackHawk = int.Parse(BlackHawk);
-        bestScore = int.Parse(BestScore);
-        restTime = int.Parse(RestTime);
-        nextStage = int.Parse(NextStage);
-        Debug.Log("2번");
-
-    }
+    //}
 
 
 
