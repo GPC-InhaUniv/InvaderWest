@@ -156,7 +156,7 @@ public class AccountInfo : MonoBehaviour
             Data = new Dictionary<string, string>()
             {
                 //재화//
-                {"Fuel" , "0" },
+                {"Fuel" , "5000" },
                 {"Time" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileitem" , "0" },
@@ -182,7 +182,7 @@ public class AccountInfo : MonoBehaviour
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
-        //GetUserData();
+        GetUserData();
         
     }
 
@@ -347,7 +347,6 @@ public class AccountInfo : MonoBehaviour
         {
             Debug.Log("Now Creating Data");
             SetUserData();
-            Debug.Log("돈다");
 
         }
         else
