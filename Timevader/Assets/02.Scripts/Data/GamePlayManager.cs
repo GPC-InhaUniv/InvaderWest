@@ -11,7 +11,7 @@ public class GamePlayManager : MonoBehaviour {
         get { return instance; }
         set { instance = value; }
     }
-
+    [SerializeField]
     private int playerShipNum;
     public int PlayerShipNum
     {

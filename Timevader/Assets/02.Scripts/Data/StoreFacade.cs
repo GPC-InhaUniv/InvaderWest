@@ -8,7 +8,17 @@ public class StoreFacade : MonoBehaviour  {
     public Text MyTimeText;
     public Text MyFuelText;
 
-    private int MyFuel;
+    [SerializeField]
+    private int myFuel= int.Parse(AccountInfo.Instance.Fuel);
+    private int resttime = int.Parse(AccountInfo.Instance.Time);
+    private int addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
+    private int assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
+    private int lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
+    private int raptor = int.Parse(AccountInfo.Instance.Raptor);
+    private int blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
+    private int bestScore = int.Parse(AccountInfo.Instance.BestScore);
+    private int restTime = int.Parse(AccountInfo.Instance.RestTime);
+    private int nextStage = int.Parse(AccountInfo.Instance.NextStage);
     //인벤토리관련//
     public Image MyInventroy1;
     public Image MyInventroy2;
@@ -36,8 +46,6 @@ public class StoreFacade : MonoBehaviour  {
     {
         MyInventoryExplainText.text = " ";
 
-        MyFuel = int.Parse(AccountInfo.Instance.Fuel);
-
         CheckInventory();
         //여기서 부르질 않음//
         //AccountInfo.Instance.RegisterObserver(this);
@@ -48,15 +56,16 @@ public class StoreFacade : MonoBehaviour  {
 
     }
 
+
     public void ChangeValue()
     {
         if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
         {
             ItemExplain.text = "Item1 is AddMissileitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
-            if (AccountInfo.Instance.AddMissileitem =="0")
+            if (addMissileitem == 0)
             {
-                BuyExPlainText.text = "Item1 is very good to you";
+                BuyExPlainText.text = "Item2 is very good to you";
 
                 BuyButton.interactable = true;
             }
@@ -65,12 +74,13 @@ public class StoreFacade : MonoBehaviour  {
                 BuyExPlainText.text = "이미 보유중 입니다.";
                 BuyButton.interactable = false;
             }
+
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
             ItemExplain.text = "Item2 is Assistantitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
-            if (AccountInfo.Instance.Assistantitem == "0")
+            if (assistantitem == 0) 
             {
                 BuyExPlainText.text = "Item2 is very good to you";
 
@@ -86,7 +96,7 @@ public class StoreFacade : MonoBehaviour  {
         {
             ItemExplain.text = "Item3 is LastBombitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
-            if (AccountInfo.Instance.LastBombitem == "0")
+            if (lastBombitem == 0) 
             {
                 BuyExPlainText.text = "Item3 is very good to you";
 
@@ -102,7 +112,7 @@ public class StoreFacade : MonoBehaviour  {
         {
             ItemExplain.text = "Item4 is Raptor playership";
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
-            if (AccountInfo.Instance.Raptor == "0") 
+            if (raptor == 0)  
             {
                 BuyExPlainText.text = "Item4 is very good to you";
 
@@ -118,7 +128,7 @@ public class StoreFacade : MonoBehaviour  {
         {
             ItemExplain.text = "Item5 is BlackHawk playership";
             ItemScrollRect.horizontalNormalizedPosition = 1.0f;
-            if (AccountInfo.Instance.BlackHawk == "0")
+            if (blackHawk == 0) 
             {
                 BuyExPlainText.text = "Item5 is very good to you";
 
@@ -142,89 +152,143 @@ public class StoreFacade : MonoBehaviour  {
     {
         if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
         {
-            BuyAddMissileitem(50);
+            if (addMissileitem == 0)
+            {
+                BuyAddMissileitem(50, 1);
+                ChangeValue();
+            }
+            else
+            {
+                Debug.Log("이미 보유중입니다.");
+            }
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
-            BuyAssistantitem(50);
+            if (assistantitem == 0)
+            {
+                BuyAssistantitem(50, 1);
+                ChangeValue();
+
+            }
+            else
+            {
+                Debug.Log("이미 보유중입니다.");
+            }
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
         {
-            BuyLastBombitem(50);
+            if (lastBombitem == 0)
+            {
+                BuyLastBombitem(50, 1);
+                ChangeValue();
+
+            }
+            else
+            {
+                Debug.Log("이미 보유중입니다.");
+            }
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
-            BuyRaptor(50);
+            if (raptor == 0)
+            {
+                BuyRaptor(50, 1);
+                ChangeValue();
+
+            }
+            else
+            {
+                Debug.Log("이미 보유중입니다.");
+            }
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
         {
-            BuyBlackHawk(50);
+            if (blackHawk == 0)
+            {
+                BuyBlackHawk(50, 1);
+                ChangeValue();
+
+            }
+            else
+            {
+                Debug.Log("이미 보유중입니다.");
+            }
         }
     }
     private void CheckInventory()
     {
 
-        Debug.Log(int.Parse(AccountInfo.Instance.Fuel));
-        MyFuelText.text = MyFuel.ToString();
-        MyTimeText.text = AccountInfo.Instance.Time;
+        MyFuelText.text = myFuel.ToString();
+        MyTimeText.text = resttime.ToString();
 
-        if (AccountInfo.Instance.AddMissileitem == "0")
+        if (addMissileitem == 0) 
             MyInventroy1.gameObject.SetActive(false);
         else
             MyInventroy1.gameObject.SetActive(true);
 
-        if (AccountInfo.Instance.Assistantitem == "0")
+        if (assistantitem == 0) 
             MyInventroy2.gameObject.SetActive(false);
         else
             MyInventroy2.gameObject.SetActive(true);
 
-        if (AccountInfo.Instance.LastBombitem == "0")
+        if (lastBombitem == 0) 
             MyInventroy3.gameObject.SetActive(false);
         else
             MyInventroy3.gameObject.SetActive(true);
     }
 
-    public void BuyAddMissileitem(int price)
+    public void BuyAddMissileitem(int price, int itemCount)
     {
-        MyFuel = MyFuel - price;
-        AccountInfo.ChangeFuelData(MyFuel);
+        myFuel = myFuel - price;
+        addMissileitem = itemCount;
+        AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeAddMissileitemData(1);
         CheckInventory();
     }
-    public void BuyAssistantitem(int price)
+    public void BuyAssistantitem(int price, int itemCount)
     {
-        MyFuel = MyFuel - price;
-        AccountInfo.ChangeFuelData(MyFuel);
+        myFuel = myFuel - price;
+        assistantitem = itemCount;
+
+        AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeAssistantitemData(1);
         CheckInventory();
 
 
     }
-    public void BuyLastBombitem(int price)
+    public void BuyLastBombitem(int price, int itemCount)
     {
-        MyFuel = MyFuel - price;
-        AccountInfo.ChangeFuelData(MyFuel);
+        myFuel = myFuel - price;
+        lastBombitem = itemCount;
+
+
+        AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeLastBombitemData(1);
         CheckInventory();
 
 
     }
-    public void BuyRaptor(int price)
+    public void BuyRaptor(int price, int itemCount)
     {
-        MyFuel = MyFuel - price;
-        AccountInfo.ChangeFuelData(MyFuel);
+        myFuel = myFuel - price;
+        raptor = itemCount;
+
+
+        AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeRaptoritemData(1);
         CheckInventory();
 
     }
-    public void BuyBlackHawk(int price)
+    public void BuyBlackHawk(int price, int itemCount)
     {
-        MyFuel = MyFuel - price;
-        AccountInfo.ChangeFuelData(MyFuel);
+        myFuel = myFuel - price;
+        blackHawk = itemCount;
+
+        AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeBlackHawkData(1);
         CheckInventory();
