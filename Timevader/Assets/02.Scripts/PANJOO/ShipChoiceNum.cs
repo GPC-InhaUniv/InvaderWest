@@ -8,10 +8,13 @@ public class ShipChoiceNum : MonoBehaviour {
     // Use this for initialization
     [SerializeField]
     private Text SpaceShipSelectNumText;
+
     [SerializeField]
     private Text SpaceShipNameText;
+
     [SerializeField]
     private Text SpaceShipSpeedText;
+
     [SerializeField]
     private GameObject[] LifeImage;
 
@@ -20,8 +23,16 @@ public class ShipChoiceNum : MonoBehaviour {
     private const int ChoiceValue = 1; //버튼 클릭시 빼는 값, 상수
     private int ChoiceNum;
 
+
     [SerializeField]
     private GameObject[] playerShip;
+
+    private int playerShipAmount;
+
+    private List<string> playerShipName = new List<string>();
+    private List<string> playerShipSpeed = new List<string>();
+    private List<int> playerShipLife = new List<int>();
+
 
     [Header("Button")]
     [SerializeField]
@@ -29,34 +40,58 @@ public class ShipChoiceNum : MonoBehaviour {
     [SerializeField]
     private Button LeftButton;
 
-    void Start () {
+    
+    private void Awake()
+    {
+        GetPlayerShipAmount();
+        GetSpaceShipStatus();
+    }
+
+    void Start ()
+    {
+        ChangeStatusText(ChoiceValue);
+        OnLifeImage(ChoiceValue);
+    }
+
+      
+    void GetPlayerShipAmount()
+    {
+       playerShipAmount = playerShip.Length - ChoiceValue; //플레이어가 가진 우주선 갯수
+    }
+
+    void ChangeStatusText(int choiceNum)
+    {
+        SpaceShipSelectNumText.text = "(" + choiceNum + " / " + playerShipAmount + ")";
+        SpaceShipNameText.text = playerShipName[choiceNum];
+        SpaceShipSpeedText.text = playerShipSpeed[choiceNum];
+    }
+
+    void OnLifeImage(int choiceNum)
+    {
+        for(int i = 0; i < playerShipLife[choiceNum]; i++)
+        {
+            LifeImage[i].SetActive(true);
+        }
+    }
+    void OffLifeImage()
+    {
         for (int i = 0; i < LifeImage.Length; i++)
         {
             LifeImage[i].SetActive(false);
         }
-
     }
 
-    void ChangeText()
+    void GetSpaceShipStatus()
     {
-        //플레이어쉽 기반으로 받아올것
-        SpaceShipSelectNumText.text = "김판주";
-        SpaceShipNameText.text = "김판주";
-        SpaceShipSpeedText.text = "김판주";
-    }
-    void ChangeImage()
-    {
-        //플레이어쉽 라이프만큼 돌리기
-        for (int i = 0; i < LifeImage.Length; i++)
+        for(int i = 0; i <= playerShipAmount; i++)
         {
-            LifeImage[i].SetActive(false);
+            playerShipName.Add(playerShip[i].GetComponent<SpaceShipStatus>().SpaceShipName);
+            playerShipSpeed.Add(playerShip[i].GetComponent<SpaceShipStatus>().Speed.ToString());
+            playerShipLife.Add(playerShip[i].GetComponent<SpaceShipStatus>().Life);
         }
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
     public void ShipSelectLeftButtonClick()
     {
         if ( LeftButton.tag == "LeftButton")
@@ -68,11 +103,14 @@ public class ShipChoiceNum : MonoBehaviour {
             if (playerSelectSpaceShipNumber >= 2)
             {
                 Debug.Log("왼쪽 버튼 눌림");
-
+                OffLifeImage();
                 playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
                 ChoiceNum = playerSelectSpaceShipNumber - ChoiceValue;
                 playerSelectSpaceShipNumber = ChoiceNum;
                 playerShip[ChoiceNum].SetActive(true);
+
+                ChangeStatusText(ChoiceNum);
+                OnLifeImage(ChoiceNum);
 
                 GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
             }
@@ -93,13 +131,16 @@ public class ShipChoiceNum : MonoBehaviour {
             if (playerSelectSpaceShipNumber >= 1)
             {
                 Debug.Log("오른쪽 버튼 눌림");
-
+                OffLifeImage();
                 playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
                 ChoiceNum = playerSelectSpaceShipNumber + ChoiceValue;
                 playerSelectSpaceShipNumber = ChoiceNum;
                 playerShip[ChoiceNum].SetActive(true);
 
-               GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
+                ChangeStatusText(ChoiceNum);
+                OnLifeImage(ChoiceNum);
+
+                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
             }
         }
         else if (RightButton.tag == "RightButton" && initialSpaceShipNumber == 0)
