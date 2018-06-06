@@ -4,6 +4,21 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 
+//public interface ISubjectable
+//{
+//    void RegisterObserver(IObserverable o);
+//    void RemoveObserver(IObserverable o);
+//    void NotifyObservers();
+//}
+//public interface IObserverable
+//{
+//    void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem, int raptor,
+//                    int blackHawk, int bestScore, int restTime, int nextStage);
+//}
+//public interface IDisplayable
+//{
+//    void DisPlay();
+//}
 
 public class AccountInfo : MonoBehaviour
 {
@@ -31,12 +46,20 @@ public class AccountInfo : MonoBehaviour
     //    set { myMonoey = value; }
     //}
 
+
+
+    public string Fuel, Time, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
+
+
+
     private void Awake()
     {
         if (instance != this)
             instance = this;
 
         DontDestroyOnLoad(gameObject);
+
+        GamePlayManager.Instance.PlayerShipNum = 5;
     }
 
     public static void Register(string username, string email, string password)
@@ -109,6 +132,8 @@ public class AccountInfo : MonoBehaviour
         //돈확인하기//
         //UpdateMyMoney();
 
+        GetUserData();
+
     }
     ////실험으로 만들어본것//
     //public static void UpdateMyMoney()
@@ -131,8 +156,8 @@ public class AccountInfo : MonoBehaviour
             Data = new Dictionary<string, string>()
             {
                 //재화//
-                {"Gas" , "0" },
-                {"Crystal" , "0" },
+                {"Fuel" , "5000" },
+                {"Time" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileitem" , "0" },
                 {"Assistantitem" , "0" },
@@ -157,6 +182,8 @@ public class AccountInfo : MonoBehaviour
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
+        GetUserData();
+        
     }
 
     ////버튼으로 데이타 저장 실험//
@@ -166,24 +193,24 @@ public class AccountInfo : MonoBehaviour
     //}
 
     //재화 데이타 변경 함수// 
-    public static void ChangeGasData(int gas)
+    public static void ChangeFuelData(int fuel)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"Gas", ""+gas+""},
+                {"Fuel", ""+fuel+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
     }
-    public static void ChangeCrystalData(int crystal)
+    public static void ChangeTimeData(int time)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"Crystal", ""+crystal+""},
+                {"Time", ""+time+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
@@ -307,8 +334,6 @@ public class AccountInfo : MonoBehaviour
         GetUserDataRequest request = new GetUserDataRequest()
         {
             Keys = null
-
-
         };
 
         PlayFabClientAPI.GetUserData(request, OnGetUserData, ManagerFuncion.OnAPIError);
@@ -318,27 +343,93 @@ public class AccountInfo : MonoBehaviour
     {
         result.DataVersion = 1;
         Debug.Log("Got user data:");
-        if (!result.Data.ContainsKey("Gas"))
+        if (!result.Data.ContainsKey("Fuel"))
         {
             Debug.Log("Now Creating Data");
             SetUserData();
+
         }
         else
         {
-            Debug.Log("Gas: " + result.Data["Gas"].Value);
-            Debug.Log("Crystal: " + result.Data["Crystal"].Value);
-            Debug.Log("AddMissileitem: " + result.Data["AddMissileitem"].Value);
-            Debug.Log("Assistantitem: " + result.Data["Assistantitem"].Value);
-            Debug.Log("LastBombitem: " + result.Data["LastBombitem"].Value);
-            Debug.Log("Raptor: " + result.Data["Raptor"].Value);
-            //Debug.Log("Thunderblot: " + result.Data["Thunderblot"].Value);
-            //Debug.Log("Spirit: " + result.Data["Spirit"].Value);
-            Debug.Log("BlackHawk: " + result.Data["BlackHawk"].Value);
-            Debug.Log("BestScore: " + result.Data["BestScore"].Value);
-            Debug.Log("RestTime: " + result.Data["RestTime"].Value);
-            Debug.Log("NextStage: " + result.Data["NextStage"].Value);
+            //Debug.Log("Fuel: " + result.Data["Fuel"].Value);
+            //Debug.Log("Time: " + result.Data["Time"].Value);
+            //Debug.Log("AddMissileitem: " + result.Data["AddMissileitem"].Value);
+            //Debug.Log("Assistantitem: " + result.Data["Assistantitem"].Value);
+            //Debug.Log("LastBombitem: " + result.Data["LastBombitem"].Value);
+            //Debug.Log("Raptor: " + result.Data["Raptor"].Value);
+            ////Debug.Log("Thunderblot: " + result.Data["Thunderblot"].Value);
+            ////Debug.Log("Spirit: " + result.Data["Spirit"].Value);
+            //Debug.Log("BlackHawk: " + result.Data["BlackHawk"].Value);
+            //Debug.Log("BestScore: " + result.Data["BestScore"].Value);
+            //Debug.Log("RestTime: " + result.Data["RestTime"].Value);
+            //Debug.Log("NextStage: " + result.Data["NextStage"].Value);
+
+            instance.Fuel = result.Data["Fuel"].Value;
+            instance.Time = result.Data["Time"].Value;
+            instance.AddMissileitem = result.Data["AddMissileitem"].Value;
+            instance.Assistantitem = result.Data["Assistantitem"].Value;
+            instance.LastBombitem = result.Data["LastBombitem"].Value;
+            instance.Raptor = result.Data["Raptor"].Value;
+            instance.BlackHawk = result.Data["BlackHawk"].Value;
+            instance.BestScore = result.Data["BestScore"].Value;
+            instance.RestTime = result.Data["RestTime"].Value;
+            instance.NextStage = result.Data["NextStage"].Value;
+
+            Debug.Log("1번");
         }
     }
+
+    //public void RegisterObserver(IObserverable o)
+    //{
+    //    observerList.Add(o);
+    //}
+
+    //public void RemoveObserver(IObserverable o)
+    //{
+
+    //    observerList.Remove(o);
+    //}
+
+    //public void NotifyObservers()
+    //{
+    //    for (int i = 0; i < observerList.Count; i++)
+    //    {
+    //        observerList[i].UpdateData(fuel, time, addMissileitem, assistantitem, lastBombitem, raptor,
+    //                                   blackHawk, bestScore, restTime, nextStage);
+    //    }
+
+    //}
+
+    //public void MeasureChangedData()
+    //{
+    //    //데이터 확인//
+    //    GetUserData();
+    //    //데이터 인트로 바꾸기//
+    //    ParseData();
+    //    //옵저버에게 알리기//
+    //    NotifyObservers();
+
+    //    Debug.Log("12344");
+
+    //}
+
+    //public void ParseData()
+    //{
+    //    fuel = int.Parse(Fuel);
+    //    time = int.Parse(Time);
+    //    addMissileitem = int.Parse(AddMissileitem);
+    //    assistantitem = int.Parse(Assistantitem);
+    //    lastBombitem = int.Parse(LastBombitem);
+    //    raptor = int.Parse(Raptor);
+    //    blackHawk = int.Parse(BlackHawk);
+    //    bestScore = int.Parse(BestScore);
+    //    restTime = int.Parse(RestTime);
+    //    nextStage = int.Parse(NextStage);
+    //    Debug.Log("2번");
+
+    //}
+
+
 
     ////버튼으로 저장한 데이타 출력//
     //public void GetdataButton()

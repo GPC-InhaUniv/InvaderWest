@@ -1,0 +1,543 @@
+fileFormatVersion: 2
+guid: 14fac9ba7d98cce4a8f7d92e6dbf5d16
+timeCreated: 1527834069
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: arrows-29567_960_720_0
+    21300002: arrows-29567_960_720_1
+    21300004: arrows-29567_960_720_2
+    21300006: arrows-29567_960_720_3
+    21300008: arrows-29567_960_720_4
+    21300010: arrows-29567_960_720_5
+    21300012: arrows-29567_960_720_6
+    21300014: arrows-29567_960_720_7
+    21300016: arrows-29567_960_720_8
+    21300018: arrows-29567_960_720_9
+    21300020: arrows-29567_960_720_10
+    21300022: arrows-29567_960_720_11
+    21300024: arrows-29567_960_720_12
+    21300026: arrows-29567_960_720_13
+    21300028: arrows-29567_960_720_14
+    21300030: arrows-29567_960_720_15
+    21300032: arrows-29567_960_720_16
+    21300034: arrows-29567_960_720_17
+    21300036: arrows-29567_960_720_18
+    21300038: arrows-29567_960_720_19
+    21300040: arrows-29567_960_720_20
+    21300042: arrows-29567_960_720_21
+    21300044: arrows-29567_960_720_22
+    21300046: arrows-29567_960_720_23
+    21300048: arrows-29567_960_720_24
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.50523955, y: 0.49451303}
+  spriteBorder: {x: 0, y: 560, z: 597, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: arrows-29567_960_720_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 573
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_1
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 573
+        width: 149
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_2
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 573
+        width: 149
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_3
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 565
+        width: 163
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_4
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 573
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 377
+        width: 147
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_6
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 376
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_7
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 377
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_8
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 371
+        width: 157
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_9
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 377
+        width: 147
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_10
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 188
+        width: 147
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_11
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 188
+        width: 156
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_12
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 188
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_14
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 188
+        width: 147
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 184
+        width: 149
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_16
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 186
+        width: 168
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_18
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 183
+        width: 157
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_19
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 188
+        width: 149
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_21
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 0
+        width: 153
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_22
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 0
+        width: 150
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_23
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 0
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: arrows-29567_960_720_24
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 0
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline:
+    - - {x: -265, y: -211}
+      - {x: -335, y: -211}
+      - {x: -377, y: -229}
+      - {x: -377, y: -326}
+      - {x: -344, y: -360}
+      - {x: -248, y: -360}
+      - {x: -228, y: -315}
+      - {x: -228, y: -255}
+      - {x: -243, y: -234}
+    - - {x: -134, y: -211}
+      - {x: -178, y: -244}
+      - {x: -178, y: -325}
+      - {x: -165, y: -360}
+      - {x: -42, y: -360}
+      - {x: -25, y: -356}
+      - {x: -25, y: -254}
+      - {x: -59, y: -211}
+    - - {x: 54, y: -211}
+      - {x: 25, y: -232}
+      - {x: 25, y: -330}
+      - {x: 43, y: -360}
+      - {x: 163, y: -360}
+      - {x: 178, y: -316}
+      - {x: 178, y: -253}
+      - {x: 150, y: -211}
+    - - {x: 228, y: -211}
+      - {x: 228, y: -360}
+      - {x: 370, y: -360}
+      - {x: 377, y: -336}
+      - {x: 377, y: -236}
+      - {x: 347, y: -211}
+    - - {x: -349, y: -20}
+      - {x: -377, y: -49}
+      - {x: -377, y: -152}
+      - {x: -334, y: -174}
+      - {x: -235, y: -174}
+      - {x: -228, y: -150}
+      - {x: -228, y: -37}
+      - {x: -267, y: -20}
+    - - {x: -79, y: -20}
+      - {x: -137, y: -20}
+      - {x: -178, y: -50}
+      - {x: -178, y: -130}
+      - {x: -160, y: -174}
+      - {x: -50, y: -174}
+      - {x: -31, y: -171}
+      - {x: -25, y: -147}
+      - {x: -25, y: -62}
+      - {x: -48, y: -30}
+    - - {x: 53, y: -20}
+      - {x: 25, y: -58}
+      - {x: 25, y: -134}
+      - {x: 28, y: -145}
+      - {x: 56, y: -174}
+      - {x: 137, y: -174}
+      - {x: 178, y: -159}
+      - {x: 178, y: -34}
+      - {x: 136, y: -20}
+    - - {x: 258, y: -20}
+      - {x: 245, y: -26}
+      - {x: 228, y: -46}
+      - {x: 228, y: -132}
+      - {x: 242, y: -174}
+      - {x: 338, y: -174}
+      - {x: 377, y: -150}
+      - {x: 377, y: -44}
+      - {x: 368, y: -20}
+    - - {x: -356, y: 168}
+      - {x: -366, y: 166}
+      - {x: -377, y: 124}
+      - {x: -377, y: 15}
+      - {x: -228, y: 15}
+      - {x: -228, y: 164}
+      - {x: -243, y: 168}
+    - - {x: -54, y: 164}
+      - {x: -62, y: 168}
+      - {x: -133, y: 168}
+      - {x: -178, y: 153}
+      - {x: -178, y: 31}
+      - {x: -148, y: 15}
+      - {x: -44, y: 15}
+      - {x: -42, y: 18}
+      - {x: -25, y: 57}
+      - {x: -25, y: 131}
+    - - {x: 68, y: 168}
+      - {x: 29, y: 145}
+      - {x: 25, y: 124}
+      - {x: 25, y: 32}
+      - {x: 53, y: 15}
+      - {x: 155, y: 15}
+      - {x: 178, y: 36}
+      - {x: 178, y: 131}
+      - {x: 153, y: 168}
+    - - {x: 258, y: 168}
+      - {x: 228, y: 145}
+      - {x: 228, y: 45}
+      - {x: 236, y: 15}
+      - {x: 376, y: 15}
+      - {x: 377, y: 18}
+      - {x: 377, y: 145}
+      - {x: 337, y: 168}
+    - - {x: -346, y: 360}
+      - {x: -377, y: 326}
+      - {x: -377, y: 255}
+      - {x: -365, y: 222}
+      - {x: -347, y: 211}
+      - {x: -261, y: 211}
+      - {x: -228, y: 246}
+      - {x: -228, y: 325}
+      - {x: -266, y: 360}
+    - - {x: -143, y: 360}
+      - {x: -178, y: 323}
+      - {x: -178, y: 260}
+      - {x: -155, y: 220}
+      - {x: -135, y: 211}
+      - {x: -65, y: 211}
+      - {x: -25, y: 241}
+      - {x: -25, y: 328}
+      - {x: -42, y: 360}
+    - - {x: 59, y: 360}
+      - {x: 25, y: 347}
+      - {x: 25, y: 239}
+      - {x: 63, y: 211}
+      - {x: 165, y: 211}
+      - {x: 178, y: 239}
+      - {x: 178, y: 337}
+      - {x: 156, y: 360}
+    - - {x: 228, y: 225}
+      - {x: 250, y: 211}
+      - {x: 342, y: 211}
+      - {x: 377, y: 232}
+      - {x: 377, y: 358}
+      - {x: 376, y: 360}
+      - {x: 249, y: 360}
+      - {x: 228, y: 341}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

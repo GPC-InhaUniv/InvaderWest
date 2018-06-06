@@ -29,18 +29,31 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    protected int hp;
-    protected float moveSpeed;
-    protected Direction moveDirection;
-    public Direction MoveDirection { set { moveDirection = value; } }
+    public GameObject missile;
+    public ObjectPool missilePool;
+    
+    protected int MAXSETA = 360;
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
-    //float attackRate; // Attacking만
 
-    public void Move()
+    protected int curveRate;
+    protected float moveHeight; // Zigzag
+    protected float radius; // Circle
+    protected float circleSpeed;
+    
+    private void Start()
     {
+        missilePool = new ObjectPool(); // 스크립트 컴포넌트 추가안됨?? 어떻게 추가하지?
+        missilePool.SetObject(missile);
 
+        curveRate = 6;
+        moveHeight = 1f; // Zigzag
+        radius = 4f; // Circle
+        circleSpeed = 6f;
     }
-    //public abstract void Attack(); // Attacking만
+
+    virtual public void Move() { }
+    virtual public void MoveCircle(bool sign) { }
+    virtual public void Init() { }
     public void GetDemage()
     {
 
@@ -53,19 +66,23 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    /* 우주선이 파괴되면 잔해가 되어 아래로 점점 떨어진다. 
-     * 플레이어나 우주선에 닿으면 데미지를 준다. 파괴되지 않는다. */
+    /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
+     * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
     public void Wrecked() 
     {
 
     }
-
-    public void OnCollisionExit(Collision collision)
+    
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.tag == "BackGround")
-        {
-            // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
-            this.gameObject.SetActive(false);
-        }
+        if (other.gameObject.tag == "BackGround")
+            OutofScreen();
+    }
+
+    public void OutofScreen()
+    {
+        // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
+        Init();
+        this.gameObject.SetActive(false);
     }
 }
