@@ -29,9 +29,9 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    public GameObject missile;
-    public ObjectPool missilePool;
-    
+    //public GameObject missile;
+    public ObjectPool MissilePool;
+
     protected int MAXSETA = 360;
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
@@ -39,11 +39,12 @@ public class Enemy : MonoBehaviour
     protected float moveHeight; // Zigzag
     protected float radius; // Circle
     protected float circleSpeed;
-    
-    private void Start()
+
+    private void Awake()
     {
-        missilePool = new ObjectPool(); // 스크립트 컴포넌트 추가안됨?? 어떻게 추가하지?
-        missilePool.SetObject(missile);
+        //missilePool = gameObject.AddComponent<ObjectPool>();
+        //missilePool = gameObject.AddComponent("ObjectPool") as ObjectPool); // 스크립트 컴포넌트 추가안됨?? 어떻게 추가하지?
+        //missilePool.SetObject(missile);
 
         curveRate = 6;
         moveHeight = 1f; // Zigzag
