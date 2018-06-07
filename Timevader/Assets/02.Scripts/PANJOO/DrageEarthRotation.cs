@@ -8,10 +8,12 @@ using UnityEngine.SceneManagement;
 public class DrageEarthRotation : MonoBehaviour {
 
     //지구를 돌리는
-    public GameObject Earth;
+    [SerializeField]
+    private GameObject Earth;
 
+    [SerializeField]
+    private GameObject Cloud;
     Vector3 prevPoint;
-
 
     private float ConditionRotation;
     
@@ -22,20 +24,7 @@ public class DrageEarthRotation : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            Debug.Log("클릭");
-            
-            if (Physics.Raycast(ray, out hit))
-            {
-                // 지구 회전
-                Debug.Log("Raycast Hit");
-                ClickDrag();
-                //TouchSlide();
-            }
-        }
+        ActionClickOrDarg();
     }
     private void Start()
     {
@@ -45,9 +34,25 @@ public class DrageEarthRotation : MonoBehaviour {
     {
         NextScene();
     }
+    void ActionClickOrDarg()
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Debug.Log("클릭");
 
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 지구 회전
+                Debug.Log("Raycast Hit");
+                ClickOrDrag();
+                //TouchSlide();
+            }
+        }
+    }
 
-    void ClickDrag()
+    void ClickOrDrag()
     {
         /*    PC 조작   */
         if (Input.GetMouseButtonDown(0))
@@ -63,6 +68,7 @@ public class DrageEarthRotation : MonoBehaviour {
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
             //Debug.Log("roat" + dragValue);
+            Cloud.transform.Rotate(rotatePower / 2 * rotateSpeed);
             Earth.transform.Rotate(rotatePower / 2 * rotateSpeed);
             prevPoint = Input.mousePosition;
         }
@@ -83,6 +89,8 @@ public class DrageEarthRotation : MonoBehaviour {
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
             Earth.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime);
+            Cloud.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime / 2);
+            
             prevPoint = Input.GetTouch(0).position;
         }
     }
@@ -93,6 +101,7 @@ public class DrageEarthRotation : MonoBehaviour {
         if(Earth.transform.rotation.z < -ConditionRotation || Earth.transform.rotation.z > ConditionRotation)
         {
             Debug.Log("다음 씬으로");
+            
             SceneManager.LoadScene("Main");
         }
     }
