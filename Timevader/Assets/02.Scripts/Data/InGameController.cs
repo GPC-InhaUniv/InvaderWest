@@ -64,7 +64,8 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         }
 		
 	}
-    public void GetPlayerData(int playerLife)
+    //플레이어 시작라이프//
+    public void GetPlayerLife(int playerLife)
     {
         if (playerLife == 3)
         {
@@ -72,27 +73,45 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         }
 
     }
-
-    public void UpdateData(int playerLife, int playerRestTime)
+    //플레이어 라이프//
+    public void UpdatePlayerLife(int playerLife)
     {
         if (NowGameState == GameState.Start &&playerLife>0)
         {
-            if (playerLife < 4)
-                LifeImage[0].gameObject.SetActive(false);
             this.playerLife = playerLife;
-            this.playerRestTime = playerRestTime;
             Debug.Log("Observer Success  " + playerLife);
+            DisPlayPlayerLife();
         }
         else
         {
             NowGameState=GameState.GameOver;
+            player.RemoveObserver(this);
             GameLoseResultPanel.gameObject.SetActive(true);
         }
-        DisPlay();
-
+    }
+    //플레이어 시간//
+    public void UpdatePlayerRestTime(int playerRestTime)
+    {
+        if (NowGameState == GameState.Start && playerRestTime > 0)
+        {
+            this.playerRestTime = playerRestTime;
+            DisplayPlayerRestTime();
+        }
+        else
+        {
+            NowGameState = GameState.GameOver;
+            player.RemoveObserver(this);
+            GameLoseResultPanel.gameObject.SetActive(true);
+        }
+        
+    }
+    public void DisplayPlayerRestTime()
+    {
+        RestTimeScoreText.text = playerRestTime.ToString();
+        Debug.Log(playerRestTime);
     }
 
-    public void DisPlay()
+    public void DisPlayPlayerLife()
     {
         //Debug.Log("go");
         // 옵저버 끊어버리기 player.RemoveObserver(this);
@@ -103,11 +122,10 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
             if (LifeImage[i].gameObject.activeSelf == true)
             {
                 LifeImage[i].gameObject.SetActive(false);
-
                 return;
             }
         }
     }
 
-    
+
 }

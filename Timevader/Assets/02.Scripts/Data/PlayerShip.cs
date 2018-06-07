@@ -6,17 +6,19 @@ public interface ISubjectable
 {
     void RegisterObserver(IObserverable o);
     void RemoveObserver(IObserverable o);
-    void NotifyObservers();
+    void NotifyPlayerLifeToObservers();
+    void NotifyPlayerRestTimeToObservers();
 }
 public interface IObserverable
 {
-    void UpdateData(int playerLife, int playerRestTime);
-    void GetPlayerData(int playerLife);
+    void UpdatePlayerLife(int playerLife);
+    void GetPlayerLife(int playerLife);
+    void UpdatePlayerRestTime(int playerRestTime);
 }
 public interface IDisplayable
 {
-    void DisPlay();
-   
+    void DisPlayPlayerLife();
+    void DisplayPlayerRestTime();
 }
 
 public class PlayerShip : MonoBehaviour , ISubjectable
@@ -32,24 +34,29 @@ public class PlayerShip : MonoBehaviour , ISubjectable
 
     void Start()
     {
-        GamePlayManager.Instance.PlayerShipNum = 1;
+        GamePlayManager.Instance.PlayerShipNum = 2;
 
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
             playerLife = 3;
+            playerRestTime = 5000;
 
         }
         if (GamePlayManager.Instance.PlayerShipNum == 2)
         {
             playerLife = 4;
+            playerRestTime = 2500;
 
         }
         if (GamePlayManager.Instance.PlayerShipNum == 3)
         {
             playerLife = 3;
+            playerRestTime = 1000;
 
         }
         NotifyStartDataToObservers();
+
+        StartCoroutine("LoseTime");
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -58,25 +65,30 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         {
             playerLife = playerLife - 1;
         }
-        NotifyObservers();
+        NotifyPlayerLifeToObservers();
 
-        Debug.Log("Enter check");
+        //Debug.Log("Enter check");
     }
 
     public void NotifyStartDataToObservers()
     {
         for (int i = 0; i < observerList.Count; i++)
         {
-            observerList[i].GetPlayerData(playerLife);
+            observerList[i].GetPlayerLife(playerLife);
         }
     }
-
-
-    public void NotifyObservers()
+    public void NotifyPlayerLifeToObservers()
     {
         for (int i = 0; i < observerList.Count; i++)
         {
-            observerList[i].UpdateData(playerLife , playerRestTime);
+            observerList[i].UpdatePlayerLife(playerLife);
+        }
+    }
+    public void NotifyPlayerRestTimeToObservers()
+    {
+        for (int i = 0; i < observerList.Count; i++)
+        {
+            observerList[i].UpdatePlayerRestTime(playerRestTime);
         }
     }
 
@@ -90,7 +102,20 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         observerList.Remove(o);
         Debug.Log("remove");
     }
+    private IEnumerator LoseTime()
+    {
+        playerRestTime = playerRestTime - 10;
+        NotifyPlayerRestTimeToObservers();
 
+        yield return new WaitForSeconds(1.5f);
+
+        Debug.Log(playerRestTime);
+
+        StartCoroutine("LoseTime");
+        
+
+
+    }
 
 
 }
