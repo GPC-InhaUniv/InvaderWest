@@ -13,20 +13,10 @@ public class BossAttribute : MonoBehaviour {
 
     public int ScoreValue;
 
-    private GameController gameController;
 
     private void Start()
     {
 
-        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        if (gameControllerObject != null)
-        {
-            gameController = gameControllerObject.GetComponent<GameController>();
-        }
-        if (gameController == null)
-        {
-            Debug.Log("게임 컨트롤러를 찾을 수 없습니다.");
-        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -43,8 +33,7 @@ public class BossAttribute : MonoBehaviour {
             Instantiate(explosion, transform.position, transform.rotation);
             Hp -= 10;
             if(Hp == 0)
-            {
-                gameController.GameClear();
+            {             
                 Instantiate(playerexplosion, transform.position, transform.rotation);
                 Destroy(gameObject);
             }             
@@ -53,9 +42,7 @@ public class BossAttribute : MonoBehaviour {
         if (other.tag == "Player") //플레이어가 부딪힌다면
         {
             Instantiate(playerexplosion, other.transform.position, other.transform.rotation);
-            gameController.GameOver();
+
         }
-        gameController.AddSocre(ScoreValue);
-        Destroy(other.gameObject);
     }
 }
