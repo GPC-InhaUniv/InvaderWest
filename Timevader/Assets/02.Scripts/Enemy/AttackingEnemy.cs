@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int maxHp, hp;
-    float attackRate = 10.0f;
+    float attackRate = 0.6f;
     float attackPower = 5.0f;
     float moveSpeed = 5.0f;
     int seta = 0;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
 
+    private void Start()
+    {
+        StartCoroutine(Attack());
+        MissilePool = GameObject.FindWithTag("Factory").GetComponent<Enemy>().MissilePool;
+    }
+
     private void FixedUpdate()
     {
+        //if (MissilePool == null)
+        //{
+        //    MissilePool = GameObject.FindWithTag("Factory").GetComponent<Enemy>().MissilePool;
+        //    return;
+        //}
         Move();
-        StartCoroutine(Attack());
     }
 
     private IEnumerator Attack()
     {
-        GameObject shot =  missilePool.GetFromPool();
-        shot.transform.position = transform.position;
-        shot.transform.rotation = Quaternion.identity;
-        shot.SetActive(true);
         yield return new WaitForSeconds(attackRate);
+        GameObject shot = MissilePool.GetFromPool();
+        if (shot != null)
+        {
+            shot.transform.position = transform.position;
+            shot.transform.rotation = Quaternion.identity;
+            shot.SetActive(true);
+        }
+       
     }
 
     override public void Move()
@@ -37,18 +51,19 @@ public class AttackingEnemy : Enemy{
                 transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
                 break;
             case Direction.Zigzag_LeftToRight:
+                if (seta > MAXSETA) seta %= MAXSETA;
                 seta += 1;
                 transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Zigzag_RightToLeft:
+                if (seta > MAXSETA) seta %= MAXSETA;
                 seta += 1;
                 transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Circle_Clockwise:
-                
-                break;
+                MoveCircle(true); break;
             case Direction.Circle_CounterClockwise:
-                break;
+                MoveCircle(false); break;
             default: break;
         }
     }
