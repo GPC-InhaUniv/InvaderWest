@@ -11,13 +11,15 @@ public interface ISubjectable
 public interface IObserverable
 {
     void UpdateData(int playerLife, int playerRestTime);
+    void GetPlayerData(int playerLife);
 }
 public interface IDisplayable
 {
     void DisPlay();
+   
 }
 
-public class PlayerObserver : MonoBehaviour , ISubjectable
+public class PlayerShip : MonoBehaviour , ISubjectable
 {
     [SerializeField]
     private int playerLife;
@@ -39,21 +41,34 @@ public class PlayerObserver : MonoBehaviour , ISubjectable
         }
         if (GamePlayManager.Instance.PlayerShipNum == 2)
         {
-            playerLife = 6;
+            playerLife = 4;
 
         }
         if (GamePlayManager.Instance.PlayerShipNum == 3)
         {
-            playerLife = 9;
+            playerLife = 3;
 
         }
-
+        NotifyStartDataToObservers();
     }
 
     public void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Bolt"))
+        {
+            playerLife = playerLife - 1;
+        }
         NotifyObservers();
+
         Debug.Log("Enter check");
+    }
+
+    public void NotifyStartDataToObservers()
+    {
+        for (int i = 0; i < observerList.Count; i++)
+        {
+            observerList[i].GetPlayerData(playerLife);
+        }
     }
 
 
