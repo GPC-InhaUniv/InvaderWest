@@ -10,13 +10,15 @@ public class UIFader : MonoBehaviour {
     float timeSinceStarted;
     float percentageComplete;
 
-    public void FadeIn(CanvasGroup UIElement)
+    public void FadeIn()
     {
+        Debug.Log("FadeIn");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 1));
     }
 
-    public void FadeOut(CanvasGroup UIElement)
+    public void FadeOut()
     {
+        Debug.Log("FadeOut");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 0));
     }
 

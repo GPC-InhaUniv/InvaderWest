@@ -33,14 +33,6 @@ public class ShipChoiceNum : MonoBehaviour {
     private List<string> playerShipSpeed = new List<string>();
     private List<int> playerShipLife = new List<int>();
 
-
-    [Header("Button")]
-    [SerializeField]
-    private Button RightButton;
-    [SerializeField]
-    private Button LeftButton;
-
-    
     private void Awake()
     {
         GetPlayerShipAmount();
@@ -94,60 +86,47 @@ public class ShipChoiceNum : MonoBehaviour {
 
     public void ShipSelectLeftButtonClick()
     {
-        if ( LeftButton.tag == "LeftButton")
+        if (playerSelectSpaceShipNumber == ChoiceValue)
         {
-            if(playerSelectSpaceShipNumber == ChoiceValue)
-            {
-                return;
-            }
-            if (playerSelectSpaceShipNumber >= playerShip.Length-ChoiceValue) //3-1= 2
-            {
-                Debug.Log("왼쪽 버튼 눌림");
-                OffLifeImage();
-                playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
-                ChoiceNum = playerSelectSpaceShipNumber - ChoiceValue;
-                playerSelectSpaceShipNumber = ChoiceNum;
-                playerShip[ChoiceNum].SetActive(true);
-
-                ChangeStatusText(ChoiceNum);
-                OnLifeImage(ChoiceNum);
-
-                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-            }
+            return;
         }
-        else if (LeftButton.tag == "LeftButton" && initialSpaceShipNumber == 0)
+        if (playerSelectSpaceShipNumber >= playerShip.Length - ChoiceValue) //3-1= 2
         {
-            Debug.Log("플레이어 선택 오류입니다");
+            Debug.Log("왼쪽 버튼 눌림");
+            OffLifeImage();
+
+            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+            ChoiceNum = playerSelectSpaceShipNumber - ChoiceValue;
+            playerSelectSpaceShipNumber = ChoiceNum;
+            playerShip[ChoiceNum].SetActive(true);
+
+            ChangeStatusText(ChoiceNum);
+            OnLifeImage(ChoiceNum);
+
+            GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
         }
     }
     public void ShipSelectRightButtonClick()
     {
-        if (playerSelectSpaceShipNumber == playerShip.Length-ChoiceValue)
+        if (playerSelectSpaceShipNumber == playerShip.Length - ChoiceValue)
         {
             return;
         }
-        if (RightButton.tag == "RightButton")
+        if (playerSelectSpaceShipNumber >= 1)
         {
-            if (playerSelectSpaceShipNumber >= 1)
-            {
-                Debug.Log("오른쪽 버튼 눌림");
-                OffLifeImage();
-                playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
-                ChoiceNum = playerSelectSpaceShipNumber + ChoiceValue;
-                playerSelectSpaceShipNumber = ChoiceNum;
-                playerShip[ChoiceNum].SetActive(true);
+            Debug.Log("오른쪽 버튼 눌림");
+            OffLifeImage();
 
-                ChangeStatusText(ChoiceNum);
-                OnLifeImage(ChoiceNum);
+            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+            ChoiceNum = playerSelectSpaceShipNumber + ChoiceValue;
+            playerSelectSpaceShipNumber = ChoiceNum;
+            playerShip[ChoiceNum].SetActive(true);
 
-                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-            }
+            ChangeStatusText(ChoiceNum);
+            OnLifeImage(ChoiceNum);
+
+            GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
         }
-        else if (RightButton.tag == "RightButton" && initialSpaceShipNumber == 0)
-        {
-            Debug.Log("플레이어 선택 오류입니다");
-        }
-
     }
 
 }

@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour {
 
+    [SerializeField]
     [Range(0, 5)]
-    public float movement;
-    public  int a = 1;
+    private float movement;
 
+    private float moveVlaue;
 
-    public void Update()
+    void BossMove()
     {
-        if (transform.localPosition.x < -3.0f)
+        if (transform.localPosition.x > -0.2f)
         {
-            a = -1;
+            moveVlaue = -1;
         }
-        else if(transform.localPosition.x > 2.0f)
+        else if (transform.localPosition.x < 0.2f)
         {
-            a = 1;
+            moveVlaue = 1;
         }
-        transform.Translate(Vector3.left * 1.0f * Time.deltaTime * a);
+        transform.Translate(Vector3.up * 1.0f * Time.deltaTime * moveVlaue);
+    }
+
+    void Start()
+    {
+        movement = 1;
+    }
+
+    void Update()
+    {
+        BossMove();
     }
 }
