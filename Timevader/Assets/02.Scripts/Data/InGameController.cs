@@ -43,11 +43,11 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         Invoke("GameStart", 3.0f);
 
         //playerLife = GamePlayManager.Instance.PlayerShipNum;
-        player = GameObject.FindWithTag("Player").GetComponent<PlayerObserver>();
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
         player.RegisterObserver(this);
 
         //player
-
+        GameStart();
     }
     void GameStart()
     {
@@ -64,19 +64,37 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         }
 		
 	}
+    public void GetPlayerData(int playerLife)
+    {
+        if (playerLife == 3)
+        {
+            LifeImage[0].gameObject.SetActive(false);
+        }
+
+    }
 
     public void UpdateData(int playerLife, int playerRestTime)
     {
-        this.playerLife = playerLife;
-        this.playerRestTime = playerRestTime;
-        Debug.Log("Observer Success"+playerLife);
-        this.playerLife--;
+        if (NowGameState == GameState.Start &&playerLife>0)
+        {
+            if (playerLife < 4)
+                LifeImage[0].gameObject.SetActive(false);
+            this.playerLife = playerLife;
+            this.playerRestTime = playerRestTime;
+            Debug.Log("Observer Success  " + playerLife);
+        }
+        else
+        {
+            NowGameState=GameState.GameOver;
+            GameLoseResultPanel.gameObject.SetActive(true);
+        }
         DisPlay();
+
     }
 
     public void DisPlay()
     {
-        Debug.Log("go");
+        //Debug.Log("go");
         // 옵저버 끊어버리기 player.RemoveObserver(this);
 
         //Life Image Change//
@@ -89,7 +107,7 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
                 return;
             }
         }
-
-
     }
+
+    
 }
