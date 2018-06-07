@@ -10,7 +10,7 @@ public interface ISubjectable
 }
 public interface IObserverable
 {
-    void UpdateData(int playerLife, int playerRestTime, int playerfirerapid);
+    void UpdateData(int playerLife, int playerRestTime);
 }
 public interface IDisplayable
 {
@@ -19,15 +19,19 @@ public interface IDisplayable
 
 public class PlayerObserver : MonoBehaviour , ISubjectable
 {
-
+    [SerializeField]
     private int playerLife;
+    [SerializeField]
     private int playerRestTime;
+    [SerializeField]
     private int playerfirerapid;
 
     List<IObserverable> observerList = new List<IObserverable>();
 
     void Start()
     {
+        GamePlayManager.Instance.PlayerShipNum = 1;
+
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
             playerLife = 3;
@@ -46,12 +50,18 @@ public class PlayerObserver : MonoBehaviour , ISubjectable
 
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        NotifyObservers();
+        Debug.Log("Enter check");
+    }
+
 
     public void NotifyObservers()
     {
         for (int i = 0; i < observerList.Count; i++)
         {
-           // observerList[i].UpdateData(playerLife , playerRestTime);
+            observerList[i].UpdateData(playerLife , playerRestTime);
         }
     }
 
@@ -63,6 +73,7 @@ public class PlayerObserver : MonoBehaviour , ISubjectable
     public void RemoveObserver(IObserverable o)
     {
         observerList.Remove(o);
+        Debug.Log("remove");
     }
 
 
