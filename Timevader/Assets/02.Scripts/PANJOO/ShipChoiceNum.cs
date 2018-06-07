@@ -96,11 +96,11 @@ public class ShipChoiceNum : MonoBehaviour {
     {
         if ( LeftButton.tag == "LeftButton")
         {
-            if(playerSelectSpaceShipNumber == 1)
+            if(playerSelectSpaceShipNumber == ChoiceValue)
             {
                 return;
             }
-            if (playerSelectSpaceShipNumber >= 2)
+            if (playerSelectSpaceShipNumber >= playerShip.Length-ChoiceValue) //3-1= 2
             {
                 Debug.Log("왼쪽 버튼 눌림");
                 OffLifeImage();
