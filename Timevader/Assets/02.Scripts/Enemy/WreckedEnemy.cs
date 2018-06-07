@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WreckedEnemy : Enemy{
+    int hp, maxHp = 10;
+    float moveSpeed = 3.0f;
 
-    //public override void Move()
-    //{
+    private void Start()
+    {
+        hp = maxHp;
+        WreckedShip = enemy.WreckedShip;
+    }
+    private void FixedUpdate()
+    {
+        Move();
+    }
 
-    //}
+    override public void Move()
+    {
+        transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
+    }
 
-    //public override void GetDemage()
-    //{
-
-    //}
-
-    //public override void Explode()
-    //{
-
-    //}
-
-    //public override void DropItem()
-    //{
-
-    //}
-
-    //public override void Wrecked()
-    //{
-
-    //}
+    override public void GetDemage(int damage)
+    {
+        hp -= damage;
+        Debug.Log(gameObject.name + "Damage " + damage);
+        if (hp <= 0) Destroy(gameObject);
+    }
 }

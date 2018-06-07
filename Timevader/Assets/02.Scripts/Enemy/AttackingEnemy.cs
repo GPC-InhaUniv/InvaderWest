@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int maxHp, hp;
-    float attackRate = 0.6f;
+    int attackRate = 3;
     float attackPower = 5.0f;
     float moveSpeed = 5.0f;
     int seta = 0;
@@ -13,31 +13,31 @@ public class AttackingEnemy : Enemy{
 
     private void Start()
     {
-        StartCoroutine(Attack());
-        MissilePool = GameObject.FindWithTag("Factory").GetComponent<Enemy>().MissilePool;
+        MissilePool = enemy.MissilePool;
+        WreckedShip = enemy.WreckedShip;
     }
 
     private void FixedUpdate()
     {
-        //if (MissilePool == null)
-        //{
-        //    MissilePool = GameObject.FindWithTag("Factory").GetComponent<Enemy>().MissilePool;
-        //    return;
-        //}
         Move();
     }
 
     private IEnumerator Attack()
     {
-        yield return new WaitForSeconds(attackRate);
-        GameObject shot = MissilePool.GetFromPool();
-        if (shot != null)
+        while (true)
         {
-            shot.transform.position = transform.position;
-            shot.transform.rotation = Quaternion.identity;
-            shot.SetActive(true);
+            yield return new WaitForSeconds((float)Random.Range(5, attackRate) / 10);
+            
+            GameObject shot = MissilePool.GetFromPool();
+            if (shot != null)
+            {
+                shot.transform.rotation = Quaternion.identity;
+                shot.SetActive(true);
+                shot.transform.position = transform.position;
+            }
+            yield return null;
+
         }
-       
     }
 
     override public void Move()
@@ -87,5 +87,12 @@ public class AttackingEnemy : Enemy{
     {
         seta = 0;
         hp = maxHp;
+    }
+
+    override public void GetDemage(int damage)
+    {
+        hp -= damage;
+        Debug.Log(gameObject.name + "Damage " + damage);
+        if (hp <= 0) Explode();
     }
 }

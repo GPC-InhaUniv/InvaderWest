@@ -8,7 +8,12 @@ public class NormalEnemy : Enemy {
     int seta = 0;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
-    
+
+    private void Start()
+    {
+        WreckedShip = enemy.WreckedShip;
+    }
+
     private void FixedUpdate()
     {
         Move();

@@ -28,21 +28,22 @@ public class Spawner : MonoBehaviour {
     void SpawnEnemy(InvaderType type, Vector3 spawnPoint, Direction moveDirection)
     {
         GameObject enemy = factory.GetEnemy(type);
+        enemy.transform.position = spawnPoint;
+        enemy.transform.rotation = Quaternion.identity;
+        enemy.SetActive(true);
+
         if (enemy.GetComponent<NormalEnemy>())
         {
-            Debug.Log("NormalEnemy 스크립트");
+            //Debug.Log("NormalEnemy 스크립트");
             enemy.GetComponent<NormalEnemy>().MoveDirection = moveDirection;
         }
         else if (enemy.GetComponent<AttackingEnemy>())
         {
-            Debug.Log("AttackingEnemy 스크립트");
+            //Debug.Log("AttackingEnemy 스크립트");
             enemy.GetComponent<AttackingEnemy>().MoveDirection = moveDirection;
+            enemy.GetComponent<AttackingEnemy>().StartCoroutine("Attack");
         }
         else Debug.Log("enemy 스크립트를 찾을 수 없습니다.");
-
-        enemy.transform.position = spawnPoint;
-        enemy.transform.rotation = Quaternion.identity;
-        enemy.SetActive(true);
     }
 
     private IEnumerator Stage1()
@@ -50,7 +51,7 @@ public class Spawner : MonoBehaviour {
         
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Normal, SpawnPoint[0].position, Direction.Zigzag_LeftToRight);
+            SpawnEnemy(InvaderType.Attacking, SpawnPoint[0].position, Direction.Zigzag_LeftToRight);
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(0.7f);
@@ -64,7 +65,7 @@ public class Spawner : MonoBehaviour {
 
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Normal, SpawnPoint[2].position, Direction.Circle_Clockwise);
+            SpawnEnemy(InvaderType.Attacking, SpawnPoint[2].position, Direction.Circle_Clockwise);
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(2.0f);
