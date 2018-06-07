@@ -6,21 +6,11 @@ using UnityEngine.UI;
 public class ChangeUIBySpaceShip : MonoBehaviour {
 
     [SerializeField]
-    private Text SpaceShipSelectNumText { get; set; }
+    private Text SpaceShipSelectNumText;
     [SerializeField]
-    private Text SpaceShipNameText { get; set; }
+    private Text SpaceShipNameText;
 
     [SerializeField]
-    private GameObject[] SpaceShipObject { get; set; }
+    private GameObject[] SpaceShipObject;
 
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

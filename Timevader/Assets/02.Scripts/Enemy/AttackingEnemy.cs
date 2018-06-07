@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int maxHp, hp;
-    float attackRate = 10.0f;
+    int attackRate = 3;
     float attackPower = 5.0f;
     float moveSpeed = 5.0f;
     int seta = 0;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
 
+    private void Start()
+    {
+        MissilePool = enemy.MissilePool;
+        WreckedShip = enemy.WreckedShip;
+    }
+
     private void FixedUpdate()
     {
         Move();
-        StartCoroutine(Attack());
     }
 
     private IEnumerator Attack()
     {
-        GameObject shot =  missilePool.GetFromPool();
-        shot.transform.position = transform.position;
-        shot.transform.rotation = Quaternion.identity;
-        shot.SetActive(true);
-        yield return new WaitForSeconds(attackRate);
+        while (true)
+        {
+            yield return new WaitForSeconds((float)Random.Range(5, attackRate) / 10);
+            
+            GameObject shot = MissilePool.GetFromPool();
+            if (shot != null)
+            {
+                shot.transform.rotation = Quaternion.identity;
+                shot.SetActive(true);
+                shot.transform.position = transform.position;
+            }
+            yield return null;
+
+        }
     }
 
     override public void Move()
@@ -37,18 +51,19 @@ public class AttackingEnemy : Enemy{
                 transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
                 break;
             case Direction.Zigzag_LeftToRight:
+                if (seta > MAXSETA) seta %= MAXSETA;
                 seta += 1;
                 transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Zigzag_RightToLeft:
+                if (seta > MAXSETA) seta %= MAXSETA;
                 seta += 1;
                 transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Circle_Clockwise:
-                
-                break;
+                MoveCircle(true); break;
             case Direction.Circle_CounterClockwise:
-                break;
+                MoveCircle(false); break;
             default: break;
         }
     }
@@ -72,5 +87,12 @@ public class AttackingEnemy : Enemy{
     {
         seta = 0;
         hp = maxHp;
+    }
+
+    override public void GetDemage(int damage)
+    {
+        hp -= damage;
+        Debug.Log(gameObject.name + "Damage " + damage);
+        if (hp <= 0) Explode();
     }
 }

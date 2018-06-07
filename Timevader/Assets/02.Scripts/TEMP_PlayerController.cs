@@ -9,7 +9,7 @@ public class TEMP_PlayerController : MonoBehaviour {
 
     Rigidbody rig;
 
-    public GameObject shot;
+    public GameObject shot2;
     public Transform shotSpawn;
     public float fireRate = 0.25f;
     float nextFire = 0.0f;
@@ -24,7 +24,7 @@ public class TEMP_PlayerController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(shot, shotSpawn.position, Quaternion.identity);
+            Instantiate(shot2, shotSpawn.position, Quaternion.identity);
         }
     }
 

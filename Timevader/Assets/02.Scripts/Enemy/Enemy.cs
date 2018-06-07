@@ -29,9 +29,11 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    public GameObject missile;
-    public ObjectPool missilePool;
-    
+    //public GameObject missile;
+    public ObjectPool MissilePool;
+    public GameObject WreckedShip;
+
+    protected Enemy enemy;
     protected int MAXSETA = 360;
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
@@ -39,28 +41,26 @@ public class Enemy : MonoBehaviour
     protected float moveHeight; // Zigzag
     protected float radius; // Circle
     protected float circleSpeed;
-    
-    private void Start()
-    {
-        missilePool = new ObjectPool(); // 스크립트 컴포넌트 추가안됨?? 어떻게 추가하지?
-        missilePool.SetObject(missile);
 
+    private void Awake()
+    {
         curveRate = 6;
         moveHeight = 1f; // Zigzag
         radius = 4f; // Circle
         circleSpeed = 6f;
+        enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
     }
 
     virtual public void Move() { }
     virtual public void MoveCircle(bool sign) { }
     virtual public void Init() { }
-    public void GetDemage()
-    {
-
-    }
+    virtual public void GetDemage(int damage) { }
     public void Explode()
     {
-
+        Debug.Log("EXPLODE");
+        if (Random.Range(0, 3) == 0)
+            Wrecked();
+        ReturnToPool();
     }
     public void DropItem()
     {
@@ -70,16 +70,24 @@ public class Enemy : MonoBehaviour
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
     public void Wrecked() 
     {
-
+        Debug.Log("WRECKED");
+        Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            GetDemage(2); // other.power
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "BackGround")
-            OutofScreen();
+            ReturnToPool();
     }
 
-    public void OutofScreen()
+    public void ReturnToPool()
     {
         // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
         Init();

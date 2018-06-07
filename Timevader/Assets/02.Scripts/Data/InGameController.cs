@@ -20,15 +20,18 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
     public GameObject GameLoseResultPanel;
 
     public Text RestTimeScoreText;
-    public Text StageText;
 
-    public Image Life3Image;
-    public Image Life2Image;
-    public Image Life1Image;
+    public Image[] LifeImage;
 
 
+    [SerializeField]
     private int playerLife;
+    [SerializeField]
     private int playerRestTime;
+    [SerializeField]
+    public ISubjectable player;
+
+
 
 
     // Use this for initialization
@@ -39,9 +42,12 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
         Invoke("GameStart", 3.0f);
 
-        playerLife = GamePlayManager.Instance.PlayerShipNum;
-        
+        //playerLife = GamePlayManager.Instance.PlayerShipNum;
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
+        player.RegisterObserver(this);
 
+        //player
+        GameStart();
     }
     void GameStart()
     {
@@ -53,21 +59,55 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
         if(NowGameState == GameState.Start)
         {
-            
 
 
         }
 		
 	}
-
-    public void UpdateData(int playerLife, int playerRestTime, int playerfirerapid)
+    public void GetPlayerData(int playerLife)
     {
-        this.playerLife = playerLife;
-        this.playerRestTime = playerRestTime;
+        if (playerLife == 3)
+        {
+            LifeImage[0].gameObject.SetActive(false);
+        }
+
+    }
+
+    public void UpdateData(int playerLife, int playerRestTime)
+    {
+        if (NowGameState == GameState.Start &&playerLife>0)
+        {
+            if (playerLife < 4)
+                LifeImage[0].gameObject.SetActive(false);
+            this.playerLife = playerLife;
+            this.playerRestTime = playerRestTime;
+            Debug.Log("Observer Success  " + playerLife);
+        }
+        else
+        {
+            NowGameState=GameState.GameOver;
+            GameLoseResultPanel.gameObject.SetActive(true);
+        }
+        DisPlay();
+
     }
 
     public void DisPlay()
     {
-        throw new System.NotImplementedException();
+        //Debug.Log("go");
+        // 옵저버 끊어버리기 player.RemoveObserver(this);
+
+        //Life Image Change//
+        for (int i = 0; i < LifeImage.Length; i++)
+        {
+            if (LifeImage[i].gameObject.activeSelf == true)
+            {
+                LifeImage[i].gameObject.SetActive(false);
+
+                return;
+            }
+        }
     }
+
+    
 }

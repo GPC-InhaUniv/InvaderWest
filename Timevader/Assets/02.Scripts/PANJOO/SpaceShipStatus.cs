@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class SpaceShipStatus : MonoBehaviour {
     [SerializeField]
-    private float speed { get; set; }  //set하면 넘겨주기 !!
-    [SerializeField]
-    private int Life { get ; set; }
-    [SerializeField]
-    private string SpaceShipName { get; set; }  
+    private float speed;//set하면 넘겨주기 !!
+    public float Speed { get { return speed; } }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField]
+    private int life;
+    public int Life { get { return life; } }
+
+    [SerializeField]
+    private string spaceShipName;
+    public string SpaceShipName { get { return spaceShipName; } }
+
 }

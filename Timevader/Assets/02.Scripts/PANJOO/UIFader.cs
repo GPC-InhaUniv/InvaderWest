@@ -12,12 +12,16 @@ public class UIFader : MonoBehaviour {
 
     public void FadeIn()
     {
+        Debug.Log("FadeIn");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 1));
     }
+
     public void FadeOut()
     {
+        Debug.Log("FadeOut");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 0));
     }
+
     public IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float StartFade, float EndFade, float lerpTime = 0.5f)
     {
         timeStartedLerping = Time.time;
