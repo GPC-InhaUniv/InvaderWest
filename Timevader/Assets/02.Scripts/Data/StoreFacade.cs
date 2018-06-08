@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoreFacade : MonoBehaviour  {
+public class StoreFacade : MonoBehaviour {
     //재화관련//
     public Text MyTimeText;
     public Text MyFuelText;
 
     [SerializeField]
-    private int myFuel= int.Parse(AccountInfo.Instance.Fuel);
-    private int resttime = int.Parse(AccountInfo.Instance.Time);
-    private int addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
-    private int assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
-    private int lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
-    private int raptor = int.Parse(AccountInfo.Instance.Raptor);
-    private int blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
-    private int bestScore = int.Parse(AccountInfo.Instance.BestScore);
-    private int restTime = int.Parse(AccountInfo.Instance.RestTime);
-    private int nextStage = int.Parse(AccountInfo.Instance.NextStage);
+    //private int myFuel= int.Parse(AccountInfo.Instance.Fuel);
+    //private int addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
+    //private int assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
+    //private int lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
+    //private int raptor = int.Parse(AccountInfo.Instance.Raptor);
+    //private int blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
+    //private int bestScore = int.Parse(AccountInfo.Instance.BestScore);
+    //private int restTime = int.Parse(AccountInfo.Instance.RestTime);
+    //private int nextStage = int.Parse(AccountInfo.Instance.NextStage);
+    
+    private int myFuel;
+    private int addMissileitem;
+    private int assistantitem;
+    private int lastBombitem;
+    private int raptor;
+    private int blackHawk;
+    private int bestScore;
+    private int restTime;
+    private int nextStage;
     //인벤토리관련//
     public Image MyInventroy1;
     public Image MyInventroy2;
@@ -44,6 +53,16 @@ public class StoreFacade : MonoBehaviour  {
 
     private void Start()
     {
+
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+        addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
+        assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
+        lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
+        raptor = int.Parse(AccountInfo.Instance.Raptor);
+        blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
+        bestScore = int.Parse(AccountInfo.Instance.BestScore);
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
+        nextStage = int.Parse(AccountInfo.Instance.NextStage);
         MyInventoryExplainText.text = " ";
 
         CheckInventory();
@@ -219,7 +238,7 @@ public class StoreFacade : MonoBehaviour  {
     {
 
         MyFuelText.text = myFuel.ToString();
-        MyTimeText.text = resttime.ToString();
+        MyTimeText.text = restTime.ToString();
 
         if (addMissileitem == 0) 
             MyInventroy1.gameObject.SetActive(false);

@@ -13,6 +13,7 @@ public class NormalEnemy : Enemy {
     {
         hp = maxHp;
         WreckedShip = enemy.WreckedShip;
+        Items = enemy.Items;
     }
 
     private void FixedUpdate()

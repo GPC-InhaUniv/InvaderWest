@@ -6,33 +6,36 @@ using UnityEngine;
  *  GameManager에 배치할 것 */
 public class ObjectPool : MonoBehaviour {
 
-    public GameObject PooledObject;
-    public int PoolSize = 21;
-    public bool CanIncreaseSize = true; // pool Size 자동 증가
+    [SerializeField]
+    private GameObject pooledObject;
+    [SerializeField]
+    private int poolSize = 21;
+    [SerializeField]
+    private bool canIncreaseSize = true; // pool Size 자동 증가
     List<GameObject> pool; // 여유가 있으면 activeInHieracrchy 쓰지말고 queue로 할 것
 
     private void Start()
     {
         pool = new List<GameObject>();
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < poolSize; i++)
         {
-            GameObject obj = Instantiate(PooledObject);
+            GameObject obj = Instantiate(pooledObject);
             obj.SetActive(false);
             pool.Add(obj);
         }
-        Debug.Log("pool 생성 완료");
+        //Debug.Log("pool 생성 완료");
 
     }
 
     public void SetObject(GameObject obj)
     {
-        PooledObject = obj;
+        pooledObject = obj;
     }
 
     public GameObject GetFromPool()
     {
-        Debug.Log("GetFromPool 실행");
-        for (int i = 0; i < PoolSize; i++)
+        //Debug.Log("GetFromPool 실행");
+        for (int i = 0; i < poolSize; i++)
         {
             if(!pool[i].activeInHierarchy)
             {
@@ -40,10 +43,10 @@ public class ObjectPool : MonoBehaviour {
             }
         }
 
-        if(CanIncreaseSize)
+        if(canIncreaseSize)
         {
             // pool의 오브젝트가 모두 사용중이면 pool 사이즈를 증가시킨다.
-            GameObject obj = Instantiate(PooledObject);
+            GameObject obj = Instantiate(pooledObject);
             pool.Add(obj);
             return obj;
         }

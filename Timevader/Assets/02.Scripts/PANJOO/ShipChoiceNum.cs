@@ -64,13 +64,19 @@ public class ShipChoiceNum : MonoBehaviour {
     [SerializeField]
     private Text RestTimeText;
 
-    private int myFuel = int.Parse(AccountInfo.Instance.Fuel);
-    private int resttime = int.Parse(AccountInfo.Instance.Time);
+    private int myFuel;
+    private int restTime;
 
     void ChangeInventory()
     {
         FuelScoreText.text = myFuel.ToString();
+<<<<<<< HEAD
         RestTimeText.text = resttime.ToString();
+=======
+        RestTimeText.text = restTime.ToString();
+
+
+>>>>>>> c1b058edbd2de5ffe0e3596c1b59735149d872dc
     }
     //수정한사람 황윤우 //
 
@@ -86,7 +92,13 @@ public class ShipChoiceNum : MonoBehaviour {
         OnLifeImage(ChoiceValue);
         CheckEnoughFuel(ChoiceValue);
         //수정한사람 황윤우 //
+<<<<<<< HEAD
         ChangeInventory();
+=======
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
+        CheckInventory();
+>>>>>>> c1b058edbd2de5ffe0e3596c1b59735149d872dc
         //수정한사람 황윤우 //
     }
 

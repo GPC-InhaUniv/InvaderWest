@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int maxHp = 3, hp;
-    int attackRate = 1;
-    float attackPower = 5.0f;
-    float moveSpeed = 5.0f;
-    int seta = 0;
+    int attackRate = 11;
+    //float attackPower = 1.0f;
+    float moveSpeed = 2.0f;
+    float seta = 0;
+    float setaRate = 0.5f;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
 
     private void Start()
     {
+        
         hp = maxHp;
         MissilePool = enemy.MissilePool;
         WreckedShip = enemy.WreckedShip;
+        Items = enemy.Items;
     }
 
     private void FixedUpdate()
@@ -53,12 +56,12 @@ public class AttackingEnemy : Enemy{
                 break;
             case Direction.Zigzag_LeftToRight:
                 if (seta > MAXSETA) seta %= MAXSETA;
-                seta += 1;
+                seta += setaRate;
                 transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Zigzag_RightToLeft:
                 if (seta > MAXSETA) seta %= MAXSETA;
-                seta += 1;
+                seta += setaRate;
                 transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
                 break;
             case Direction.Circle_Clockwise:
@@ -93,7 +96,7 @@ public class AttackingEnemy : Enemy{
     override public void GetDemage(int damage)
     {
         hp -= damage;
-        Debug.Log(gameObject.name + "Damage " + damage);
+        //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
     }
 }

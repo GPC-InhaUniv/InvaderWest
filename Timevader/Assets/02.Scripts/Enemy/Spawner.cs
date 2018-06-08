@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-    public Transform[] SpawnPoint; // Enemy가 소환될 좌표에 위치한 EmptyObject
+    [SerializeField]
+    private Transform[] SpawnPoint; // Enemy가 소환될 좌표에 위치한 EmptyObject
     public int SpawnCount = 3;
     public int StageLevel = 1;
 

@@ -16,8 +16,7 @@ public class Mover : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Item" || other.gameObject.tag == "BackGround") return;
-        Destroy(gameObject);
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt") OutofScreen();
     }
 
     private void OnTriggerExit(Collider other)

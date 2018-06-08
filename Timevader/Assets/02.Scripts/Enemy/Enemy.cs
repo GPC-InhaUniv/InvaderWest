@@ -21,7 +21,7 @@ public enum InvaderType
 
 public enum ItemList
 {
-    Item1 = 1,
+    Item1 = 0,
     Item2,
     Item3
 }
@@ -29,9 +29,9 @@ public enum ItemList
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    //public GameObject missile;
     public ObjectPool MissilePool;
     public GameObject WreckedShip;
+    public GameObject[] Items;
 
     protected Enemy enemy;
     protected int MAXSETA = 360;
@@ -44,35 +44,45 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        curveRate = 6;
-        moveHeight = 2f; // Zigzag
+        curveRate = 3;
+        moveHeight = 5f; // Zigzag
         radius = 4f; // Circle
         circleSpeed = 6f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
+    }
+
+    protected ObjectPool GetMissilePool()
+    {
+        return MissilePool;
     }
 
     virtual public void Move() { }
     virtual public void MoveCircle(bool sign) { }
     virtual public void Init() { }
     virtual public void GetDemage(int damage) { }
+
     public void Explode()
     {
         Debug.Log("EXPLODE");
-        if (Random.Range(0, 3) == 0)
+        if (Random.Range(0, 2) == 0) // 50%
             Wrecked();
+
+        if (Random.Range(0, 5) == 0) // 20%
+            DropItem(ItemList.Item1);
         ReturnToPool();
     }
-    public void DropItem()
-    {
 
+    public void DropItem(ItemList num)
+    {
+        Debug.Log((int)num);
+        Instantiate(Items[0], transform.position, Quaternion.identity);
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
     public void Wrecked() 
     {
         Debug.Log("WRECKED");
-        if(Random.Range(0,3) == 0)
-            Instantiate(WreckedShip, transform.position, Quaternion.identity);
+       Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
     private void OnTriggerEnter(Collider other)
     {
