@@ -15,7 +15,12 @@ public class Story : MonoBehaviour {
     private GameObject ConfirmPanel;
 
     [SerializeField]
-    private GameObject[] btnStories;
+    private GameObject[] btnStories;    
+    
+    public void zoomEarth()
+    {
+        
+    }
 
     public void NextPage()
     {
