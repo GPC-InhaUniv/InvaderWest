@@ -46,12 +46,12 @@ public class Player : MonoBehaviour {
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
         rigidbody.velocity = movement * speed;
-        
+
         rigidbody.position = new Vector3
         (
-            Mathf.Clamp (rigidbody.position.x, Boundary.xMin, Boundary.xMax),
-            Mathf.Clamp (rigidbody.position.y, Boundary.yMin, Boundary.yMax),
-            -328.5f
+            Mathf.Clamp(rigidbody.position.x, Boundary.xMin, Boundary.xMax),
+            Mathf.Clamp(rigidbody.position.y, Boundary.yMin, Boundary.yMax),
+            0.0f
         );
         
     }

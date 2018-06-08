@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         curveRate = 6;
-        moveHeight = 1f; // Zigzag
+        moveHeight = 2f; // Zigzag
         radius = 4f; // Circle
         circleSpeed = 6f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt")
         {
             GetDemage(2); // other.power
         }

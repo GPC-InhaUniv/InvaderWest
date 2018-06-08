@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackingEnemy : Enemy{
-    int maxHp, hp;
-    int attackRate = 3;
+    int maxHp = 3, hp;
+    int attackRate = 1;
     float attackPower = 5.0f;
     float moveSpeed = 5.0f;
     int seta = 0;
@@ -13,6 +13,7 @@ public class AttackingEnemy : Enemy{
 
     private void Start()
     {
+        hp = maxHp;
         MissilePool = enemy.MissilePool;
         WreckedShip = enemy.WreckedShip;
     }
