@@ -71,7 +71,8 @@ public class Enemy : MonoBehaviour
     public void Wrecked() 
     {
         Debug.Log("WRECKED");
-        Instantiate(WreckedShip, transform.position, Quaternion.identity);
+        if(Random.Range(0,3) == 0)
+            Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
     private void OnTriggerEnter(Collider other)
     {
