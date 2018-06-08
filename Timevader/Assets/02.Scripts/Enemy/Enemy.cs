@@ -44,8 +44,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        curveRate = 6;
-        moveHeight = 2f; // Zigzag
+        curveRate = 3;
+        moveHeight = 5f; // Zigzag
         radius = 4f; // Circle
         circleSpeed = 6f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
     public void Wrecked() 
     {
         Debug.Log("WRECKED");
-        if(Random.Range(0,3) == 0)
+        if(Random.Range(0, 3) != 0)
             Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
     private void OnTriggerEnter(Collider other)
