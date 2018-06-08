@@ -25,6 +25,8 @@ public class LogInManager : MonoBehaviour
     public void Login()
     {
         AccountInfo.Login(loginUsername.text, loginUserPassword.text);
+        GamePlayManager.Instance.PlayerName = loginUsername.text;
+        Debug.Log(GamePlayManager.Instance.PlayerName);
     }
     public void Register()
     {

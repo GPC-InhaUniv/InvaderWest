@@ -42,14 +42,14 @@ public class ShipChoiceNum : MonoBehaviour {
     public Text FuelScoreText;
     public Text RestTimeText;
 
-    private int myFuel = int.Parse(AccountInfo.Instance.Fuel);
-    private int resttime = int.Parse(AccountInfo.Instance.Time);
+    private int myFuel;
+    private int restTime;
 
     private void CheckInventory()
     {
 
         FuelScoreText.text = myFuel.ToString();
-        RestTimeText.text = resttime.ToString();
+        RestTimeText.text = restTime.ToString();
 
 
     }
@@ -70,6 +70,8 @@ public class ShipChoiceNum : MonoBehaviour {
         OnLifeImage(ChoiceValue);
 
         //수정한사람 황윤우 //
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
         CheckInventory();
         //수정한사람 황윤우 //
     }

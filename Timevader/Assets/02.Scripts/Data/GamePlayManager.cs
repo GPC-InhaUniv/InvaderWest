@@ -18,6 +18,14 @@ public class GamePlayManager : MonoBehaviour {
         get { return playerShipNum; }
         set { playerShipNum = value; }
     }
+    private string playerName;
+
+    public string PlayerName
+    {
+        get { return playerName; }
+        set { playerName = value; }
+    }
+
 
 
     private void Awake()
