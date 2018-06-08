@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.SceneManagement;
 
 //public interface ISubjectable
 //{
@@ -364,16 +365,20 @@ public class AccountInfo : MonoBehaviour
             //Debug.Log("RestTime: " + result.Data["RestTime"].Value);
             //Debug.Log("NextStage: " + result.Data["NextStage"].Value);
 
+            instance.Time = result.Data["Time"].Value; // 사용x
+            instance.RestTime = result.Data["RestTime"].Value;
+            instance.BestScore = result.Data["BestScore"].Value;
+            instance.NextStage = result.Data["NextStage"].Value;
+
             instance.Fuel = result.Data["Fuel"].Value;
-            instance.Time = result.Data["Time"].Value;
             instance.AddMissileitem = result.Data["AddMissileitem"].Value;
             instance.Assistantitem = result.Data["Assistantitem"].Value;
             instance.LastBombitem = result.Data["LastBombitem"].Value;
             instance.Raptor = result.Data["Raptor"].Value;
             instance.BlackHawk = result.Data["BlackHawk"].Value;
-            instance.BestScore = result.Data["BestScore"].Value;
-            instance.RestTime = result.Data["RestTime"].Value;
-            instance.NextStage = result.Data["NextStage"].Value;
+
+            
+
 
             Debug.Log("1번");
         }

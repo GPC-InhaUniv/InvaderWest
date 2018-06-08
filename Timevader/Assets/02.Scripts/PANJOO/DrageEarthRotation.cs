@@ -102,7 +102,7 @@ public class DrageEarthRotation : MonoBehaviour {
         {
             Debug.Log("다음 씬으로");
             
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("LogIn");
         }
     }
 }
