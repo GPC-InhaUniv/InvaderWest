@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour {
-    public ObjectPool normalPool, AttackingPool;
+    [SerializeField]
+    private ObjectPool normalPool, AttackingPool;
 
     public GameObject GetEnemy(InvaderType type)
     {

@@ -14,9 +14,11 @@ public class AttackingEnemy : Enemy{
 
     private void Start()
     {
+        
         hp = maxHp;
         MissilePool = enemy.MissilePool;
         WreckedShip = enemy.WreckedShip;
+        Items = enemy.Items;
     }
 
     private void FixedUpdate()
@@ -94,7 +96,7 @@ public class AttackingEnemy : Enemy{
     override public void GetDemage(int damage)
     {
         hp -= damage;
-        Debug.Log(gameObject.name + "Damage " + damage);
+        //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
     }
 }
