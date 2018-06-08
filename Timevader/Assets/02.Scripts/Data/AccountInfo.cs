@@ -23,6 +23,7 @@ using UnityEngine.SceneManagement;
 
 public class AccountInfo : MonoBehaviour
 {
+
     private static AccountInfo instance;
     public static AccountInfo Instance
     {
@@ -78,6 +79,7 @@ public class AccountInfo : MonoBehaviour
     static void OnRegister(RegisterPlayFabUserResult result)
     {
         Debug.Log("Registered with : " + result.PlayFabId);
+
     }
 
     public static void Login(string username, string password)
@@ -178,8 +180,14 @@ public class AccountInfo : MonoBehaviour
 
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnSetUserDataInLogIn, ManagerFuncion.OnAPIError);
     }
+    static void OnSetUserDataInLogIn(UpdateUserDataResult result)
+    {
+        Debug.Log("Successfully updated user data");
+        GetUserData();
+    }
+
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
@@ -329,19 +337,24 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-            instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
-            instance.RestTime = result.Data["RestTime"].Value;
-            instance.BestScore = result.Data["BestScore"].Value;
-            instance.NextStage = result.Data["NextStage"].Value;
+            //instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
+            //instance.RestTime = result.Data["RestTime"].Value;
+            //instance.BestScore = result.Data["BestScore"].Value;
+            //instance.NextStage = result.Data["NextStage"].Value;
 
-            instance.Fuel = result.Data["Fuel"].Value;
-            instance.AddMissileitem = result.Data["AddMissileitem"].Value;
-            instance.Assistantitem = result.Data["Assistantitem"].Value;
-            instance.LastBombitem = result.Data["LastBombitem"].Value;
-            instance.Raptor = result.Data["Raptor"].Value;
-            instance.BlackHawk = result.Data["BlackHawk"].Value;
-            Debug.Log("1번");
+            //instance.Fuel = result.Data["Fuel"].Value;
+            //instance.AddMissileitem = result.Data["AddMissileitem"].Value;
+            //instance.Assistantitem = result.Data["Assistantitem"].Value;
+            //instance.LastBombitem = result.Data["LastBombitem"].Value;
+            //instance.Raptor = result.Data["Raptor"].Value;
+            //instance.BlackHawk = result.Data["BlackHawk"].Value;
+
+            GetInfoList(result);
+            GetShopList(result);
+
+            Debug.Log("ShopData set up complete");
             SceneManager.LoadScene("Main");
+            //SceneManager.LoadScene("Intro");
         }
     }
 
@@ -369,18 +382,41 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-            instance.Time = result.Data["Time"].Value; // 사용x
-            instance.RestTime = result.Data["RestTime"].Value;
-            instance.BestScore = result.Data["BestScore"].Value;
-            instance.NextStage = result.Data["NextStage"].Value;
+            //instance.Time = result.Data["Time"].Value; // 사용x
+            //instance.RestTime = result.Data["RestTime"].Value;
+            //instance.BestScore = result.Data["BestScore"].Value;
+            //instance.NextStage = result.Data["NextStage"].Value;
 
-            instance.Fuel = result.Data["Fuel"].Value;
-            instance.AddMissileitem = result.Data["AddMissileitem"].Value;
-            instance.Assistantitem = result.Data["Assistantitem"].Value;
-            instance.LastBombitem = result.Data["LastBombitem"].Value;
-            instance.Raptor = result.Data["Raptor"].Value;
-            instance.BlackHawk = result.Data["BlackHawk"].Value;
-            Debug.Log("1번");
+            //instance.Fuel = result.Data["Fuel"].Value;
+            //instance.AddMissileitem = result.Data["AddMissileitem"].Value;
+            //instance.Assistantitem = result.Data["Assistantitem"].Value;
+            //instance.LastBombitem = result.Data["LastBombitem"].Value;
+            //instance.Raptor = result.Data["Raptor"].Value;
+            //instance.BlackHawk = result.Data["BlackHawk"].Value;
+
+            GetShopList(result);
+            Debug.Log("ShopData set up complete");
         }
+    }
+
+
+
+
+    public static void GetInfoList(GetUserDataResult result)
+    {
+        instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
+        instance.RestTime = result.Data["RestTime"].Value;
+        instance.BestScore = result.Data["BestScore"].Value;
+        instance.NextStage = result.Data["NextStage"].Value;
+
+    }
+    public static void GetShopList(GetUserDataResult result)
+    {
+        instance.Fuel = result.Data["Fuel"].Value;
+        instance.AddMissileitem = result.Data["AddMissileitem"].Value;
+        instance.Assistantitem = result.Data["Assistantitem"].Value;
+        instance.LastBombitem = result.Data["LastBombitem"].Value;
+        instance.Raptor = result.Data["Raptor"].Value;
+        instance.BlackHawk = result.Data["BlackHawk"].Value;
     }
 }
