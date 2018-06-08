@@ -14,6 +14,9 @@ public class Story : MonoBehaviour {
     [SerializeField]
     private GameObject ConfirmPanel;
 
+    [SerializeField]
+    private GameObject[] btnStories;
+
     public void NextPage()
     {
         
