@@ -33,7 +33,32 @@ public class ShipChoiceNum : MonoBehaviour {
     private List<string> playerShipSpeed = new List<string>();
     private List<int> playerShipLife = new List<int>();
 
-    private void Awake()
+
+
+
+
+    //수정한사람 황윤우 //
+
+    public Text FuelScoreText;
+    public Text RestTimeText;
+
+    private int myFuel = int.Parse(AccountInfo.Instance.Fuel);
+    private int resttime = int.Parse(AccountInfo.Instance.Time);
+
+    private void CheckInventory()
+    {
+
+        FuelScoreText.text = myFuel.ToString();
+        RestTimeText.text = resttime.ToString();
+
+
+    }
+
+
+        //수정한사람 황윤우 //
+
+
+        private void Awake()
     {
         GetPlayerShipAmount();
         GetSpaceShipStatus();
@@ -43,9 +68,13 @@ public class ShipChoiceNum : MonoBehaviour {
     {
         ChangeStatusText(ChoiceValue);
         OnLifeImage(ChoiceValue);
+
+        //수정한사람 황윤우 //
+        CheckInventory();
+        //수정한사람 황윤우 //
     }
 
-      
+
     void GetPlayerShipAmount()
     {
        playerShipAmount = playerShip.Length - ChoiceValue; //플레이어가 가진 우주선 갯수
