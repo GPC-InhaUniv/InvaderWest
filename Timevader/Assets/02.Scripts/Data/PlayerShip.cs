@@ -36,6 +36,7 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     {
         GamePlayManager.Instance.PlayerShipNum = 2;
 
+
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
             playerLife = 3;
