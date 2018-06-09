@@ -8,17 +8,6 @@ public class StoreFacade : MonoBehaviour {
     public Text MyTimeText;
     public Text MyFuelText;
 
-    [SerializeField]
-    //private int myFuel= int.Parse(AccountInfo.Instance.Fuel);
-    //private int addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
-    //private int assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
-    //private int lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
-    //private int raptor = int.Parse(AccountInfo.Instance.Raptor);
-    //private int blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
-    //private int bestScore = int.Parse(AccountInfo.Instance.BestScore);
-    //private int restTime = int.Parse(AccountInfo.Instance.RestTime);
-    //private int nextStage = int.Parse(AccountInfo.Instance.NextStage);
-    
     private int myFuel;
     private int addMissileitem;
     private int assistantitem;
@@ -32,6 +21,9 @@ public class StoreFacade : MonoBehaviour {
     public Image MyInventroy1;
     public Image MyInventroy2;
     public Image MyInventroy3;
+    public Image MyInventroyCheck1;
+    public Image MyInventroyCheck2;
+    public Image MyInventroyCheck3;
 
     public Text MyInventoryExplainText;
     //스크롤 관련//
@@ -40,15 +32,6 @@ public class StoreFacade : MonoBehaviour {
     //구입 관련//
     public Text BuyExPlainText;
     public Button BuyButton;
-
-
-    public float horizonval;
-
-    //옵저버 도전중///
-    //[SerializeField]
-    //private int fuel, time, addMissileitem, assistantitem, lastBombitem, raptor, blackHawk, bestScore, restTime, nextStage;
-    //private ISubjectable subjectable;
-
 
 
     private void Start()
@@ -187,7 +170,6 @@ public class StoreFacade : MonoBehaviour {
             {
                 BuyAssistantitem(50, 1);
                 ChangeValue();
-
             }
             else
             {
@@ -200,7 +182,6 @@ public class StoreFacade : MonoBehaviour {
             {
                 BuyLastBombitem(50, 1);
                 ChangeValue();
-
             }
             else
             {
@@ -213,7 +194,6 @@ public class StoreFacade : MonoBehaviour {
             {
                 BuyRaptor(50, 1);
                 ChangeValue();
-
             }
             else
             {
@@ -226,7 +206,6 @@ public class StoreFacade : MonoBehaviour {
             {
                 BuyBlackHawk(50, 1);
                 ChangeValue();
-
             }
             else
             {
@@ -269,7 +248,6 @@ public class StoreFacade : MonoBehaviour {
     {
         myFuel = myFuel - price;
         assistantitem = itemCount;
-
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeAssistantitemData(1);
@@ -281,8 +259,6 @@ public class StoreFacade : MonoBehaviour {
     {
         myFuel = myFuel - price;
         lastBombitem = itemCount;
-
-
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeLastBombitemData(1);
@@ -294,8 +270,6 @@ public class StoreFacade : MonoBehaviour {
     {
         myFuel = myFuel - price;
         raptor = itemCount;
-
-
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeRaptoritemData(1);
@@ -306,55 +280,10 @@ public class StoreFacade : MonoBehaviour {
     {
         myFuel = myFuel - price;
         blackHawk = itemCount;
-
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeBlackHawkData(1);
         CheckInventory();
 
     }
-
-
-    ////옵저버 도전중//
-    //public void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem,
-    //                       int raptor, int blackHawk, int bestScore, int restTime, int nextStage)
-    //{
-    //    this.fuel = fuel;
-    //    this.time = time;
-    //    this.addMissileitem = addMissileitem;
-    //    this.assistantitem = assistantitem;
-    //    this.lastBombitem = lastBombitem;
-    //    this.raptor = raptor;
-    //    this.blackHawk = blackHawk;
-    //    this.bestScore = bestScore;
-    //    this.restTime = restTime;
-    //    this.nextStage = nextStage;
-
-    //    DisPlay();
-
-    //}
-
-    //public void DisPlay()
-    //{
-    //    MyFuelText.text = fuel.ToString();
-    //    MyTimeText.text = time.ToString();
-
-    //    if (addMissileitem == 0)
-    //        MyInventroy1.gameObject.SetActive(false);
-    //    else
-    //        MyInventroy1.gameObject.SetActive(true);
-
-    //    if (assistantitem == 0)
-    //        MyInventroy2.gameObject.SetActive(false);
-    //    else
-    //        MyInventroy2.gameObject.SetActive(true);
-
-    //    if (lastBombitem == 0)
-    //        MyInventroy3.gameObject.SetActive(false);
-    //    else
-    //        MyInventroy3.gameObject.SetActive(true);
-
-
-    //}
-
 }
