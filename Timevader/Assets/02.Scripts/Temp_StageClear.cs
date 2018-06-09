@@ -5,44 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
-    private Camera mainCam;
+    private GameObject mainCam, clearInfoPanel;
 
-    Vector3 startPos, endPos;
     public bool gameClear;
+    //float seta = 0;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (mainCam.transform.eulerAngles.y == 90.0f) gameClear = false;//LoadStage();
+        if (mainCam.transform.eulerAngles.y == 270.0f)
+        {
+            gameClear = false;
+        }
+        if (gameClear) MoveCam();
     }
 
-    private void LateUpdate()
-    {
-        if(gameClear) MoveCam();
-    }
-
+    int speed = 0;
     public void MoveCam()
     {
-        mainCam.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime);
-        mainCam.transform.Rotate(0, Mathf.Lerp(0f, 90f, Time.deltaTime), 0);
-        
-        //mainCam.transform.Rotate(Vector3.Lerp(new Vector3(0,0,0), new Vector3(0, 90f, 0), Time.deltaTime));
+        mainCam.transform.Rotate(0, Mathf.Lerp(0f, -90f, Time.deltaTime * 1.0f), 0);
+        mainCam.transform.Translate(Vector3.down * speed++ * Time.deltaTime * 0.3f);
 
-        
+        if (mainCam.transform.position.y < -7)
+        {
+            clearInfoPanel.SetActive(true);
+        }
+        //seta = Mathf.Deg2Rad * Mathf.Lerp(0.0f, 90f * Mathf.Deg2Rad, Time.deltaTime);
+        //float sinValue = Mathf.Sin(seta);
+        //float cosValue = Mathf.Cos(seta);
+
+        //float x = cosValue / 3; // 값이 크게 나옴
+        //float y = sinValue / 3;
+
+        //mainCam.transform.Translate(new Vector3(-x, 0, -y));
     }
+    public void GameClear(){ gameClear = true; }
 
-    public void GameClear()
-    {
-        startPos = mainCam.transform.position;
-        //startPos = new Vector3(0f, 0f, -10f);
-        endPos = new Vector3(-10f, 0f, 0f);
-
-        gameClear = true;
-
-        Debug.Log(startPos + " " + endPos);
-    }
-
-    public void LoadStage()
-    {
-        SceneManager.LoadScene("StageSelect");
-    }
+    public void LoadStage(){ SceneManager.LoadScene("StageSelect"); }
 }
