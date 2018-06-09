@@ -61,7 +61,8 @@ public class AccountInfo : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        GamePlayManager.Instance.PlayerShipNum = 5;
+        GamePlayManager.Instance.PlayerShipNum = 1;
+        Debug.Log(GamePlayManager.Instance.PlayerShipNum);
     }
 
     public static void Register(string username, string email, string password)

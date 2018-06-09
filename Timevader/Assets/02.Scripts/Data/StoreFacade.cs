@@ -84,7 +84,7 @@ public class StoreFacade : MonoBehaviour {
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
             if (addMissileitem == 0)
             {
-                BuyExPlainText.text = "Item2 is very good to you";
+                BuyExPlainText.text = "Item1 is very good to you";
 
                 BuyButton.interactable = true;
             }
