@@ -18,6 +18,4 @@ public class SpaceShipStatus : MonoBehaviour {
     [SerializeField]
     private int spaceShipPrice;
     public int SpaceShipPrice { get { return spaceShipPrice; } }
-
-    public bool IsProperty;
 }
