@@ -29,7 +29,6 @@ public class LogInManager : MonoBehaviour
     {
         AccountInfo.Login(loginUsername.text, loginUserPassword.text);
         GamePlayManager.Instance.PlayerName = loginUsername.text;
-        Debug.Log(GamePlayManager.Instance.PlayerName);
     }
     public void Register()
     {
@@ -39,7 +38,6 @@ public class LogInManager : MonoBehaviour
         //\p{P}| 기호
         //\p{S})) 문장기호
         //.{6,}" 6개이상
-
 
         string minString = @"(?x)^(?=.*(\d|\p{P}|\p{S})).{6,}";
 
