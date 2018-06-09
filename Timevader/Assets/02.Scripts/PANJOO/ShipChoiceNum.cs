@@ -85,19 +85,22 @@ public class ShipChoiceNum : MonoBehaviour {
 
     void Start ()
     {
-        myFuel = int.Parse(AccountInfo.Instance.Fuel);
-        restTime = int.Parse(AccountInfo.Instance.RestTime);
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
         raptor = int.Parse(AccountInfo.Instance.Raptor);
+       
 
-        playerShip[playerSelectSpaceShipNumber].SetActive(true); 
 
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
 
         ChangeInventory();
 
+        HideSpaceShip();      
+
+        playerShip[playerSelectSpaceShipNumber].SetActive(true);
+
         ChangeStatusText(ChoiceValue);
         OnLifeImage(ChoiceValue);
-
         CheckSpaceShipLock(ChoiceValue);
     }
 
@@ -119,9 +122,9 @@ public class ShipChoiceNum : MonoBehaviour {
 
     void ChangeStatusText(int choiceNum)
     {
-        SpaceShipSelectNumText.text = "(" + choiceNum + " / " + playerShipAmount + ")";
-        SpaceShipNameText.text = playerShipName[choiceNum];
-        SpaceShipSpeedText.text = playerShipSpeed[choiceNum];
+        SpaceShipSelectNumText.text = "(" + playerSelectSpaceShipNumber + " / " + playerShipAmount + ")";
+        SpaceShipNameText.text = playerShipName[playerSelectSpaceShipNumber];
+        SpaceShipSpeedText.text = playerShipSpeed[playerSelectSpaceShipNumber];
     }
 
     void OnLifeImage(int choiceNum)
@@ -223,23 +226,58 @@ public class ShipChoiceNum : MonoBehaviour {
 
     public void SaveSeletedSpaceShipNumber()
     {
-        switch (ChoiceNum)
+        switch (playerSelectSpaceShipNumber)
         {
             case 1:
-                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
             case 2:
-                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                if(blackHawk == 1)
+                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
             case 3:
-                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                if(raptor == 1)
+                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
             default:
                 break;
         }
     }
 
- 
+    public void ShipSelectButtonClick(int click)
+    {
+        // click = -1 이면 왼쪽 버튼이 눌린 것이고 click = +1 이면 오른쪽 버튼이 눌린 것으로 판단한다.
+
+        int next = playerSelectSpaceShipNumber + click;
+        if (next < 1)
+            return;
+
+        if (next > playerShip.Length - 1)
+            return;
+
+        if (click < 0)
+            Debug.Log("왼쪽 버튼 눌림");
+        else
+            Debug.Log("오른쪽 버튼 눌림");
+
+        // 공통 코드
+        HideSpaceShip();
+        OffLifeImage();
+
+        playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+
+        playerSelectSpaceShipNumber = next;
+        playerShip[next].SetActive(true); //선택된 우주선 보여줌
+        CheckSpaceShipLock(next); //우주선이 소유했는가? (잠금 UI출력)
+
+        ChangeStatusText(next); //선택된 우주선 스탯을 기반으로 UI출력
+
+        OnLifeImage(next); //선택된 우주선 기반 라이프 UI 출력
+        SaveSeletedSpaceShipNumber(); //싱글톤 저장
+    }
+
+
+
     public void ShipSelectLeftButtonClick()
     {
         if (playerSelectSpaceShipNumber == ChoiceValue)
@@ -264,7 +302,6 @@ public class ShipChoiceNum : MonoBehaviour {
             ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
 
             OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
-            Debug.Log(playerShipPrice[ChoiceNum]);
             SaveSeletedSpaceShipNumber(); //싱글톤 저장
         }
     }
@@ -292,7 +329,6 @@ public class ShipChoiceNum : MonoBehaviour {
             ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
 
             OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
-            Debug.Log(playerShipPrice[ChoiceNum]);
             SaveSeletedSpaceShipNumber(); //싱글톤 저장
         }
     }
@@ -303,8 +339,10 @@ public class ShipChoiceNum : MonoBehaviour {
         {
             case 1: return;// 기본
             case 2: AccountInfo.ChangeBlackHawkData(1);
+                blackHawk = blackHawk + 1;
                 break;
-            case 3: AccountInfo.ChangeRaptoritemData(1); 
+            case 3: AccountInfo.ChangeRaptoritemData(1);
+                raptor = raptor + 1;
                 break;
             default:
                 break;
@@ -318,28 +356,29 @@ public class ShipChoiceNum : MonoBehaviour {
 
     public void BuySpaceShip()
     {
-        switch (ChoiceNum)
+        switch (playerSelectSpaceShipNumber)
         {
             case 1:
                 break;
             case 2:
-                if (CheckEnoughFuel(ChoiceNum) && blackHawk ==0) //소유했으면 못사게해야함. 수정필요합니다.
+                if (CheckEnoughFuel(playerSelectSpaceShipNumber) && blackHawk ==0) //소유했으면 못사게해야함. 수정필요합니다.
                 {
-                    myFuel = myFuel - playerShipPrice[ChoiceNum];
-                    CheckSpaceShipLock(ChoiceNum);
+                    myFuel = myFuel - playerShipPrice[playerSelectSpaceShipNumber];
+                    ChoiceSpaceShip(playerSelectSpaceShipNumber);
+                    CheckSpaceShipLock(playerSelectSpaceShipNumber);
                     AccountInfo.ChangeFuelData(myFuel);
-                    ChoiceSpaceShip(ChoiceNum);
+                    ChangeInventory();
                 }
                 else WarningPopUpPanel.SetActive(true);
                 break;
             case 3:
-                if (CheckEnoughFuel(ChoiceNum) && raptor == 0) //소유했으면 못사게해야함. 수정필요합니다.
+                if (CheckEnoughFuel(playerSelectSpaceShipNumber) && raptor == 0) //소유했으면 못사게해야함. 수정필요합니다.
                 {
-                    myFuel = myFuel - playerShipPrice[ChoiceNum];
-                    CheckSpaceShipLock(ChoiceNum);
+                    myFuel = myFuel - playerShipPrice[playerSelectSpaceShipNumber];
+                    ChoiceSpaceShip(playerSelectSpaceShipNumber);
+                    CheckSpaceShipLock(playerSelectSpaceShipNumber);
                     AccountInfo.ChangeFuelData(myFuel);
-                    ChoiceSpaceShip(ChoiceNum);
-
+                    ChangeInventory();
                 }
                 else WarningPopUpPanel.SetActive(true);
                 break;
