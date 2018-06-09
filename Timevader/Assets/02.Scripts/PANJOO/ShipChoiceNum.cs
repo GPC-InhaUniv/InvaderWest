@@ -44,7 +44,7 @@ public class ShipChoiceNum : MonoBehaviour {
     [SerializeField]
     private Text BuyText;
 
-    private int playerSelectSpaceShipNumber = 1; // 초기값 or 플레이어가 고른 값 
+    private int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
 
     private const int ChoiceValue = 1; //버튼 클릭시 빼는 값, 상수
 
@@ -78,6 +78,7 @@ public class ShipChoiceNum : MonoBehaviour {
 
     void Awake()
     {
+        playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         GetPlayerShipAmount();
         GetSpaceShipStatus();
     }
@@ -88,6 +89,9 @@ public class ShipChoiceNum : MonoBehaviour {
         restTime = int.Parse(AccountInfo.Instance.RestTime);
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
         raptor = int.Parse(AccountInfo.Instance.Raptor);
+
+        playerShip[playerSelectSpaceShipNumber].SetActive(true); 
+
 
         ChangeInventory();
 
@@ -133,6 +137,14 @@ public class ShipChoiceNum : MonoBehaviour {
         for (int i = 0; i < LifeImage.Length; i++)
         {
             LifeImage[i].SetActive(false);
+        }
+    }
+
+    void HideSpaceShip()
+    {
+        for(int i =0; i < playerShip.Length; i++)
+        {
+            playerShip[i].SetActive(false);
         }
     }
 
@@ -209,19 +221,22 @@ public class ShipChoiceNum : MonoBehaviour {
         }
     }
 
-    void SaveSeletedSpaceShipNumber()
+    public void SaveSeletedSpaceShipNumber()
     {
-        if (raptor == 0)
+        switch (ChoiceNum)
         {
-            return;
+            case 1:
+                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                break;
+            case 2:
+                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                break;
+            case 3:
+                GamePlayManager.Instance.PlayerShipNum = ChoiceNum;
+                break;
+            default:
+                break;
         }
-        else GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-
-        if (blackHawk == 0)
-        {
-            return;
-        }
-        else GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
     }
 
  
@@ -235,6 +250,7 @@ public class ShipChoiceNum : MonoBehaviour {
         if (playerSelectSpaceShipNumber >= ChoiceValue+1)
         {
             Debug.Log("왼쪽 버튼 눌림");
+            HideSpaceShip();
             OffLifeImage();
 
             playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
@@ -262,6 +278,7 @@ public class ShipChoiceNum : MonoBehaviour {
         if (playerSelectSpaceShipNumber < playerShip.Length - ChoiceValue)
         {
             Debug.Log("오른쪽 버튼 눌림");
+            HideSpaceShip();
             OffLifeImage();
 
             playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
@@ -293,8 +310,6 @@ public class ShipChoiceNum : MonoBehaviour {
                 break;
         }
     }
-
-
 
     public void ChangeSceneToSelectStage()
     {
