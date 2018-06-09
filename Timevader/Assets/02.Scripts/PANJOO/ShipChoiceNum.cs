@@ -276,63 +276,6 @@ public class ShipChoiceNum : MonoBehaviour {
         SaveSeletedSpaceShipNumber(); //싱글톤 저장
     }
 
-
-
-    public void ShipSelectLeftButtonClick()
-    {
-        if (playerSelectSpaceShipNumber == ChoiceValue)
-        {
-            Debug.Log("오류 : << 플레이어 선택이 0");
-            return;
-        }
-        if (playerSelectSpaceShipNumber >= ChoiceValue+1)
-        {
-            Debug.Log("왼쪽 버튼 눌림");
-            HideSpaceShip();
-            OffLifeImage();
-
-            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
-            ChoiceNum = playerSelectSpaceShipNumber - ChoiceValue;
-
-            playerSelectSpaceShipNumber = ChoiceNum; //플레이어쉽 선택 넘버에 선택 번호 저장
-
-            playerShip[ChoiceNum].SetActive(true); //선택된 우주선 보여줌
-            CheckSpaceShipLock(ChoiceNum); //우주선이 소유했는가? (잠금 UI출력)
-
-            ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
-
-            OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
-            SaveSeletedSpaceShipNumber(); //싱글톤 저장
-        }
-    }
-    public void ShipSelectRightButtonClick()
-    {
-        if (playerSelectSpaceShipNumber == playerShip.Length-ChoiceValue)
-        {
-            Debug.Log("오류 : 플레이어 선택 범위 벗어남 >>");
-            return;
-        }
-        if (playerSelectSpaceShipNumber < playerShip.Length - ChoiceValue)
-        {
-            Debug.Log("오른쪽 버튼 눌림");
-            HideSpaceShip();
-            OffLifeImage();
-
-            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
-            ChoiceNum = playerSelectSpaceShipNumber + ChoiceValue;
-
-            playerSelectSpaceShipNumber = ChoiceNum; //플레이어쉽 선택 넘버에 선택 번호 저장
-
-            playerShip[ChoiceNum].SetActive(true); //선택된 우주선 보여줌
-            CheckSpaceShipLock(ChoiceNum); //우주선이 소유했는가? (잠금 UI출력)
-
-            ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
-
-            OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
-            SaveSeletedSpaceShipNumber(); //싱글톤 저장
-        }
-    }
-
     void ChoiceSpaceShip(int choiceNum)
     {
         switch (choiceNum)
@@ -384,6 +327,60 @@ public class ShipChoiceNum : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+    public void ShipSelectLeftButtonClick()
+    {
+        if (playerSelectSpaceShipNumber == ChoiceValue)
+        {
+            Debug.Log("오류 : << 플레이어 선택이 0");
+            return;
+        }
+        if (playerSelectSpaceShipNumber >= ChoiceValue + 1)
+        {
+            Debug.Log("왼쪽 버튼 눌림");
+            HideSpaceShip();
+            OffLifeImage();
+
+            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+            ChoiceNum = playerSelectSpaceShipNumber - ChoiceValue;
+
+            playerSelectSpaceShipNumber = ChoiceNum; //플레이어쉽 선택 넘버에 선택 번호 저장
+
+            playerShip[ChoiceNum].SetActive(true); //선택된 우주선 보여줌
+            CheckSpaceShipLock(ChoiceNum); //우주선이 소유했는가? (잠금 UI출력)
+
+            ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
+
+            OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
+            SaveSeletedSpaceShipNumber(); //싱글톤 저장
+        }
+    }
+    public void ShipSelectRightButtonClick()
+    {
+        if (playerSelectSpaceShipNumber == playerShip.Length - ChoiceValue)
+        {
+            Debug.Log("오류 : 플레이어 선택 범위 벗어남 >>");
+            return;
+        }
+        if (playerSelectSpaceShipNumber < playerShip.Length - ChoiceValue)
+        {
+            Debug.Log("오른쪽 버튼 눌림");
+            HideSpaceShip();
+            OffLifeImage();
+
+            playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+            ChoiceNum = playerSelectSpaceShipNumber + ChoiceValue;
+
+            playerSelectSpaceShipNumber = ChoiceNum; //플레이어쉽 선택 넘버에 선택 번호 저장
+
+            playerShip[ChoiceNum].SetActive(true); //선택된 우주선 보여줌
+            CheckSpaceShipLock(ChoiceNum); //우주선이 소유했는가? (잠금 UI출력)
+
+            ChangeStatusText(ChoiceNum); //선택된 우주선 스탯을 기반으로 UI출력
+
+            OnLifeImage(ChoiceNum); //선택된 우주선 기반 라이프 UI 출력
+            SaveSeletedSpaceShipNumber(); //싱글톤 저장
         }
     }
 }
