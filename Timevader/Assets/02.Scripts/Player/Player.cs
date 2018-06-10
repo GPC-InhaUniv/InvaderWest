@@ -17,8 +17,6 @@ public class Player : MonoBehaviour {
 
     public GameObject Shot;
     public Transform ShotSpawn;
-
-    public GameObject AddedShot;
     public Transform AddedSpawn;
 
     public float fireDelta = 0.5f;
@@ -26,43 +24,48 @@ public class Player : MonoBehaviour {
     private float nextFire = 0.5f;
     private float myTime = 0.0f;
 
-    Rigidbody rigidbody;
+    Rigidbody rigid;
     Vector3 movement;
 
-    public void GetItem(DropItem.ItemKind itemKind)
+    public void GetItem(Item.ItemKind itemKind)
     {
         switch (itemKind)
         {
-            case DropItem.ItemKind.AddMissileitem:
+            case Item.ItemKind.AddMissileitem:
                 AddMissile();
                 break;
-            case DropItem.ItemKind.Assistantitem:
+            case Item.ItemKind.Assistantitem:
                 break;
         }
     }
 
     void AddMissile()
     {
-        Instantiate(Shot, ShotSpawn.position, ShotSpawn.rotation);
+        Shoot(AddedSpawn);
     }
 
-    private void Start()
-    {
-        rigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
+    void Shoot(Transform AnySpawn)
     {
         myTime = myTime + Time.deltaTime;
 
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
-            Instantiate(Shot, ShotSpawn.position, ShotSpawn.rotation);
+            Instantiate(Shot, AnySpawn.position, AnySpawn.rotation);
 
             nextFire = nextFire - myTime;
-            myTime = 0.0F;
+            myTime = 0.0f;
         }
+    }
+
+    private void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        Shoot(ShotSpawn);
     }
 
     private void FixedUpdate()
@@ -73,12 +76,12 @@ public class Player : MonoBehaviour {
             float moveVertical = Input.GetAxis("Vertical");
 
             movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-            rigidbody.velocity = movement * speed;
+            rigid.velocity = movement * speed;
 
-            rigidbody.position = new Vector3
+            rigid.position = new Vector3
             (
-                Mathf.Clamp(rigidbody.position.x, Boundary.xMin, Boundary.xMax),
-                Mathf.Clamp(rigidbody.position.y, Boundary.yMin, Boundary.yMax),
+                Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
+                Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
                 0.0f
             );
         }

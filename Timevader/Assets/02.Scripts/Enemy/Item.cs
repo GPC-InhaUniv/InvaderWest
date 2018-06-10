@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
+    public enum ItemKind
+    {
+        AddMissileitem,
+        Assistantitem,
+    };
+
+    protected Player player;
+    public ItemKind kind;
+
     float moveSpeed = 1.0f;
     public float RotateValue = 1.0f;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+    }
 
     private void FixedUpdate()
     {
@@ -17,7 +31,8 @@ public class Item : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("아이템 효과 적용");
+            Debug.Log("아이템 효과 적용");            
+            player.GetItem(kind);
             Destroy(gameObject);
         }
     }
