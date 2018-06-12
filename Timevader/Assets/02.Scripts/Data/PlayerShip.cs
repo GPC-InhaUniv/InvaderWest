@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState
+{
+    Ready,
+    Start,
+    GameOver
+}
+
 public interface ISubjectable
 {
     void RegisterObserver(IObserverable o);
@@ -20,7 +28,17 @@ public interface IDisplayable
     void DisPlayPlayerLife();
     void DisplayPlayerRestTime();
 }
+
+/// <summary>
+/// 설님꺼 합치기
+/// </summary>
 [System.Serializable]
+public class Boundary1
+{
+    public float xMin, xMax, yMin, yMax;
+}
+
+
 public class PlayerShip : MonoBehaviour , ISubjectable
 {
     [SerializeField]
@@ -38,19 +56,79 @@ public class PlayerShip : MonoBehaviour , ISubjectable
 
     List<IObserverable> observerList = new List<IObserverable>();
 
-    void Awake()
+    GameState NowGameState;
+
+
+
+    /// <summary>
+    /// 설님꺼
+    /// </summary>
+    [SerializeField]
+    private float speed;
+
+    public Boundary Boundary;
+
+    public GameObject Shot;
+    public Transform ShotSpawn;
+    public Transform AddedSpawn;
+
+    public float fireDelta = 0.2f;
+    [SerializeField]
+    private float nextFire = 0.2f;
+    private float myTime = 0.0f;
+
+    Rigidbody rigid;
+    Vector3 movement;
+
+    public void GetItem(Item.ItemKind itemKind)
     {
-
-
+        switch (itemKind)
+        {
+            case Item.ItemKind.AddMissileitem:
+                AddMissile();
+                break;
+            case Item.ItemKind.Assistantitem:
+                break;
+        }
     }
+
+    void AddMissile()
+    {
+        Shoot(AddedSpawn);
+    }
+
+    void Shoot(Transform AnySpawn)
+    {
+        myTime = myTime + Time.deltaTime;
+
+        if (myTime > nextFire)
+        {
+            nextFire = myTime + fireDelta;
+            Instantiate(Shot, AnySpawn.position, AnySpawn.rotation);
+
+            nextFire = nextFire - myTime;
+            myTime = 0.0f;
+        }
+    }
+    /// <summary>
+    /// 설님꺼
+    /// </summary>
 
     void Start()
     {
+        ///설님꺼
+        rigid = GetComponent<Rigidbody>();
+        ///설님꺼
+        NowGameState = GameState.Ready;
+
+        Invoke("GameStart", 2.0f);
+
         //addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
         //assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
         //lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
+       fireDelta = 0.7f;
 
-        GamePlayManager.Instance.PlayerShipNum = 2;
+    GamePlayManager.Instance.PlayerShipNum = 2;
 
 
         if (GamePlayManager.Instance.PlayerShipNum == 1)
@@ -77,40 +155,68 @@ public class PlayerShip : MonoBehaviour , ISubjectable
             UseAssistantitem();
             Debug.Log("UseAssistantitem");
         }
-
-
-
         StartCoroutine("LoseTime");
 
-
-        DataStart();
-
-
-
-    }
-    public void DataStart()
-    {
         NotifyStartDataToObservers();
-        Debug.Log("gogogoo");
+
     }
+
+    void GameStart()
+    {
+        NowGameState = GameState.Start;
+    }
+
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Bolt"))
+        if (other.gameObject.CompareTag("Factory"))
         {
             playerLife = playerLife - 1;
+            NotifyPlayerLifeToObservers();
+
         }
-        NotifyPlayerLifeToObservers();  
     }
 
 
     private void Update()
     {
-
-        if (lastBombitem == 1)
+        if (NowGameState == GameState.Start)
         {
-            UseLastBombitem();
-            Debug.Log("UseLastBombitem");
+            ///설님꺼
+            Shoot(ShotSpawn);
+            ///설님꺼
+
+            if (lastBombitem == 1)
+            {
+                UseLastBombitem();
+                Debug.Log("UseLastBombitem");
+            }
+        }
+        if (playerLife <= 0)
+        {
+            playerLife = 0;
+            NowGameState = GameState.GameOver;
+        }
+
+    }
+    private void FixedUpdate()
+    {
+        if (NowGameState == GameState.Start)
+        {
+            {
+                float moveHorizontal = Input.GetAxis("Horizontal");
+                float moveVertical = Input.GetAxis("Vertical");
+
+                movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
+                rigid.velocity = movement * speed;
+
+                rigid.position = new Vector3
+                (
+                    Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
+                    Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
+                    0.0f
+                );
+            }
         }
 
     }
@@ -121,7 +227,6 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         {
             observerList[i].GetPlayerLife(playerLife);
             Debug.Log("에너지 알려주기");
-            Debug.Log(playerLife);
         }
     }
     public void NotifyPlayerLifeToObservers()
@@ -163,9 +268,10 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         StartCoroutine("LoseTime");
     }
 
+    //미사일 아이템 사용
     void UseAddMissileitem()
     {
-
+        fireDelta = 0.15f;
         AccountInfo.ChangeAddMissileitemData(0);
 
     }
