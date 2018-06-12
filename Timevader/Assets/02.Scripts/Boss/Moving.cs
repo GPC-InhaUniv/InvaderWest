@@ -10,15 +10,13 @@ public class Moving : MonoBehaviour {
 
     void BossMove()
     {
-        LeftBossBoundary = new Vector3(-2f, 0.0f, 0.0f);
-        RightBossBoundary = new Vector3(2f, 0.0f, 0.0f);
-        if (transform.localPosition.x > -LeftBossBoundary.x)
+        if (transform.localPosition.x < -3.0f)
         {
-            moveVlaue = 0.9f;
+            moveVlaue = 1.0f;
         }
-        else if (transform.localPosition.x < RightBossBoundary.x)
+        else if (transform.localPosition.x > 3.0f)
         {
-            moveVlaue = -0.9f;
+            moveVlaue = -1.0f;
         }
         transform.Translate(Vector3.left * Time.deltaTime * moveVlaue);
     }

@@ -87,8 +87,6 @@ public class ShipChoiceNum : MonoBehaviour {
     {
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
         raptor = int.Parse(AccountInfo.Instance.Raptor);
-       
-
 
         myFuel = int.Parse(AccountInfo.Instance.Fuel);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
@@ -231,49 +229,51 @@ public class ShipChoiceNum : MonoBehaviour {
             case 1:
                 GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
+
             case 2:
                 if(blackHawk == 1)
                 GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
+
             case 3:
                 if(raptor == 1)
                 GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
                 break;
+
             default:
                 break;
         }
     }
 
-    public void ShipSelectButtonClick(int click)
+    public void ShipSelectButtonClick(int click) //
     {
-        // click = -1 이면 왼쪽 버튼이 눌린 것이고 click = +1 이면 오른쪽 버튼이 눌린 것으로 판단한다.
-
+        // click = -1 이면 왼쪽 버튼이 눌린 것, click = +1 이면 오른쪽 버튼이 눌린 것으로 판단한다.
         int next = playerSelectSpaceShipNumber + click;
-        if (next < 1)
+
+        if (next < 1) //  선택값이 1보다는 커야함
+            return;
+        if (next > playerShip.Length - 1) //선택값 > 3(선택창 최대길이)
             return;
 
-        if (next > playerShip.Length - 1)
-            return;
-
-        if (click < 0)
+        if (click < 0) //-1, 1 눌림 검사
             Debug.Log("왼쪽 버튼 눌림");
         else
             Debug.Log("오른쪽 버튼 눌림");
 
-        // 공통 코드
+        // 우주선, 이미지 setactive(false);
         HideSpaceShip();
         OffLifeImage();
-
+        //
         playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
 
-        playerSelectSpaceShipNumber = next;
+        playerSelectSpaceShipNumber = next; //선택 값 저장
+
         playerShip[next].SetActive(true); //선택된 우주선 보여줌
-        CheckSpaceShipLock(next); //우주선이 소유했는가? (잠금 UI출력)
-
+        CheckSpaceShipLock(next); //우주선이 소유했는가? (아닐 시 잠금 UI출력)
         ChangeStatusText(next); //선택된 우주선 스탯을 기반으로 UI출력
-
         OnLifeImage(next); //선택된 우주선 기반 라이프 UI 출력
-        SaveSeletedSpaceShipNumber(); //싱글톤 저장
+
+        SaveSeletedSpaceShipNumber(); //싱글톤 저장, 소유여부 검사
     }
 
     void ChoiceSpaceShip(int choiceNum)
@@ -329,7 +329,7 @@ public class ShipChoiceNum : MonoBehaviour {
                 break;
         }
     }
-    public void ShipSelectLeftButtonClick()
+    public void ShipSelectLeftButtonClick() //미사용
     {
         if (playerSelectSpaceShipNumber == ChoiceValue)
         {
@@ -356,7 +356,7 @@ public class ShipChoiceNum : MonoBehaviour {
             SaveSeletedSpaceShipNumber(); //싱글톤 저장
         }
     }
-    public void ShipSelectRightButtonClick()
+    public void ShipSelectRightButtonClick() //미사용
     {
         if (playerSelectSpaceShipNumber == playerShip.Length - ChoiceValue)
         {

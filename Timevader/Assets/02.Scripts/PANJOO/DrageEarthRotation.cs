@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class DrageEarthRotation : MonoBehaviour {
 
+    float middleValue = 100.0f;
+    float increaseValue = 1.0f;
+
     //지구를 돌리는
     [SerializeField]
     private GameObject Earth;
@@ -15,12 +18,15 @@ public class DrageEarthRotation : MonoBehaviour {
     private GameObject Cloud;
     Vector3 prevPoint;
 
+    [SerializeField]
     private float ConditionRotation;
     
     [SerializeField]
     [Range(-0.5f,5f)]
     private float rotateSpeed;
 
+    [SerializeField]
+    private Camera MainCamera;
 
     void FixedUpdate()
     {
@@ -101,8 +107,25 @@ public class DrageEarthRotation : MonoBehaviour {
         if(Earth.transform.rotation.z < -ConditionRotation || Earth.transform.rotation.z > ConditionRotation)
         {
             Debug.Log("다음 씬으로");
-            
-            SceneManager.LoadScene("LogIn");
+            StartCoroutine(EffectCoroutine());
+
+            if (MainCamera.fieldOfView <= 179.0f)
+                SceneManager.LoadScene("LogIn");
         }
+    }
+
+    IEnumerator EffectCoroutine()
+    {
+        Debug.Log("코루틴");
+        NextEffect();
+        yield return new WaitForSeconds(2.0f);
+    }
+
+    void NextEffect()
+    {
+        MainCamera.fieldOfView += increaseValue;
+
+        if (MainCamera.fieldOfView > middleValue)
+            increaseValue = 79.0f;        
     }
 }

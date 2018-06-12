@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIFader : MonoBehaviour {
 
@@ -10,17 +11,18 @@ public class UIFader : MonoBehaviour {
     float timeSinceStarted;
     float percentageComplete;
 
-    public void FadeIn()
+    public void CanvasFadeIn(CanvasGroup UIElement)
     {
-        Debug.Log("FadeIn");
+        Debug.Log("CanvasFadeIn");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 1));
     }
 
-    public void FadeOut()
+    public void CanvasFadeOut(CanvasGroup UIElement)
     {
-        Debug.Log("FadeOut");
+        Debug.Log("CanvasFadeOut");
         StartCoroutine(FadeCanvasGroup(UIElement, UIElement.alpha, 0));
     }
+
 
     public IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float StartFade, float EndFade, float lerpTime = 0.5f)
     {
