@@ -32,11 +32,8 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
     public ISubjectable player;
 
 
-
-
-    // Use this for initialization
-    void Start () {
-        //GameWinResultPanel.gameObject.SetActive(false);
+    void Awake()
+    {
 
         NowGameState = GameState.Ready;
 
@@ -48,6 +45,12 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
         //player
         GameStart();
+    }
+
+    // Use this for initialization
+    void Start () {
+        //GameWinResultPanel.gameObject.SetActive(false);
+
     }
     void GameStart()
     {
@@ -70,6 +73,7 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         if (playerLife == 3)
         {
             LifeImage[0].gameObject.SetActive(false);
+            Debug.Log("라이프줄었다");
         }
 
     }
@@ -86,6 +90,7 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         {
             NowGameState=GameState.GameOver;
             player.RemoveObserver(this);
+            DisPlayPlayerLife();
             GameLoseResultPanel.gameObject.SetActive(true);
         }
     }
