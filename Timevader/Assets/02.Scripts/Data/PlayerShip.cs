@@ -84,10 +84,10 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     {
         switch (itemKind)
         {
-            case Item.ItemKind.AddMissileitem:
+            case Item.ItemKind.AddMissileItem:
                 AddMissile();
                 break;
-            case Item.ItemKind.Assistantitem:
+            case Item.ItemKind.AssistantItem:
                 break;
         }
     }
