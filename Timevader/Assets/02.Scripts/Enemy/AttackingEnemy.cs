@@ -68,22 +68,33 @@ public class AttackingEnemy : Enemy{
                 MoveCircle(true); break;
             case Direction.Circle_CounterClockwise:
                 MoveCircle(false); break;
+            case Direction.Curve_RightDown:
+                MoveCurve();
+                break;
+            case Direction.Curve_LeftDown:
+                break;
             default: break;
         }
     }
 
+    public void MoveCurve()
+    {
+        transform.Translate(new Vector3(Mathf.Cos(seta / curveRate) * moveSpeed * moveHeight, Vector3.down.y * moveSpeed, 0) * Time.deltaTime);
+    }
+
     override public void MoveCircle(bool sign)
     {
-        //            Circlewise : CounterClockwise 
-        seta = (sign) ? seta -= 1 : seta += 1;
+        seta -= 1;
         if (seta > MAXSETA) seta %= MAXSETA;
 
-        float de2Rad = circleSpeed * seta * Mathf.Deg2Rad;
-        float sinValue = Mathf.Sin(de2Rad);
-        float cosValue = Mathf.Cos(de2Rad);
+        float deg2Rad = circleSpeed * seta * Mathf.Deg2Rad;
+        float sinValue = Mathf.Sin(deg2Rad);
+        float cosValue = Mathf.Cos(deg2Rad);
 
-        float x = cosValue * radius;
         float y = sinValue * radius;
+        float x = cosValue * radius;
+        if (!sign) x *= -1; // CounterClockwise 
+
         transform.Translate(new Vector3(x, y, 0) * circleSpeed / 2 * Time.deltaTime);
     }
 

@@ -10,6 +10,8 @@ public enum Direction
     Circle_CounterClockwise,
     Zigzag_LeftToRight, // 지그재그
     Zigzag_RightToLeft,
+    Curve_RightDown, // 곡선,
+    Curve_LeftDown,
 }
 
 public enum InvaderType

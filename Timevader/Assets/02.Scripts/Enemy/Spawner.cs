@@ -49,10 +49,10 @@ public class Spawner : MonoBehaviour {
 
     private IEnumerator Stage1()
     {
-        
+        yield return new WaitForSeconds(2.0f);
         for (int i = 0; i < SpawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, SpawnPoint[0].position, Direction.Zigzag_LeftToRight);
+            SpawnEnemy(InvaderType.Attacking, SpawnPoint[0].position, Direction.Curve_RightDown);
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(0.7f);
@@ -69,7 +69,7 @@ public class Spawner : MonoBehaviour {
             SpawnEnemy(InvaderType.Attacking, SpawnPoint[2].position, Direction.Circle_Clockwise);
             yield return new WaitForSeconds(0.2f);
         }
-        yield return new WaitForSeconds(2.0f);
+
         StartSpawn();
     }
     private IEnumerator Stage2()
