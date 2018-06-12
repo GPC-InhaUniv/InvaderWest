@@ -5,42 +5,64 @@ using UnityEngine.SceneManagement;
 
 public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
-    private GameObject mainCam, clearInfoPanel;
+    private GameObject camRotater, clearInfoPanel, player;
 
-    public bool gameClear;
-    //float seta = 0;
+    float ZOONVALUE = 30.0f, INITVALUE = 60.0f;
+    float t = 0f;
 
-    private void FixedUpdate()
+    enum GameState
     {
-        //if (mainCam.transform.eulerAngles.y == 270.0f)
-        //{
-        //    gameClear = false;
-        //}
-        if (gameClear) MoveCam();
+        GAMECLEAR = 1 << 0,
+        CAMERAZOOM = 1 << 1,
     }
 
-    int speed = 0;
-    public void MoveCam()
-    {
-        //if (mainCam.transform.eulerAngles.y == 270.0f) return;
-        mainCam.transform.Rotate(0, Mathf.Lerp(0f, -90f, Time.deltaTime * 1.0f), 0);
-        mainCam.transform.Translate(Vector3.down * speed++ * Time.deltaTime * 0.4f);
+    GameState gameState;
+    Vector3 camPos;
+    int moveSpeed = 0;
 
-        if (mainCam.transform.position.y < -10)
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void Update()
+    {
+        if ((gameState & GameState.GAMECLEAR) == GameState.GAMECLEAR) SetCamera();
+        if ((gameState & GameState.CAMERAZOOM) == GameState.CAMERAZOOM) MoveCamera();
+    }
+
+    public void SetCamera()
+    {
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos, Time.deltaTime * 2.5f);
+        Camera.main.fieldOfView = Mathf.Lerp(INITVALUE, ZOONVALUE, t);
+        t += 0.9f * Time.deltaTime;
+
+        if (Camera.main.fieldOfView <= ZOONVALUE) // 줌인 완료
+        {
+            gameState |= GameState.CAMERAZOOM;
+            gameState = gameState & ~GameState.GAMECLEAR;
+            t = 0f;
+        }
+    }
+
+    public void MoveCamera()
+    {
+        camRotater.transform.Rotate(0, Mathf.Lerp(0f, -90f, Time.deltaTime * 1.2f), 0);
+        Camera.main.fieldOfView = Mathf.Lerp(ZOONVALUE, INITVALUE, t);
+        Camera.main.transform.Translate(Vector3.down * moveSpeed++ * Time.deltaTime * 0.4f);
+        t += 1.5f * Time.deltaTime;
+
+        if (Camera.main.transform.position.y <= -12.0f) // 이동 연출 완료
         {
             clearInfoPanel.SetActive(true);
-            gameClear = false;
+            gameState = gameState & ~GameState.CAMERAZOOM;
         }
-        //seta = Mathf.Deg2Rad * Mathf.Lerp(0.0f, 90f * Mathf.Deg2Rad, Time.deltaTime);
-        //float sinValue = Mathf.Sin(seta);
-        //float cosValue = Mathf.Cos(seta);
-
-        //float x = cosValue / 3; // 값이 크게 나옴
-        //float y = sinValue / 3;
-
-        //mainCam.transform.Translate(new Vector3(-x, 0, -y));
     }
-    public void GameClear(){ gameClear = true; }
 
+    public void GameClear()
+    {
+        gameState |= GameState.GAMECLEAR;
+        camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, Camera.main.transform.position.z);
+    }
     public void LoadStage(){ SceneManager.LoadScene("StageSelect"); }
 }
