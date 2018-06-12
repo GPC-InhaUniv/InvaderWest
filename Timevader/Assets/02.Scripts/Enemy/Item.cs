@@ -6,8 +6,9 @@ public class Item : MonoBehaviour {
 
     public enum ItemKind
     {
-        AddMissileitem,
-        Assistantitem,
+        AddMissileItem,
+        AssistantItem,
+        IncreasingShotSpeedItem,
     };
 
     protected Player player;
@@ -29,7 +30,7 @@ public class Item : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("아이템 효과 적용");            
             player.GetItem(kind);

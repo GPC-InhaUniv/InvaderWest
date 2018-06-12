@@ -16,10 +16,13 @@ public class Player : MonoBehaviour {
     public Boundary Boundary;
 
     public GameObject Shot;
-    public Transform ShotSpawn;
-    public Transform AddedSpawn;
+    [SerializeField]
+    private Transform shotSpawn;
+    [SerializeField]
+    private Transform addedSpawn;
 
-    public float fireDelta = 0.5f;
+    [SerializeField]
+    private float fireDelta = 0.5f;
 
     private float nextFire = 0.5f;
     private float myTime = 0.0f;
@@ -27,21 +30,32 @@ public class Player : MonoBehaviour {
     Rigidbody rigid;
     Vector3 movement;
 
+    bool hasDoubleMissile = false;
+
     public void GetItem(Item.ItemKind itemKind)
     {
         switch (itemKind)
         {
-            case Item.ItemKind.AddMissileitem:
+            case Item.ItemKind.AddMissileItem:
                 AddMissile();
                 break;
-            case Item.ItemKind.Assistantitem:
+            case Item.ItemKind.IncreasingShotSpeedItem:
+                IncreasingShotSpeed();
+                break;
+            case Item.ItemKind.AssistantItem:
                 break;
         }
     }
 
     void AddMissile()
     {
-        Shoot(AddedSpawn);
+        hasDoubleMissile = true;
+        Shoot(addedSpawn);
+    }
+
+    void IncreasingShotSpeed()
+    {
+        fireDelta = 0.3f;
     }
 
     void Shoot(Transform AnySpawn)
@@ -65,7 +79,13 @@ public class Player : MonoBehaviour {
 
     private void Update()
     {
-        Shoot(ShotSpawn);
+        if (hasDoubleMissile == true)
+        {
+            Shoot(shotSpawn);
+            Shoot(addedSpawn);
+        }
+        else
+            Shoot(shotSpawn);
     }
 
     private void FixedUpdate()
