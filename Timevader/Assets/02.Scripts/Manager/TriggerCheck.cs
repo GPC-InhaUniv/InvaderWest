@@ -20,6 +20,7 @@ public class TriggerCheck : MonoBehaviour {
         if (other.tag == "StageSelect")
         {
             info = other.gameObject.GetComponent<StageInfoData>(); // ※ 실행 중에 GetComponent ※
+            other.gameObject.GetComponent<Animator>().enabled = true;
             other.gameObject.GetComponent<Animator>().SetTrigger("Checked"); // ※ 실행 중에 GetComponent ※
 
             stageLoad.StageNumber = int.Parse(info.GetStageLv());
@@ -33,7 +34,7 @@ public class TriggerCheck : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("exit");
-        other.gameObject.GetComponent<Animator>().SetTrigger("Normal"); // ※ 실행 중에 GetComponent ※
+        other.gameObject.GetComponent<Animator>().enabled = false;
         StageInfo.text = string.Empty;
         stageLoad.StageNumber = null;
     }
