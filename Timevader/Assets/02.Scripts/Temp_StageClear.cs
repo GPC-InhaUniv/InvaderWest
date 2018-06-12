@@ -12,22 +12,24 @@ public class Temp_StageClear : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (mainCam.transform.eulerAngles.y == 270.0f)
-        {
-            gameClear = false;
-        }
+        //if (mainCam.transform.eulerAngles.y == 270.0f)
+        //{
+        //    gameClear = false;
+        //}
         if (gameClear) MoveCam();
     }
 
     int speed = 0;
     public void MoveCam()
     {
+        //if (mainCam.transform.eulerAngles.y == 270.0f) return;
         mainCam.transform.Rotate(0, Mathf.Lerp(0f, -90f, Time.deltaTime * 1.0f), 0);
-        mainCam.transform.Translate(Vector3.down * speed++ * Time.deltaTime * 0.3f);
+        mainCam.transform.Translate(Vector3.down * speed++ * Time.deltaTime * 0.4f);
 
-        if (mainCam.transform.position.y < -7)
+        if (mainCam.transform.position.y < -10)
         {
             clearInfoPanel.SetActive(true);
+            gameClear = false;
         }
         //seta = Mathf.Deg2Rad * Mathf.Lerp(0.0f, 90f * Mathf.Deg2Rad, Time.deltaTime);
         //float sinValue = Mathf.Sin(seta);
