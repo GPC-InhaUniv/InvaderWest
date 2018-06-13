@@ -49,10 +49,14 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     private int playerfirerapid;
     [SerializeField]
     private int addMissileitem;
+    public GameObject AddMissileItem;
+
     [SerializeField]
     private int assistantitem;
+    private bool assistant;
     [SerializeField]
     private int lastBombitem;
+
 
     List<IObserverable> observerList = new List<IObserverable>();
 
@@ -80,22 +84,7 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     Rigidbody rigid;
     Vector3 movement;
 
-    public void GetItem(Item.ItemKind itemKind)
-    {
-        switch (itemKind)
-        {
-            case Item.ItemKind.AddMissileItem:
-                AddMissile();
-                break;
-            case Item.ItemKind.AssistantItem:
-                break;
-        }
-    }
 
-    void AddMissile()
-    {
-        Shoot(AddedSpawn);
-    }
 
     void Shoot(Transform AnySpawn)
     {
@@ -171,9 +160,21 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     {
         if (other.gameObject.CompareTag("Factory"))
         {
-            playerLife = playerLife - 1;
-            NotifyPlayerLifeToObservers();
+            if (assistant == true)
+            {
+                assistant = false;
+                Debug.Log(assistant);
+            }
+            else
+            {
+                playerLife = playerLife - 1;
+                if (AddMissileItem.activeSelf == true)
+                {
+                    AddMissileItem.gameObject.SetActive(false);
+                }
+                NotifyPlayerLifeToObservers();
 
+            }
         }
     }
 
@@ -226,7 +227,6 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         for (int i = 0; i < observerList.Count; i++)
         {
             observerList[i].GetPlayerLife(playerLife);
-            Debug.Log("에너지 알려주기");
         }
     }
     public void NotifyPlayerLifeToObservers()
@@ -248,7 +248,6 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     public void RegisterObserver(IObserverable o)
     {
         observerList.Add(o);
-        Debug.Log("관찰시작");
             
     }
 
@@ -259,7 +258,6 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     }
     private IEnumerator LoseTime()
     {
-        Debug.Log("코루틴돈다");
         playerRestTime = playerRestTime - 10;
         NotifyPlayerRestTimeToObservers();
 
@@ -271,12 +269,13 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     //미사일 아이템 사용
     void UseAddMissileitem()
     {
-        fireDelta = 0.15f;
+        AddMissileItem.gameObject.SetActive(true);
         AccountInfo.ChangeAddMissileitemData(0);
 
     }
     void UseAssistantitem()
     {
+        assistant = true;
         AccountInfo.ChangeAssistantitemData(0);
 
     }

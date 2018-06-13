@@ -34,25 +34,9 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         player = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
         player.RegisterObserver(this);
         
-        //GameStart();
 
     }
 
-
-    // Use this for initialization
-    void Start () {
-
-
-
-    }
-
-	
-	// Update is called once per frame
-	void Update () {
-
-
-		
-	}
     //플레이어 시작라이프//
     public void GetPlayerLife(int playerLife)
     {
