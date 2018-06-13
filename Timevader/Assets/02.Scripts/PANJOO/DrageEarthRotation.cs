@@ -18,7 +18,6 @@ public class DrageEarthRotation : MonoBehaviour {
     private GameObject Cloud;
     Vector3 prevPoint;
 
-    [SerializeField]
     private float ConditionRotation;
     
     [SerializeField]
@@ -28,18 +27,24 @@ public class DrageEarthRotation : MonoBehaviour {
     [SerializeField]
     private Camera MainCamera;
 
+    UIFader uIFader;
+    [SerializeField]
+    private CanvasGroup FadePanel;
+
+    [SerializeField] //로그인 조건 만족시 사라짐
+    private GameObject[] otherObject;
+
     void FixedUpdate()
     {
         ActionClickOrDarg();
+        NextScene();
     }
     private void Start()
     {
         ConditionRotation = 0.90f;
+        uIFader = GetComponent<UIFader>();
     }
-    void Update()
-    {
-        NextScene();
-    }
+
     void ActionClickOrDarg()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
@@ -109,16 +114,40 @@ public class DrageEarthRotation : MonoBehaviour {
             Debug.Log("다음 씬으로");
             StartCoroutine(EffectCoroutine());
 
-            if (MainCamera.fieldOfView <= 179.0f)
-                SceneManager.LoadScene("LogIn");
+            if (MainCamera.fieldOfView < 170.0f)
+                HieObject();
+                uIFader.CanvasFadeIn(FadePanel);
+
+                StartCoroutine(WaitTimeForNextScene());
+
         }
+    }
+
+    void HieObject()
+    {
+        for (int i = 0; i < otherObject.Length-1; i++)
+        {
+            otherObject[i].SetActive(false);
+        }
+        Earth.SetActive(false);
+        Cloud.SetActive(false);
     }
 
     IEnumerator EffectCoroutine()
     {
-        Debug.Log("코루틴");
-        NextEffect();
+        Debug.Log("씬 넘어가는 효과 코루틴");
+        if (MainCamera.fieldOfView < 177.0f)
+        {
+            NextEffect();
+        }
         yield return new WaitForSeconds(2.0f);
+    }
+
+    IEnumerator WaitTimeForNextScene()
+    {
+        Debug.Log("다음 씬 넘어가는 코루틴");
+        yield return new WaitForSeconds(2.0f);
+        SceneManager.LoadScene("Main");
     }
 
     void NextEffect()
@@ -126,6 +155,6 @@ public class DrageEarthRotation : MonoBehaviour {
         MainCamera.fieldOfView += increaseValue;
 
         if (MainCamera.fieldOfView > middleValue)
-            increaseValue = 79.0f;        
+            increaseValue = 77.0f;        
     }
 }

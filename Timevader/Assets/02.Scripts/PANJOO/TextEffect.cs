@@ -6,9 +6,9 @@ public class TextEffect : MonoBehaviour {
     [SerializeField]
     private GameObject TipText;
     [SerializeField]
-    private float waitSecond = 0.4f;
+    private float waitSecond = 0.5f;
     [SerializeField]
-    private int CountMaxValue = 15;
+    private int CountMaxValue = 5;
 
 
     void Start () {
@@ -27,6 +27,6 @@ public class TextEffect : MonoBehaviour {
             yield return new WaitForSeconds(waitSecond);
             count++;
         }
-        TipText.SetActive(true);
+        TipText.SetActive(false);
     }
 }

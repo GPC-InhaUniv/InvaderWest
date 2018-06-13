@@ -12,19 +12,14 @@ public class ShipChoiceNum : MonoBehaviour {
     private GameObject[] playerShip;
     [SerializeField]
     private GameObject WarningPopUpPanel;
-    [SerializeField]
-    private GameObject DeciedToBuySpaceShipPanel;
 
     [Header("SpaceShipStatus")]
     [SerializeField]
     private Text NoticeText;
-
     [SerializeField]
     private Text SpaceShipSelectNumText;
-
     [SerializeField]
     private Text SpaceShipNameText;
-
     [SerializeField]
     private Text SpaceShipSpeedText;
 
@@ -48,14 +43,14 @@ public class ShipChoiceNum : MonoBehaviour {
 
     private const int ChoiceValue = 1; //버튼 클릭시 빼는 값, 상수
 
-    private int ChoiceNum;
-
     private int playerShipAmount;
 
     private List<string> playerShipName = new List<string>();
     private List<string> playerShipSpeed = new List<string>();
     private List<int> playerShipLife = new List<int>();
     private List<int> playerShipPrice = new List<int>();
+
+    private int ChoiceNum; // 버튼결합으로 인한 미사용
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
@@ -68,6 +63,8 @@ public class ShipChoiceNum : MonoBehaviour {
     private int restTime;
     private int blackHawk;
     private int raptor;
+    //수정한사람 황윤우 //
+
 
     void ChangeInventory()
     {
@@ -149,7 +146,7 @@ public class ShipChoiceNum : MonoBehaviour {
         }
     }
 
-    void CheckSpaceShipLock(int choiceNum) //수정필요합니다.
+    void CheckSpaceShipLock(int choiceNum)
     {
         BuyButton.SetActive(false);
         StartButton.SetActive(false);
@@ -159,55 +156,46 @@ public class ShipChoiceNum : MonoBehaviour {
             case 1:
                 if (choiceNum == 1)
                 {
-                    //소유한 상태
-                    StartButton.SetActive(true);
-                    CheckEnoughFuel(choiceNum);
-                    LockImage.SetActive(false);
-                    NoticeText.text = "출격 가능합니다.";
-                    return;
+                    DisplayStart();
                 }
                 break;
             case 2:
                 if (blackHawk == 0)
                 {
-                    //소유하지 않은 상태
-                    FuelImage.SetActive(true);
-                    BuyButton.SetActive(true);
-                    CheckEnoughFuel(choiceNum);
-                    LockImage.SetActive(true);
-                    NoticeText.text = playerShipPrice[choiceNum].ToString();
+                    DisplayLock(choiceNum);
                 }
                 else
                 {
-                    //소유한 상태
-                    StartButton.SetActive(true);
-                    CheckEnoughFuel(choiceNum);
-                    LockImage.SetActive(false);
-                    NoticeText.text = "출격 가능합니다.";
+                    DisplayStart();
                 }
                 break;
             case 3:
                 if (raptor == 0)
                 {
-                    //소유하지 않은 상태
-                    FuelImage.SetActive(true);
-                    BuyButton.SetActive(true);
-                    CheckEnoughFuel(choiceNum);
-                    LockImage.SetActive(true);
-                    NoticeText.text = playerShipPrice[choiceNum].ToString();
+                    DisplayLock(choiceNum);
                 }
                 else
                 {
-                    //소유한 상태
-                    StartButton.SetActive(true);
-                    CheckEnoughFuel(choiceNum);
-                    LockImage.SetActive(false);
-                    NoticeText.text = "출격 가능합니다.";
+                    DisplayStart();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    void DisplayLock(int choiceNum)
+    {
+        FuelImage.SetActive(true);
+        BuyButton.SetActive(true);
+        LockImage.SetActive(true);
+        NoticeText.text = playerShipPrice[choiceNum].ToString();
+    }
+    void DisplayStart()
+    {
+        StartButton.SetActive(true);
+        LockImage.SetActive(false);
+        NoticeText.text = "출격 가능합니다.";
     }
 
     bool CheckEnoughFuel(int choiceNum) //가진 재화가 선택한 기체의 재화보다 많은가?
@@ -263,20 +251,22 @@ public class ShipChoiceNum : MonoBehaviour {
         // 우주선, 이미지 setactive(false);
         HideSpaceShip();
         OffLifeImage();
-        //
         playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+        //
 
         playerSelectSpaceShipNumber = next; //선택 값 저장
 
         playerShip[next].SetActive(true); //선택된 우주선 보여줌
         CheckSpaceShipLock(next); //우주선이 소유했는가? (아닐 시 잠금 UI출력)
+
+        //소유여부와 무관하게 출력
         ChangeStatusText(next); //선택된 우주선 스탯을 기반으로 UI출력
         OnLifeImage(next); //선택된 우주선 기반 라이프 UI 출력
 
         SaveSeletedSpaceShipNumber(); //싱글톤 저장, 소유여부 검사
     }
 
-    void ChoiceSpaceShip(int choiceNum)
+    void ChangeSpaceShipData(int choiceNum)
     {
         switch (choiceNum)
         {
@@ -307,7 +297,7 @@ public class ShipChoiceNum : MonoBehaviour {
                 if (CheckEnoughFuel(playerSelectSpaceShipNumber) && blackHawk ==0) //소유했으면 못사게해야함. 수정필요합니다.
                 {
                     myFuel = myFuel - playerShipPrice[playerSelectSpaceShipNumber];
-                    ChoiceSpaceShip(playerSelectSpaceShipNumber);
+                    ChangeSpaceShipData(playerSelectSpaceShipNumber);
                     CheckSpaceShipLock(playerSelectSpaceShipNumber);
                     AccountInfo.ChangeFuelData(myFuel);
                     ChangeInventory();
@@ -318,7 +308,7 @@ public class ShipChoiceNum : MonoBehaviour {
                 if (CheckEnoughFuel(playerSelectSpaceShipNumber) && raptor == 0) //소유했으면 못사게해야함. 수정필요합니다.
                 {
                     myFuel = myFuel - playerShipPrice[playerSelectSpaceShipNumber];
-                    ChoiceSpaceShip(playerSelectSpaceShipNumber);
+                    ChangeSpaceShipData(playerSelectSpaceShipNumber);
                     CheckSpaceShipLock(playerSelectSpaceShipNumber);
                     AccountInfo.ChangeFuelData(myFuel);
                     ChangeInventory();

@@ -354,7 +354,7 @@ public class AccountInfo : MonoBehaviour
             GetShopList(result);
 
             Debug.Log("ShopData set up complete");
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Intro");
             //SceneManager.LoadScene("Intro");
         }
     }
