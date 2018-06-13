@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Story : MonoBehaviour {
-    
-    private Text easyText;
-    [SerializeField]
-    private Button easyBtn;
+        
     [SerializeField]
     private Button btnEarth;
     [SerializeField]
@@ -26,6 +23,13 @@ public class Story : MonoBehaviour {
     [SerializeField]
     private GameObject enemyship;
 
+    [SerializeField]
+    private Button easyBtn;
+    [SerializeField]
+    private Button normalBtn;
+    [SerializeField]
+    private Button hardBtn;
+
     int i = 0;
     
     public void NextPage()
@@ -33,23 +37,6 @@ public class Story : MonoBehaviour {
         btnStories[i].SetActive(false);
         i++;
         btnStories[i].SetActive(true);
-    }
-
-    public void SelectEasy()
-    {
-        easyText.text = "500000";
-        easyBtn.interactable=false;
-        
-    }
-
-    public void SelectNormal()
-    {
-        
-    }
-
-    public void SelectHard()
-    {
-        
     }
 
     public void SelectOK()
