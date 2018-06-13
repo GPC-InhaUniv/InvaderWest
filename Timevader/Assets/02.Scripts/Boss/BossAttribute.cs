@@ -18,6 +18,7 @@ public class BossAttribute : MonoBehaviour {
     {
 
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Boundary") //해당 스크립트를 적용한 것이 바운더리에 충돌한다면
@@ -32,6 +33,7 @@ public class BossAttribute : MonoBehaviour {
         {
             Instantiate(explosion, transform.position, transform.rotation);
             Hp -= 10;
+
             if(Hp == 0)
             {             
                 Instantiate(playerexplosion, transform.position, transform.rotation);
@@ -42,7 +44,6 @@ public class BossAttribute : MonoBehaviour {
         if (other.tag == "Player") //플레이어가 부딪힌다면
         {
             Instantiate(playerexplosion, other.transform.position, other.transform.rotation);
-
         }
     }
 }

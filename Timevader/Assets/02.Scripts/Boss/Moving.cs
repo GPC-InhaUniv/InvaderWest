@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour {
 
-    private float moveVlaue;
-    private Vector3 LeftBossBoundary;
-    private Vector3 RightBossBoundary;
+    private int moveVlaue = 1;
+
+    [SerializeField]
+    private float moveSpeed = 3.5f;
 
     void BossMove()
     {
         if (transform.localPosition.x < -3.0f)
         {
-            moveVlaue = 1.0f;
+            moveVlaue = -1;
         }
         else if (transform.localPosition.x > 3.0f)
         {
-            moveVlaue = -1.0f;
+            moveVlaue = 1;
         }
-        transform.Translate(Vector3.left * Time.deltaTime * moveVlaue);
+        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * moveVlaue);
     }
 
     void Start()
     {
 
     }
+    private void FixedUpdate()
+    {
+        BossMove();
+    }
 
     void Update()
     {
-        BossMove();
+
     }
 }
