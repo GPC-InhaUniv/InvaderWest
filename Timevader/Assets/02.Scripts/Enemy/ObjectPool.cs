@@ -16,6 +16,11 @@ public class ObjectPool : MonoBehaviour {
 
     private void Start()
     {
+        CreatePool();
+    }
+
+    void CreatePool()
+    {
         pool = new List<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
@@ -24,7 +29,6 @@ public class ObjectPool : MonoBehaviour {
             pool.Add(obj);
         }
         //Debug.Log("pool 생성 완료");
-
     }
 
     public void SetObject(GameObject obj)

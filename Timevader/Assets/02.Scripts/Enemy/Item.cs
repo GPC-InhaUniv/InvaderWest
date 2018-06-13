@@ -15,7 +15,8 @@ public class Item : MonoBehaviour {
     public ItemKind kind;
 
     float moveSpeed = 1.0f;
-    public float RotateValue = 1.0f;
+    [SerializeField]
+    float RotateValue = 1.0f;
 
     private void Awake()
     {
@@ -32,9 +33,14 @@ public class Item : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("아이템 효과 적용");            
-            player.GetItem(kind);
-            Destroy(gameObject);
+            UseItem();
         }
+    }
+
+    void UseItem()
+    {
+        Debug.Log("아이템 효과 적용");
+        player.GetItem(kind);
+        Destroy(gameObject);
     }
 }
