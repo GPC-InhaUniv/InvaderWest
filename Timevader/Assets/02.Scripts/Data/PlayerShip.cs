@@ -50,7 +50,6 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     [SerializeField]
     private int addMissileitem;
     public GameObject AddMissileItem;
-
     [SerializeField]
     private int assistantitem;
     private bool assistant;
@@ -229,6 +228,7 @@ public class PlayerShip : MonoBehaviour , ISubjectable
             observerList[i].GetPlayerLife(playerLife);
         }
     }
+
     public void NotifyPlayerLifeToObservers()
     {
         for (int i = 0; i < observerList.Count; i++)
@@ -247,15 +247,14 @@ public class PlayerShip : MonoBehaviour , ISubjectable
 
     public void RegisterObserver(IObserverable o)
     {
-        observerList.Add(o);
-            
+        observerList.Add(o);           
     }
-
     public void RemoveObserver(IObserverable o)
     {
         observerList.Remove(o);
-        Debug.Log("remove");
     }
+
+
     private IEnumerator LoseTime()
     {
         playerRestTime = playerRestTime - 10;

@@ -48,6 +48,7 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
     }
     //플레이어 라이프//
+
     public void UpdatePlayerLife(int playerLife)
     {
         if (playerLife>0)
@@ -63,7 +64,9 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
             GameLoseResultPanel.gameObject.SetActive(true);
         }
     }
+
     //플레이어 시간//
+
     public void UpdatePlayerRestTime(int playerRestTime)
     {
         if (playerRestTime > 0)

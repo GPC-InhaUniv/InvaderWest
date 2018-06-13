@@ -75,7 +75,6 @@ public class LogInManager : MonoBehaviour
     public void ReturnRegisterPanel()
     {
         ErrorPanel.gameObject.SetActive(false);
-
     }
 
 

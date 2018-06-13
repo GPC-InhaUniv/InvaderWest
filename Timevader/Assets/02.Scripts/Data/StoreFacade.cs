@@ -4,9 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreFacade : MonoBehaviour {
+
+
     //재화관련//
     public Text MyTimeText;
     public Text MyFuelText;
+
+
+    //인벤토리관련//
+    public Image MyInventroy1;
+    public Image MyInventroy2;
+    public Image MyInventroy3;
+
+
+    public Text MyInventoryExplainText;
+    //스크롤 관련//
+    public ScrollRect ItemScrollRect;
+    public Text ItemExplain;
+    //구입 관련//
+    public Text BuyExPlainText;
+    public Button BuyButton;
 
     private int myFuel;
     private int addMissileitem;
@@ -17,22 +34,6 @@ public class StoreFacade : MonoBehaviour {
     private int bestScore;
     private int restTime;
     private int nextStage;
-    //인벤토리관련//
-    public Image MyInventroy1;
-    public Image MyInventroy2;
-    public Image MyInventroy3;
-    public Image MyInventroyCheck1;
-    public Image MyInventroyCheck2;
-    public Image MyInventroyCheck3;
-
-    public Text MyInventoryExplainText;
-    //스크롤 관련//
-    public ScrollRect ItemScrollRect;
-    public Text ItemExplain;
-    //구입 관련//
-    public Text BuyExPlainText;
-    public Button BuyButton;
-
 
     private void Start()
     {
@@ -145,10 +146,7 @@ public class StoreFacade : MonoBehaviour {
         //Debug.Log(ItemScrollRect.horizontalNormalizedPosition);
 
     }
-    public void Update()
-    {
-     //   horizonval = ItemScrollRect.horizontalNormalizedPosition;
-    }
+
 
     public void BuyItem()
     {

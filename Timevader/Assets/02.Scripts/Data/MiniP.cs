@@ -29,7 +29,6 @@ public class MiniP : MonoBehaviour {
         //고정//
         gameObject.transform.RotateAround(new Vector3( 0f, Player.transform.position.y, 0f),0.1f);
 
-
         Shoot(ShotSpawn);
 
     }
