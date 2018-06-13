@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
     [SerializeField]
-    private Transform[] SpawnPoint; // Enemy가 소환될 좌표에 위치한 EmptyObject
-    public int SpawnCount = 3;
-    public int StageLevel = 1;
+    Transform[] spawnPoint; // Enemy가 소환될 좌표에 위치한 EmptyObject
 
-    public EnemyFactory factory;
+    [SerializeField]
+    EnemyFactory factory;
 
+    [SerializeField]
+    int spawnCount = 3;
+
+    int stageLevel = 1;
+    
     void Start()
     {
         factory = FindObjectOfType<EnemyFactory>();
@@ -18,7 +22,7 @@ public class Spawner : MonoBehaviour {
 
     void StartSpawn()
     {
-        switch (StageLevel)
+        switch (stageLevel)
         {
             case 1: StartCoroutine("Stage1"); break;
             case 2: StartCoroutine("Stage2"); break;
@@ -36,13 +40,13 @@ public class Spawner : MonoBehaviour {
         if (enemy.GetComponent<NormalEnemy>())
         {
             //Debug.Log("NormalEnemy 스크립트");
-            enemy.GetComponent<NormalEnemy>().MoveDirection = moveDirection;
+            enemy.GetComponent<NormalEnemy>().MoveDirection = moveDirection; /* ※※지속적인 GetCompoent※※ */
         }
         else if (enemy.GetComponent<AttackingEnemy>())
         {
             //Debug.Log("AttackingEnemy 스크립트");
-            enemy.GetComponent<AttackingEnemy>().MoveDirection = moveDirection;
-            enemy.GetComponent<AttackingEnemy>().StartCoroutine("Attack");
+            enemy.GetComponent<AttackingEnemy>().MoveDirection = moveDirection; /* ※※지속적인 GetCompoent※※ */
+            enemy.GetComponent<AttackingEnemy>().StartCoroutine("Attack"); /* ※※지속적인 GetCompoent※※ */
         }
         else Debug.Log("enemy 스크립트를 찾을 수 없습니다.");
     }
@@ -50,23 +54,23 @@ public class Spawner : MonoBehaviour {
     private IEnumerator Stage1()
     {
         yield return new WaitForSeconds(2.0f);
-        for (int i = 0; i < SpawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, SpawnPoint[0].position, Direction.Curve_RightDown);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[0].position, Direction.Curve_RightDown);
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(0.7f);
 
-        for (int i = 0; i < SpawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, SpawnPoint[1].position, Direction.Zigzag_RightToLeft);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Zigzag_RightToLeft);
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(1.0f);
 
-        for (int i = 0; i < SpawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, SpawnPoint[2].position, Direction.Circle_Clockwise);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[2].position, Direction.Circle_Clockwise);
             yield return new WaitForSeconds(0.2f);
         }
 

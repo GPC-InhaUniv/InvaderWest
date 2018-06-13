@@ -10,7 +10,7 @@ public class EnemyFactory : MonoBehaviour {
     {
         if (normalPool == null) return null;
         GameObject invader = null;
-        switch(type) // new로 받아오지 않고 pool에서 받아오게 수정
+        switch(type)
         {
             case InvaderType.Normal:
                 Debug.Log("normal 생성");

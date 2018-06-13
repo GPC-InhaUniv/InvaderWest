@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int maxHp = 3, hp;
-    int attackRate = 11;
-    //float attackPower = 1.0f;
     float moveSpeed = 2.0f;
     float seta = 0;
     float setaRate = 0.5f;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
+    int attackRate = 11;
+    //float attackPower = 1.0f;
 
     private void Start()
     {
@@ -51,30 +51,38 @@ public class AttackingEnemy : Enemy{
             case Direction.Line_LeftToRight:
                 transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
                 break;
+
             case Direction.Line_RightToLeft:
                 transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
                 break;
+
             case Direction.Zigzag_LeftToRight:
-                if (seta > MAXSETA) seta %= MAXSETA;
-                seta += setaRate;
-                transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
-                break;
+                MoveZigzag(true); break;
+
             case Direction.Zigzag_RightToLeft:
-                if (seta > MAXSETA) seta %= MAXSETA;
-                seta += setaRate;
-                transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
-                break;
+                MoveZigzag(false); break;
+
             case Direction.Circle_Clockwise:
                 MoveCircle(true); break;
+
             case Direction.Circle_CounterClockwise:
                 MoveCircle(false); break;
+
             case Direction.Curve_RightDown:
-                MoveCurve();
-                break;
+                MoveCurve(); break;
+
             case Direction.Curve_LeftDown:
                 break;
             default: break;
         }
+    }
+    // TRUE : LeftToRight, FALSE : RightToLeft
+    public void MoveZigzag(bool sign)
+    {
+        if (seta > MAXSETA) seta %= MAXSETA;
+        seta += setaRate;
+        if(sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
+        else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
     }
 
     public void MoveCurve()

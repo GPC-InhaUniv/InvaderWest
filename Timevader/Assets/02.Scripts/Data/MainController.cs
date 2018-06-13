@@ -9,26 +9,39 @@ public class MainController : MonoBehaviour {
     private Text FuelScoreText;
     [SerializeField]
     private Text RestTimeText;
+    [SerializeField]
+    private Text WelcomeText;
+
 
     [SerializeField]
     private GameObject[] SpaceShips;
 
     private int playerSelectSpaceShipNumber;
-    //[SerializeField]
-    //private int myFuel = int.Parse(AccountInfo.Instance.Fuel);
-    //private int resttime = int.Parse(AccountInfo.Instance.Time);
+    private string UserNickname;
 
-
+    [SerializeField]
+    private string myFuel;
+    private string resttime;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    { 
 
-        FuelScoreText.text = AccountInfo.Instance.Fuel;
-        RestTimeText.text = AccountInfo.Instance.RestTime;
-
+        UserNickname = GamePlayManager.Instance.PlayerName;
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
+        myFuel = AccountInfo.Instance.Fuel;
+        resttime = AccountInfo.Instance.Time;
+
+        DisplayText();
         HideSpaceShips();
         ShowSpaceShip();
+    }
+
+    void DisplayText()
+    {
+        FuelScoreText.text = myFuel;
+        RestTimeText.text = resttime;
+        WelcomeText.text = UserNickname + "님 환영합니다.";
     }
     void HideSpaceShips()
     {
