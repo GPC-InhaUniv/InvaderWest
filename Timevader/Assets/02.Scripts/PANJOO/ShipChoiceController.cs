@@ -53,10 +53,10 @@ public class ShipChoiceNum : MonoBehaviour {
     void Start ()
     {
         GetPlayerShipAmount();
-        GetSpaceShipStatus();
+        SetSpaceShipStatus();
 
         /////////정보 받아오기
-        GetGamePlayManagerData();
+        SetGamePlayManagerData();
         //////////
         ChangeInventory();
 
@@ -74,7 +74,13 @@ public class ShipChoiceNum : MonoBehaviour {
         RestTimeText.text = restTime.ToString();
     }
 
-    void GetGamePlayManagerData()
+
+    int GetPlayerShipAmount()
+    {
+        playerShipAmount = playerShips.Length - initValue; //플레이어가 가진 우주선 갯수
+        return playerShipAmount;
+    }
+    void SetGamePlayManagerData()
     {
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); //개선할 것
@@ -82,13 +88,8 @@ public class ShipChoiceNum : MonoBehaviour {
         myFuel = int.Parse(AccountInfo.Instance.Fuel);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
     }
-    int GetPlayerShipAmount()
-    {
-        playerShipAmount = playerShips.Length - initValue; //플레이어가 가진 우주선 갯수
-        return playerShipAmount;
-    }
 
-    void GetSpaceShipStatus()
+    void SetSpaceShipStatus()
     {
         for (int i = 0; i < playerShips.Length; i++)
         {
