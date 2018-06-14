@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour {
     [SerializeField]
-    private Text FuelScoreText;
+    Text FuelScoreText;
     [SerializeField]
-    private Text RestTimeText;
+    Text RestTimeText;
     [SerializeField]
-    private Text WelcomeText;
+    Text WelcomeText;
 
 
     [SerializeField]
-    private GameObject[] SpaceShips;
+    GameObject[] SpaceShips;
 
-    private int playerSelectSpaceShipNumber;
-    private string UserNickname;
+    int playerSelectSpaceShipNumber;
+    string UserNickname;
 
     [SerializeField]
-    private string myFuel;
-    private string resttime;
+    string myFuel;
+    string resttime;
 
     // Use this for initialization
     void Start()

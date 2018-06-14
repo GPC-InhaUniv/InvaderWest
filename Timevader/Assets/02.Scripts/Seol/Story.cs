@@ -99,15 +99,14 @@ public class Story : MonoBehaviour {
     {
         if (btnEarth.transform.localScale.x > 2.8)
         {
-            btnStory1.interactable = true;
-            btnEarth.interactable = false;
+            btnStory1.interactable = true;            
         }
     }
 
     private IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
-
+        btnEarth.interactable = false;
         float j = 1;
 
         while (j <= 3.0f)
@@ -118,7 +117,7 @@ public class Story : MonoBehaviour {
             yield return waitsec;                    
             Debug.Log("지구 커져라");           
             
-        }
+        }        
 
     }
 
@@ -128,16 +127,14 @@ public class Story : MonoBehaviour {
 
         int k = 879;
 
-        while (k <= 527)
+        while (k > 527)
         {
             SetPosition(enemyship, new Vector3(0, k, 0));
-            k -= 1;
+            k -= 30;
 
             yield return waitsec;
             Debug.Log("침략군 강림");
-
         }
-
     }
 
     public void OnClickEarthButton()

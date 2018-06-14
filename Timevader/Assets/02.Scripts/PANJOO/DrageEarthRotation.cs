@@ -147,6 +147,7 @@ public class DrageEarthRotation : MonoBehaviour {
     {
         Debug.Log("다음 씬 넘어가는 코루틴");
         yield return new WaitForSeconds(2.0f);
+
         SceneManager.LoadScene("Main");
     }
 
