@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Story : MonoBehaviour {
+public class Story2 : MonoBehaviour {
         
     [SerializeField]
     private Button btnEarth;

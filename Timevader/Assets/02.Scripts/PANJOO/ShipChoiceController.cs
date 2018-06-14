@@ -7,37 +7,25 @@ using UnityEngine.SceneManagement;
 public class ShipChoiceNum : MonoBehaviour {
 
     [SerializeField]
-    GameObject[] LifeImage;
+    GameObject[] LifeImages;
     [SerializeField]
-    GameObject[] playerShip;
+    GameObject[] playerShips;
     [SerializeField]
     GameObject WarningPopUpPanel;
 
     [Header("SpaceShipStatus")]
     [SerializeField]
-    Text NoticeText;
-    [SerializeField]
-    Text SpaceShipSelectNumText;
-    [SerializeField]
-    Text SpaceShipNameText;
-    [SerializeField]
-    Text SpaceShipSpeedText;
+    Text NoticeText, SpaceShipSelectNumText, SpaceShipNameText, SpaceShipSpeedText;
 
     [Header("Image")]
     [SerializeField]
-    GameObject LockImage;
-    [SerializeField]
-    GameObject FuelImage;
+    GameObject LockImage, FuelImage;
 
     [Header("Start and Buy")]
     [SerializeField]
-    GameObject StartButton;
+    GameObject StartButton, BuyButton;
     [SerializeField]
-    Text StartText;
-    [SerializeField]
-    GameObject BuyButton;
-    [SerializeField]
-    Text BuyText;
+    Text StartText, BuyText;
 
     int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
 
@@ -45,12 +33,10 @@ public class ShipChoiceNum : MonoBehaviour {
 
     int playerShipAmount;
 
-    List<string> playerShipName = new List<string>();
-    List<string> playerShipSpeed = new List<string>();
-    List<int> playerShipLife = new List<int>();
-    List<int> playerShipPrice = new List<int>();
-
-    //private int ChoiceNum; // 버튼결합으로 인한 미사용
+    List<string> playerShipsName = new List<string>();
+    List<string> playerShipsSpeed = new List<string>();
+    List<int> playerShipsLife = new List<int>();
+    List<int> playerShipsPrice = new List<int>();
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
@@ -64,78 +50,83 @@ public class ShipChoiceNum : MonoBehaviour {
     int blackHawk;
     int raptor;
 
-    void ChangeInventory()
-    {
-        FuelScoreText.text = myFuel.ToString();
-        RestTimeText.text = restTime.ToString();
-    }
-    //수정한사람 황윤우 //
-
     void Start ()
     {
         GetPlayerShipAmount();
         GetSpaceShipStatus();
+
         /////////정보 받아오기
-        playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
-        blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
-        raptor = int.Parse(AccountInfo.Instance.Raptor);
-        myFuel = int.Parse(AccountInfo.Instance.Fuel);
-        restTime = int.Parse(AccountInfo.Instance.RestTime);
+        GetGamePlayManagerData();
         //////////
         ChangeInventory();
 
-        HideSpaceShip();      
-        playerShip[playerSelectSpaceShipNumber].SetActive(true);
+        HideSpaceShip();
+        playerShips[playerSelectSpaceShipNumber].SetActive(true);
 
         ChangeStatusText(initValue);
         OnLifeImage(initValue);
         CheckSpaceShipLock(initValue);
     }
 
-    void GetPlayerShipAmount()
+    void ChangeInventory()    //수정한사람 황윤우 
     {
-        playerShipAmount = playerShip.Length - initValue; //플레이어가 가진 우주선 갯수
+        FuelScoreText.text = myFuel.ToString();
+        RestTimeText.text = restTime.ToString();
+    }
+
+    void GetGamePlayManagerData()
+    {
+        playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
+        blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); //개선할 것
+        raptor = int.Parse(AccountInfo.Instance.Raptor);
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
+    }
+    int GetPlayerShipAmount()
+    {
+        playerShipAmount = playerShips.Length - initValue; //플레이어가 가진 우주선 갯수
+        return playerShipAmount;
     }
 
     void GetSpaceShipStatus()
     {
-        for (int i = 0; i < playerShip.Length; i++)
+        for (int i = 0; i < playerShips.Length; i++)
         {
-            playerShipName.Add(playerShip[i].GetComponent<SpaceShipStatus>().SpaceShipName);
-            playerShipSpeed.Add(playerShip[i].GetComponent<SpaceShipStatus>().Speed.ToString());
-            playerShipLife.Add(playerShip[i].GetComponent<SpaceShipStatus>().Life);
-            playerShipPrice.Add(playerShip[i].GetComponent<SpaceShipStatus>().SpaceShipPrice);
+            playerShipsName.Add(playerShips[i].GetComponent<SpaceShipStatus>().SpaceShipName);
+            playerShipsSpeed.Add(playerShips[i].GetComponent<SpaceShipStatus>().Speed.ToString());
+            playerShipsLife.Add(playerShips[i].GetComponent<SpaceShipStatus>().Life);
+            playerShipsPrice.Add(playerShips[i].GetComponent<SpaceShipStatus>().SpaceShipPrice);
         }
     }
 
     void ChangeStatusText(int choiceNum)
     {
         SpaceShipSelectNumText.text = "(" + playerSelectSpaceShipNumber + " / " + playerShipAmount + ")";
-        SpaceShipNameText.text = playerShipName[playerSelectSpaceShipNumber];
-        SpaceShipSpeedText.text = playerShipSpeed[playerSelectSpaceShipNumber];
+        SpaceShipNameText.text = playerShipsName[playerSelectSpaceShipNumber];
+        SpaceShipSpeedText.text = playerShipsSpeed[playerSelectSpaceShipNumber];
     }
 
     void OnLifeImage(int choiceNum)
     {
-        for(int i = 0; i < playerShipLife[choiceNum]; i++)
+        for(int i = 0; i < playerShipsLife[choiceNum]; i++)
         {
-            LifeImage[i].SetActive(true);
+            LifeImages[i].SetActive(true);
         }
     }
 
     void OffLifeImage()
     {
-        for (int i = 0; i < LifeImage.Length; i++)
+        for (int i = 0; i < LifeImages.Length; i++)
         {
-            LifeImage[i].SetActive(false);
+            LifeImages[i].SetActive(false);
         }
     }
 
     void HideSpaceShip()
     {
-        for(int i =0; i < playerShip.Length; i++)
+        for(int i =0; i < playerShips.Length; i++)
         {
-            playerShip[i].SetActive(false);
+            playerShips[i].SetActive(false);
         }
     }
 
@@ -183,45 +174,13 @@ public class ShipChoiceNum : MonoBehaviour {
         FuelImage.SetActive(true);
         BuyButton.SetActive(true);
         LockImage.SetActive(true);
-        NoticeText.text = playerShipPrice[choiceNum].ToString();
+        NoticeText.text = playerShipsPrice[choiceNum].ToString();
     }
     void DisplayStart()
     {
         StartButton.SetActive(true);
         LockImage.SetActive(false);
         NoticeText.text = "출격 가능합니다.";
-    }
-
-    bool CheckEnoughFuel(int choiceNum) //가진 재화가 선택한 기체의 재화보다 많은가?
-    {
-        if (myFuel < playerShipPrice[choiceNum]) //재화 부족
-        {
-            return false;
-        }
-        else
-        {          
-            return true;
-        }
-    }
-
-    public void SaveSeletedSpaceShipNumber()
-    {
-        switch (playerSelectSpaceShipNumber)
-        {
-            case 1:
-                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-                break;
-            case 2:
-                if(blackHawk == 1)
-                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-                break;
-            case 3:
-                if(raptor == 1)
-                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
-                break;
-            default:
-                break;
-        }
     }
 
     public void ShipSelectButtonClick(int click) //
@@ -231,7 +190,7 @@ public class ShipChoiceNum : MonoBehaviour {
 
         if (next < 1) //  선택값이 1보다는 커야함
             return;
-        if (next > playerShip.Length - 1) //선택값 > 3(선택창 최대길이)
+        if (next > playerShips.Length - 1) //선택값 > 3(선택창 최대길이)
             return;
 
         if (click < 0) //-1, 1 눌림 검사
@@ -242,12 +201,12 @@ public class ShipChoiceNum : MonoBehaviour {
         // 우주선, 이미지 setactive(false);
         HideSpaceShip();
         OffLifeImage();
-        playerShip[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
+        playerShips[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
         //
 
         playerSelectSpaceShipNumber = next; //선택 값 저장
 
-        playerShip[next].SetActive(true); //선택된 우주선 보여줌
+        playerShips[next].SetActive(true); //선택된 우주선 보여줌
         CheckSpaceShipLock(next); //우주선이 소유했는가? (아닐 시 잠금 UI출력)
 
         //소유여부와 무관하게 출력
@@ -255,6 +214,56 @@ public class ShipChoiceNum : MonoBehaviour {
         OnLifeImage(next); //선택된 우주선 기반 라이프 UI 출력
 
         SaveSeletedSpaceShipNumber(); //싱글톤 저장, 소유여부 검사
+    }
+
+    public void OnClickedBuySpaceShipButton()//구매 버튼 온클릭
+    {
+        if (blackHawk == 1 && raptor == 1)
+            return;
+        if (!CheckEnoughFuel(playerSelectSpaceShipNumber))
+            WarningPopUpPanel.SetActive(true);
+        else
+        {
+            myFuel = myFuel - playerShipsPrice[playerSelectSpaceShipNumber];
+            ChangeSpaceShipData(playerSelectSpaceShipNumber);
+            CheckSpaceShipLock(playerSelectSpaceShipNumber);
+
+            AccountInfo.ChangeFuelData(myFuel);
+            SaveSeletedSpaceShipNumber();
+            ChangeInventory();
+        }
+    }
+
+    bool CheckEnoughFuel(int choiceNum) //가진 재화가 선택한 기체의 재화보다 많은가?
+    {
+        if (myFuel < playerShipsPrice[choiceNum]) //재화 부족
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    void SaveSeletedSpaceShipNumber()
+    {
+        switch (playerSelectSpaceShipNumber)
+        {
+            case 1:
+                GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
+                break;
+            case 2:
+                if (blackHawk == 1)
+                    GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
+                break;
+            case 3:
+                if (raptor == 1)
+                    GamePlayManager.Instance.PlayerShipNum = playerSelectSpaceShipNumber;
+                break;
+            default:
+                break;
+        }
     }
 
     void ChangeSpaceShipData(int choiceNum)
@@ -273,26 +282,8 @@ public class ShipChoiceNum : MonoBehaviour {
         }
     }
 
-    public void ChangeSceneToSelectStage()
+    public void OnClickedChangeSceneToSelectStageButton() //스타트 버튼 온클릭
     {
         SceneManager.LoadScene("StageSelect");
-    }
-
-    public void BuySpaceShip()
-    {
-        if (blackHawk == 1 && raptor == 1)
-            return;
-        if (!CheckEnoughFuel(playerSelectSpaceShipNumber))
-            WarningPopUpPanel.SetActive(true);
-        else
-        {
-            myFuel = myFuel - playerShipPrice[playerSelectSpaceShipNumber];
-            ChangeSpaceShipData(playerSelectSpaceShipNumber);
-            CheckSpaceShipLock(playerSelectSpaceShipNumber);
-
-            AccountInfo.ChangeFuelData(myFuel);
-            SaveSeletedSpaceShipNumber();
-            ChangeInventory();
-        }
     }
 }
