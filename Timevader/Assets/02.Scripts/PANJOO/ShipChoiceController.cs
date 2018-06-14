@@ -7,62 +7,62 @@ using UnityEngine.SceneManagement;
 public class ShipChoiceNum : MonoBehaviour {
 
     [SerializeField]
-    private GameObject[] LifeImage;
+    GameObject[] LifeImage;
     [SerializeField]
-    private GameObject[] playerShip;
+    GameObject[] playerShip;
     [SerializeField]
-    private GameObject WarningPopUpPanel;
+    GameObject WarningPopUpPanel;
 
     [Header("SpaceShipStatus")]
     [SerializeField]
-    private Text NoticeText;
+    Text NoticeText;
     [SerializeField]
-    private Text SpaceShipSelectNumText;
+    Text SpaceShipSelectNumText;
     [SerializeField]
-    private Text SpaceShipNameText;
+    Text SpaceShipNameText;
     [SerializeField]
-    private Text SpaceShipSpeedText;
+    Text SpaceShipSpeedText;
 
     [Header("Image")]
     [SerializeField]
-    private GameObject LockImage;
+    GameObject LockImage;
     [SerializeField]
-    private GameObject FuelImage;
+    GameObject FuelImage;
 
     [Header("Start and Buy")]
     [SerializeField]
-    private GameObject StartButton;
+    GameObject StartButton;
     [SerializeField]
-    private Text StartText;
+    Text StartText;
     [SerializeField]
-    private GameObject BuyButton;
+    GameObject BuyButton;
     [SerializeField]
-    private Text BuyText;
+    Text BuyText;
 
-    private int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
+    int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
 
-    private const int initValue = 1; 
+    const int initValue = 1; 
 
-    private int playerShipAmount;
+    int playerShipAmount;
 
-    private List<string> playerShipName = new List<string>();
-    private List<string> playerShipSpeed = new List<string>();
-    private List<int> playerShipLife = new List<int>();
-    private List<int> playerShipPrice = new List<int>();
+    List<string> playerShipName = new List<string>();
+    List<string> playerShipSpeed = new List<string>();
+    List<int> playerShipLife = new List<int>();
+    List<int> playerShipPrice = new List<int>();
 
     //private int ChoiceNum; // 버튼결합으로 인한 미사용
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
     [SerializeField]
-    private Text FuelScoreText;
+    Text FuelScoreText;
     [SerializeField]
-    private Text RestTimeText;
+    Text RestTimeText;
 
-    private int myFuel;
-    private int restTime;
-    private int blackHawk;
-    private int raptor;
+    int myFuel;
+    int restTime;
+    int blackHawk;
+    int raptor;
 
     void ChangeInventory()
     {
