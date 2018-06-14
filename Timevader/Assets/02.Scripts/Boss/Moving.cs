@@ -9,30 +9,30 @@ public class Moving : MonoBehaviour {
     [SerializeField]
     private float moveSpeed = 3.5f;
 
-    void BossMove()
-    {
-        if (transform.localPosition.x < -3.0f)
-        {
-            moveVlaue = -1;
-        }
-        else if (transform.localPosition.x > 3.0f)
-        {
-            moveVlaue = 1;
-        }
-        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * moveVlaue);
-    }
+    private float leftLimitX;
+    private float rightLimitX;
 
     void Start()
     {
-
+        leftLimitX = -3.0f;
+        rightLimitX = 3.0f;
     }
     private void FixedUpdate()
     {
         BossMove();
     }
 
-    void Update()
+    void BossMove()
     {
-
+        if (transform.localPosition.x < leftLimitX)
+        {
+            moveVlaue = -1;
+        }
+        else if (transform.localPosition.x > rightLimitX)
+        {
+            moveVlaue = 1;
+        }
+        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * moveVlaue);
     }
+
 }

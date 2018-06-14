@@ -102,6 +102,7 @@ public class Story : MonoBehaviour {
             btnStory1.interactable = true;
             btnEarth.interactable = false;
         }
+
     }
 
     private IEnumerator ZoomEarth()

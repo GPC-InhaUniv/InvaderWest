@@ -14,6 +14,6 @@ public class CharacterUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-            hpBar.value = attri.Hp / attri.maxHp;
+            hpBar.value = attri.BossHp / attri.MaxHp;
       	}
 }

@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class BossAttribute : MonoBehaviour {
 
-    public float Hp;
-    public float maxHp;
-    public bool Dead;
 
-    public GameObject explosion;
-    public GameObject playerexplosion;
+    public float BossHp;
+    public float MaxHp;
 
-    public int ScoreValue;
+
+    [SerializeField]
+    private int decreaseHp;
+
+    [SerializeField]
+    private int ScoreValue;
+
+    [SerializeField]
+    private bool dead;
+
+    [SerializeField]
+    private GameObject explosion;
+
+    [SerializeField]
+    private GameObject playerexplosion;
 
 
     private void Start()
     {
-
+        BossHp = 30000;
+        MaxHp = 30000;
+        decreaseHp = 15;
+        ScoreValue = 10;
+        dead = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -32,12 +47,14 @@ public class BossAttribute : MonoBehaviour {
         if(other.tag == "Bolt")
         {
             Instantiate(explosion, transform.position, transform.rotation);
-            Hp -= 10;
+            BossHp -= 10;
 
-            if(Hp == 0)
+            if(BossHp == 0)
             {             
                 Instantiate(playerexplosion, transform.position, transform.rotation);
                 Destroy(gameObject);
+
+                dead = true;
             }             
         }
         
