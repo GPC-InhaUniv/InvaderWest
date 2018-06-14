@@ -87,7 +87,7 @@ public class Story : MonoBehaviour {
         {
             if (enemyship.activeSelf == true)
             {
-                //StartCoroutine(MoveInvader());
+                StartCoroutine(MoveInvader());
                 Debug.Log("적");
             }
         }
