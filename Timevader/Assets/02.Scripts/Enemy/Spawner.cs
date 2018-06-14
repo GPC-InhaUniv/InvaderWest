@@ -36,6 +36,8 @@ public class Spawner : MonoBehaviour {
         enemy.transform.position = spawnPoint;
         enemy.transform.rotation = Quaternion.identity;
         enemy.SetActive(true);
+        //NormalEnemy ne;
+        //AttackingEnemy ae;
 
         if (enemy.GetComponent<NormalEnemy>())
         {

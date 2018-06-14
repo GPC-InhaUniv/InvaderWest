@@ -15,7 +15,7 @@ public class ResizebyDistance : MonoBehaviour {
     void Update()
     {
         distance = Vector3.Distance(transform.position, target.transform.position);
-        size = zoomRate / Mathf.Sqrt(distance);
+        size = zoomRate / Mathf.Sqrt(distance); // ※※루트 안 쓰고 거리 편차를 줄일 방법은 없나?※※
         transform.localScale = new Vector3(size, size, size);
     }
 }

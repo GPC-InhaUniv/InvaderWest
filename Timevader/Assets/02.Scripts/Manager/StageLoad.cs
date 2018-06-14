@@ -5,21 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class StageLoad : MonoBehaviour {
 
-    public int? StageNumber;
-    public StageManager stageManager;
+    [SerializeField]
+    int? StageNumber;
+    StageController stageController;
 
     private void Start()
     {
-        stageManager = FindObjectOfType<StageManager>();
+        stageController = FindObjectOfType<StageController>();
     }
 
     public void LoadStage()
     {
-        Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + stageManager.NextStage);
-        if (StageNumber == stageManager.NextStage)
+        Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + stageController.GetNextStageInfo());
+        if (StageNumber == stageController.GetNextStageInfo())
         {
             SceneManager.LoadScene("Stage" + StageNumber);
         }
         Debug.Log("접근할 수 없는 스테이지");
+    }
+
+    public void SetStageNumber(int? num)
+    {
+        StageNumber = num;
     }
 }

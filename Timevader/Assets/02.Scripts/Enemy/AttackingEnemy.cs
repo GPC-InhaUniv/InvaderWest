@@ -76,6 +76,13 @@ public class AttackingEnemy : Enemy{
             default: break;
         }
     }
+
+    public void MoveCurve()
+    {
+        //transform.Translate(Vector3.right.x * moveSpeed *3, 0) * Time.deltaTime);
+
+    }
+
     // TRUE : LeftToRight, FALSE : RightToLeft
     public void MoveZigzag(bool sign)
     {
@@ -84,12 +91,7 @@ public class AttackingEnemy : Enemy{
         if(sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
         else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
     }
-
-    public void MoveCurve()
-    {
-        transform.Translate(new Vector3(Mathf.Cos(seta / curveRate) * moveSpeed * moveHeight, Vector3.down.y * moveSpeed, 0) * Time.deltaTime);
-    }
-
+    
     override public void MoveCircle(bool sign)
     {
         seta -= 1;

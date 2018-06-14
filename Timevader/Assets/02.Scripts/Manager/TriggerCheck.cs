@@ -24,7 +24,10 @@ public class TriggerCheck : MonoBehaviour {
             other.gameObject.GetComponent<Animator>().enabled = true; // ※ 실행 중에 GetComponent ※
             other.gameObject.GetComponent<Animator>().SetTrigger("Checked"); // ※ 실행 중에 GetComponent ※
 
-            stageLoad.StageNumber = int.Parse(info.GetStageLv());
+            int StageNumber;
+            int.TryParse(info.GetStageLv(), out StageNumber);
+
+            stageLoad.SetStageNumber(StageNumber);
             StageLv.text = "Stage" + info.GetStageLv();
             StageInfo.text = info.GetStageInfo();
         }
@@ -38,6 +41,6 @@ public class TriggerCheck : MonoBehaviour {
         other.gameObject.GetComponent<Animator>().enabled = false;
         StageLv.text = string.Empty;
         StageInfo.text = string.Empty;
-        stageLoad.StageNumber = null;
+        stageLoad.SetStageNumber(null);
     }
 }

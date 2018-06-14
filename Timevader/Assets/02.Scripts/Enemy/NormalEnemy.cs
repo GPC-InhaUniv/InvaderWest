@@ -69,4 +69,11 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
     }
+
+    override public void GetDemage(int damage)
+    {
+        hp -= damage;
+        //Debug.Log(gameObject.name + "Damage " + damage);
+        if (hp <= 0) Explode();
+    }
 }

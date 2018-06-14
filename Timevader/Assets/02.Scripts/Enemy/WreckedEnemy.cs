@@ -24,7 +24,7 @@ public class WreckedEnemy : Enemy{
     override public void GetDemage(int damage)
     {
         hp -= damage;
-        Debug.Log(gameObject.name + "Damage " + damage);
+        //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Destroy(gameObject);
     }
 }
