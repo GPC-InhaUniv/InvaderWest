@@ -52,8 +52,6 @@ public class AccountInfo : MonoBehaviour
 
     public string Fuel, Time, AddMissileitem, Assistantitem, LastBombitem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
 
-
-
     private void Awake()
     {
         if (instance != this)

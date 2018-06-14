@@ -19,8 +19,6 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
 
     [SerializeField]
-    private int playerLife;
-    [SerializeField]
     private int playerRestTime;
     [SerializeField]
     public ISubjectable player;
@@ -53,7 +51,6 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
     {
         if (playerLife>0)
         {
-            this.playerLife = playerLife;
             Debug.Log("Observer Success  " + playerLife);
             DisPlayPlayerLife();
         }

@@ -31,9 +31,7 @@ public class StoreFacade : MonoBehaviour {
     private int lastBombitem;
     private int raptor;
     private int blackHawk;
-    private int bestScore;
     private int restTime;
-    private int nextStage;
 
     private void Start()
     {
@@ -44,9 +42,7 @@ public class StoreFacade : MonoBehaviour {
         lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
         raptor = int.Parse(AccountInfo.Instance.Raptor);
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
-        bestScore = int.Parse(AccountInfo.Instance.BestScore);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
-        nextStage = int.Parse(AccountInfo.Instance.NextStage);
         MyInventoryExplainText.text = " ";
 
         CheckInventory();
@@ -113,11 +109,11 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
-            ItemExplain.text = "Item4 is Raptor playership";
+            ItemExplain.text = "Item4 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
             if (raptor == 0)  
             {
-                BuyExPlainText.text = "Item4 is very good to you";
+                BuyExPlainText.text = "Item4 Will be added later";
 
                 BuyButton.interactable = true;
             }
@@ -129,11 +125,11 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
         {
-            ItemExplain.text = "Item5 is BlackHawk playership";
+            ItemExplain.text = "Item5 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 1.0f;
             if (blackHawk == 0) 
             {
-                BuyExPlainText.text = "Item5 is very good to you";
+                BuyExPlainText.text = "Item5 Will be added later";
 
                 BuyButton.interactable = true;
             }

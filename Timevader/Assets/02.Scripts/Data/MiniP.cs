@@ -10,24 +10,22 @@ public class MiniP : MonoBehaviour {
     public GameObject Shot;
     public Transform ShotSpawn;
 
+    public GameObject RotationAxis;
+
     public float fireDelta = 0.35f;
 
     private float nextFire = 0.35f;
     private float myTime = 0.0f;
-
+    private float rotateSpeed = 5.0f;
 
     Rigidbody rigid;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
         //고정//
-        gameObject.transform.RotateAround(new Vector3( 0f, Player.transform.position.y, 0f),0.1f);
+        RotationAxis.transform.Rotate(new Vector3( 0f, Player.transform.position.y, 0f), rotateSpeed);
 
         Shoot(ShotSpawn);
 

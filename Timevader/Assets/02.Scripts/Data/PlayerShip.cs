@@ -244,6 +244,7 @@ public class PlayerShip : MonoBehaviour , ISubjectable
             observerList[i].UpdatePlayerRestTime(playerRestTime);
         }
     }
+    
 
     public void RegisterObserver(IObserverable o)
     {
