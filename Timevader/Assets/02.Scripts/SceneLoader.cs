@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour {
 
     [SerializeField]
-    private GameObject Earth;
+    GameObject Earth;
 
     [SerializeField]
-    private float ConditionRotation;
-
+    float ConditionRotation;
 
 	void Start () {
         ConditionRotation = 30.0f;
@@ -18,16 +17,14 @@ public class SceneLoader : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         LoadNextScene();
-        
-}
+    }
+
     public void LoadNextScene()
     {
         while(Earth.transform.rotation.z > ConditionRotation)
         {
             Debug.Log("다음 씬으로");
-            
         }
         SceneManager.LoadScene("Main");
     }

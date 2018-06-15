@@ -5,30 +5,27 @@ using UnityEngine;
 public class Mover : MonoBehaviour {
 
     [SerializeField]
-    private float speed;
+    float speed;
 
-    private void Start()
+    void Start()
     {
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-
         rigidbody.velocity = transform.up * speed;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt") OutofScreen();
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "BackGround")
             OutofScreen();
     }
-
-    public void OutofScreen()
+    // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
+    void OutofScreen()
     {
-        // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
         this.gameObject.SetActive(false);
     }
-
 }
