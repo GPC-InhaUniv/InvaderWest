@@ -5,11 +5,8 @@ using UnityEngine.UI;
  
 
 
-public class InGameController : MonoBehaviour, IObserverable , IDisplayable
+public class InGameController : MonoBehaviour
 {
-
-
-
     public GameObject GameWinResultPanel;
     public GameObject GameLoseResultPanel;
 
@@ -17,55 +14,36 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
 
     public Image[] LifeImage;
 
+    [SerializeField]
+    private int? playerRestTime = null;
 
     [SerializeField]
-    private int playerRestTime;
-    [SerializeField]
-    public ISubjectable player;
-    
-
-
-    void Awake()
-    {
-
-        //playerLife = GamePlayManager.Instance.PlayerShipNum;
-        player = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-        player.RegisterObserver(this);
-        
-
-    }
-
-    //플레이어 시작라이프//
-    public void GetPlayerLife(int playerLife)
-    {
-        if (playerLife == 3)
-        {
-            LifeImage[0].gameObject.SetActive(false);
-            Debug.Log("라이프줄었다");
-        }
-
-    }
-    //플레이어 라이프//
+    private int playerLife;
 
     public void UpdatePlayerLife(int playerLife)
     {
-        if (playerLife>0)
+        Debug.Log(playerLife);
+        this.playerLife = playerLife;
+
+        if (this.playerLife>0)
         {
             Debug.Log("Observer Success  " + playerLife);
-            DisPlayPlayerLife();
+            DisPlayPlayerLifeImage(playerLife);
         }
         else
         {
-            player.RemoveObserver(this);
-            DisPlayPlayerLife();
+            DisPlayPlayerLifeImage(playerLife);
             GameLoseResultPanel.gameObject.SetActive(true);
+            Debug.Log("UpdatePlayerLife");
         }
     }
-
     //플레이어 시간//
-
     public void UpdatePlayerRestTime(int playerRestTime)
     {
+        Debug.Log(playerRestTime);
+
+        this.playerRestTime = playerRestTime;
+
         if (playerRestTime > 0)
         {
             this.playerRestTime = playerRestTime;
@@ -73,11 +51,9 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         }
         else
         {
-
-            player.RemoveObserver(this);
             GameLoseResultPanel.gameObject.SetActive(true);
-        }
-        
+            Debug.Log("UpdatePlayerRestTime");
+        }       
     }
     public void DisplayPlayerRestTime()
     {
@@ -85,13 +61,10 @@ public class InGameController : MonoBehaviour, IObserverable , IDisplayable
         Debug.Log(playerRestTime);
     }
 
-    public void DisPlayPlayerLife()
+    public void DisPlayPlayerLifeImage(int life)
     {
         //Debug.Log("go");
-        // 옵저버 끊어버리기 player.RemoveObserver(this);
-
-        //Life Image Change//
-        for (int i = 0; i < LifeImage.Length; i++)
+        for (int i = 0; life < LifeImage.Length; i++)
         {
             if (LifeImage[i].gameObject.activeSelf == true)
             {

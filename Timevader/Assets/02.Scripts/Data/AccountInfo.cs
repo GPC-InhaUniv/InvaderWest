@@ -5,21 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 
-//public interface ISubjectable
-//{
-//    void RegisterObserver(IObserverable o);
-//    void RemoveObserver(IObserverable o);
-//    void NotifyObservers();
-//}
-//public interface IObserverable
-//{
-//    void UpdateData(int fuel, int time, int addMissileitem, int assistantitem, int lastBombitem, int raptor,
-//                    int blackHawk, int bestScore, int restTime, int nextStage);
-//}
-//public interface IDisplayable
-//{
-//    void DisPlay();
-//}
+
 
 public class AccountInfo : MonoBehaviour
 {
@@ -97,10 +83,10 @@ public class AccountInfo : MonoBehaviour
     static void OnLogin(LoginResult result)
     {
         Debug.Log("Login with : " + result.PlayFabId);
-        GetAccountInfo(result.PlayFabId);
+        SetAccountInfo(result.PlayFabId);
     }
 
-    public static void GetAccountInfo(string playfabId)
+    public static void SetAccountInfo(string playfabId)
     {
         GetPlayerCombinedInfoRequestParams paramsInfo = new GetPlayerCombinedInfoRequestParams()
         {
@@ -120,9 +106,9 @@ public class AccountInfo : MonoBehaviour
             InfoRequestParameters = paramsInfo,
         };
 
-        PlayFabClientAPI.GetPlayerCombinedInfo(request, OnGetAccountInfo, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.GetPlayerCombinedInfo(request, OnSetAccountInfo, ManagerFuncion.OnAPIError);
     }
-    static void OnGetAccountInfo(GetPlayerCombinedInfoResult result)
+    static void OnSetAccountInfo(GetPlayerCombinedInfoResult result)
     {
         Debug.Log("Updated Account Info!");
         Instance.Info = result.InfoResultPayload;
@@ -134,7 +120,7 @@ public class AccountInfo : MonoBehaviour
         //돈확인하기//
         //UpdateMyMoney();
 
-        GetUserData();
+        SetUserDataInStart();
 
     }
     ////실험으로 만들어본것//
@@ -184,13 +170,13 @@ public class AccountInfo : MonoBehaviour
     static void OnSetUserDataInLogIn(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
-        GetUserData();
+        SetUserDataInStart();
     }
 
     static void OnSetUserData(UpdateUserDataResult result)
     {
         Debug.Log("Successfully updated user data");
-        GetUserDataInShop();
+        SetUserDataInShop();
         
     }
 
@@ -314,17 +300,17 @@ public class AccountInfo : MonoBehaviour
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
     }
 
-    public static void GetUserData()
+    public static void SetUserDataInStart()
     {
         GetUserDataRequest request = new GetUserDataRequest()
         {
             Keys = null
         };
 
-        PlayFabClientAPI.GetUserData(request, OnGetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.GetUserData(request, OnSetUserDataInStart, ManagerFuncion.OnAPIError);
 
     }
-    public static void OnGetUserData(GetUserDataResult result)
+    public static void OnSetUserDataInStart(GetUserDataResult result)
     {
         result.DataVersion = 1;
         Debug.Log("Got user data:");
@@ -336,20 +322,9 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-            //instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
-            //instance.RestTime = result.Data["RestTime"].Value;
-            //instance.BestScore = result.Data["BestScore"].Value;
-            //instance.NextStage = result.Data["NextStage"].Value;
 
-            //instance.Fuel = result.Data["Fuel"].Value;
-            //instance.AddMissileitem = result.Data["AddMissileitem"].Value;
-            //instance.Assistantitem = result.Data["Assistantitem"].Value;
-            //instance.LastBombitem = result.Data["LastBombitem"].Value;
-            //instance.Raptor = result.Data["Raptor"].Value;
-            //instance.BlackHawk = result.Data["BlackHawk"].Value;
-
-            GetInfoList(result);
-            GetShopList(result);
+            SetInfoList(result);
+            SetShopList(result);
 
             Debug.Log("ShopData set up complete");
             SceneManager.LoadScene("Intro");
@@ -359,17 +334,17 @@ public class AccountInfo : MonoBehaviour
 
 
 
-    public static void GetUserDataInShop()
+    public static void SetUserDataInShop()
     {
         GetUserDataRequest request = new GetUserDataRequest()
         {
             Keys = null
         };
 
-        PlayFabClientAPI.GetUserData(request, OnGetUserDataInShop, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.GetUserData(request, OnSetUserDataInShop, ManagerFuncion.OnAPIError);
 
     }
-    public static void OnGetUserDataInShop(GetUserDataResult result)
+    public static void OnSetUserDataInShop(GetUserDataResult result)
     {
         result.DataVersion = 1;
         Debug.Log("Got user data:");
@@ -381,27 +356,14 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-            //instance.Time = result.Data["Time"].Value; // 사용x
-            //instance.RestTime = result.Data["RestTime"].Value;
-            //instance.BestScore = result.Data["BestScore"].Value;
-            //instance.NextStage = result.Data["NextStage"].Value;
 
-            //instance.Fuel = result.Data["Fuel"].Value;
-            //instance.AddMissileitem = result.Data["AddMissileitem"].Value;
-            //instance.Assistantitem = result.Data["Assistantitem"].Value;
-            //instance.LastBombitem = result.Data["LastBombitem"].Value;
-            //instance.Raptor = result.Data["Raptor"].Value;
-            //instance.BlackHawk = result.Data["BlackHawk"].Value;
-
-            GetShopList(result);
+            SetShopList(result);
             Debug.Log("ShopData set up complete");
         }
     }
 
 
-
-
-    public static void GetInfoList(GetUserDataResult result)
+    public static void SetInfoList(GetUserDataResult result)
     {
         instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
         instance.RestTime = result.Data["RestTime"].Value;
@@ -409,7 +371,7 @@ public class AccountInfo : MonoBehaviour
         instance.NextStage = result.Data["NextStage"].Value;
 
     }
-    public static void GetShopList(GetUserDataResult result)
+    public static void SetShopList(GetUserDataResult result)
     {
         instance.Fuel = result.Data["Fuel"].Value;
         instance.AddMissileitem = result.Data["AddMissileitem"].Value;
