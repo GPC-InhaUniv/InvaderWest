@@ -21,28 +21,28 @@ public class DragRotation : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
             {
-                Debug.Log(hit.collider.tag);
-                // 지구 회전
-                Debug.Log("Raycast Hit");
+                //Debug.Log(hit.collider.tag);
+                //// 지구 회전
+                //Debug.Log("Raycast Hit");
                 TouchSlide();
             }
         }
         if (Input.GetMouseButtonUp(0))
             prevPoint = Input.mousePosition;
     }
-    
+
     void TouchSlide()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("click");
-            prevPoint = Input.mousePosition;
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("click");
+        //    prevPoint = Input.mousePosition;
+        //}
+        //else 
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("Drag");
-            float dragValue = (prevPoint.x - Input.mousePosition.x) / 5 - (prevPoint.y - Input.mousePosition.y);
-            // r^2 = x^2 + y^2
+            //Debug.Log("Drag");
+            float dragValue = Input.mousePosition.y - prevPoint.y;
             Vector3 rotatePower = new Vector3(0, 0, dragValue );
 
             //Debug.Log("roat" + dragValue);
