@@ -13,13 +13,12 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float speed;
 
-    public Boundary Boundary;
+    [SerializeField]
+    Boundary Boundary;
 
     public GameObject Shot;
     [SerializeField]
-    private Transform shotSpawn;
-    [SerializeField]
-    private Transform addedSpawn;
+    private Transform shotSpawn, addedSpawn;
 
     [SerializeField]
     private float fireDelta = 0.5f;
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour {
     private float nextFire = 0.5f;
     private float myTime = 0.0f;
 
-    Rigidbody rigid;
     Vector3 movement;
 
     bool hasDoubleMissile = false;
@@ -72,11 +70,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
-        rigid = GetComponent<Rigidbody>();
-    }
-
     private void Update()
     {
         if (hasDoubleMissile == true)
@@ -90,27 +83,23 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        //if (Input.anyKeyDown)
+        MovePlayer();
+    }
+
+    /* 지용 */
+    void MovePlayer()
+    {
+        if (Input.GetMouseButton(0))
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+            movement = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));            
+            transform.position = Vector3.Lerp(transform.position, movement, Time.deltaTime * speed);
 
-            movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-            rigid.velocity = movement * speed;
-
-            rigid.position = new Vector3
+            transform.position = new Vector3
             (
-                Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
-                Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
+                Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
+                Mathf.Clamp(transform.position.y, Boundary.yMin, Boundary.yMax),
                 0.0f
             );
         }
-        /*
-        else
-        {
-            movement = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(movement.x, movement.y, 0.0f);
-        }
-        */
     }
 }

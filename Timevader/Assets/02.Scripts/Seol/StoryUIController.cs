@@ -1,55 +1,50 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Story : MonoBehaviour {
-        
-    [SerializeField]
-    private Button btnEarth;
-    [SerializeField]
-    private GameObject SelectPanel;
-    [SerializeField]
-    private GameObject ConfirmPanel;
+public class StoryUIController : MonoBehaviour {
 
     [SerializeField]
-    private GameObject[] btnStories;
+    Button earthButton;
+    [SerializeField]
+    GameObject confirmPanel;
 
     [SerializeField]
-    private Button btnStory1;
+    GameObject[] storyButtons;
 
     [SerializeField]
-    private GameObject enemyship;
+    Button storyButton1;
 
     [SerializeField]
-    private Button easyBtn;
+    GameObject enemyship;
+
     [SerializeField]
-    private Button normalBtn;
+    Button easyButton;
     [SerializeField]
-    private Button hardBtn;
+    Button normalButton;
+    [SerializeField]
+    Button hardButton;
 
     int i = 0;
-    
+
     public void NextPage()
     {
-        btnStories[i].SetActive(false);
+        storyButtons[i].SetActive(false);
         i++;
-        btnStories[i].SetActive(true);
+        storyButtons[i].SetActive(true);
     }
 
-    public void SelectOK()
+    void SelectOK()
     {
         //AccountInfo.ChangeRestTimeData(50000);
         //SceneManager.LoadScene("Main");
     }
 
-    public void SelectCancel()
+    void SelectCancel()
     {
-        ConfirmPanel.SetActive(false);
+        confirmPanel.SetActive(false);
     }
-
+    /*
     void SetScale(Button earth, Vector3 scale)
     {
         earth.transform.localScale = scale;
@@ -59,7 +54,7 @@ public class Story : MonoBehaviour {
     {
         invader.transform.localPosition = position;
     }
-
+    */
     /*
     public static void AddEventTriggerListener(EventTrigger trigger,
                                             EventTriggerType eventType,
@@ -75,14 +70,20 @@ public class Story : MonoBehaviour {
 
     void Start()
     {
-        btnEarth.onClick.AddListener(OnClickEarthButton);
+        earthButton.onClick.AddListener(OnClickEarthButton);
 
         //EventTrigger trigger = GetComponentInParent<EventTrigger>();
         //trigger.OnMove(EventTriggerType.Move, AxisEventData eventData); 
     }
     
-    void Update()
+    void FixedUpdate()
     {
+        if (earthButton.transform.localScale.x > 2.8)
+        {
+            storyButton1.interactable = true;
+            earthButton.interactable = false;
+        }
+
         if (enemyship != null)
         {
             if (enemyship.activeSelf == true)
@@ -94,30 +95,22 @@ public class Story : MonoBehaviour {
         else
             return;
     }
-    
-    private void FixedUpdate()
-    {
-        if (btnEarth.transform.localScale.x > 2.8)
-        {
-            btnStory1.interactable = true;            
-        }
-    }
 
     private IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
-        btnEarth.interactable = false;
+
         float j = 1;
 
         while (j <= 3.0f)
         {
-            SetScale(btnEarth, new Vector3(j, j, j));
+            earthButton.transform.localScale = new Vector3(j, j, j);
             j += 0.1f;
 
             yield return waitsec;
-            Debug.Log("지구 커져라");           
-            
-        }        
+            Debug.Log("지구 커져라");
+
+        }
 
     }
 
@@ -129,18 +122,19 @@ public class Story : MonoBehaviour {
 
         while (k > 527)
         {
-            SetPosition(enemyship, new Vector3(0, k, 0));
-            k -= 30;
+            enemyship.transform.localPosition = new Vector3(0,k,0);
+            //SetPosition(enemyship, new Vector3(0, k, 0));
+            k -= 1;
 
             yield return waitsec;
             Debug.Log("침략군 강림");
+
         }
+
     }
 
-    public void OnClickEarthButton()
+    void OnClickEarthButton()
     {
-        StartCoroutine(ZoomEarth());        
+        StartCoroutine(ZoomEarth());
     }
- 
-    
 }

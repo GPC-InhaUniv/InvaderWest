@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoreFacade : MonoBehaviour {
+public enum DataBoolean
+{
+    FALSE =0,
+    TRUE =1,
+} 
 
+public class StoreFacade : MonoBehaviour {
 
     //재화관련//
     public Text MyTimeText;
@@ -15,7 +20,7 @@ public class StoreFacade : MonoBehaviour {
     public Image MyInventroy1;
     public Image MyInventroy2;
     public Image MyInventroy3;
-
+    
 
     public Text MyInventoryExplainText;
     //스크롤 관련//
@@ -44,13 +49,9 @@ public class StoreFacade : MonoBehaviour {
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
         MyInventoryExplainText.text = " ";
-
-        CheckInventory();
-        //여기서 부르질 않음//
-        //AccountInfo.Instance.RegisterObserver(this);
-        //AccountInfo.Instance.MeasureChangedData();
         
-
+        CheckInventory();
+ 
         ChangeValue();
 
     }
@@ -62,7 +63,7 @@ public class StoreFacade : MonoBehaviour {
         {
             ItemExplain.text = "Item1 is AddMissileitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
-            if (addMissileitem == 0)
+            if (addMissileitem == (int)DataBoolean.FALSE)
             {
                 BuyExPlainText.text = "Item1 is very good to you";
 
@@ -79,7 +80,7 @@ public class StoreFacade : MonoBehaviour {
         {
             ItemExplain.text = "Item2 is Assistantitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
-            if (assistantitem == 0) 
+            if (assistantitem == (int)DataBoolean.FALSE) 
             {
                 BuyExPlainText.text = "Item2 is very good to you";
 
@@ -95,7 +96,7 @@ public class StoreFacade : MonoBehaviour {
         {
             ItemExplain.text = "Item3 is LastBombitem";
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
-            if (lastBombitem == 0) 
+            if (lastBombitem == (int)DataBoolean.FALSE) 
             {
                 BuyExPlainText.text = "Item3 is very good to you";
 
@@ -111,7 +112,7 @@ public class StoreFacade : MonoBehaviour {
         {
             ItemExplain.text = "Item4 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
-            if (raptor == 0)  
+            if (raptor == (int)DataBoolean.FALSE)  
             {
                 BuyExPlainText.text = "Item4 Will be added later";
 
@@ -127,7 +128,7 @@ public class StoreFacade : MonoBehaviour {
         {
             ItemExplain.text = "Item5 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 1.0f;
-            if (blackHawk == 0) 
+            if (blackHawk == (int)DataBoolean.FALSE) 
             {
                 BuyExPlainText.text = "Item5 Will be added later";
 
@@ -148,7 +149,7 @@ public class StoreFacade : MonoBehaviour {
     {
         if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
         {
-            if (addMissileitem == 0)
+            if (addMissileitem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
                 BuyAddMissileitem(50, 1);
                 ChangeValue();
@@ -160,7 +161,7 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
-            if (assistantitem == 0)
+            if (assistantitem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
                 BuyAssistantitem(50, 1);
                 ChangeValue();
@@ -172,7 +173,7 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
         {
-            if (lastBombitem == 0)
+            if (lastBombitem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
                 BuyLastBombitem(50, 1);
                 ChangeValue();
@@ -184,7 +185,7 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
-            if (raptor == 0)
+            if (raptor == (int)DataBoolean.FALSE && myFuel >= 50) 
             {
                 BuyRaptor(50, 1);
                 ChangeValue();
@@ -196,7 +197,7 @@ public class StoreFacade : MonoBehaviour {
         }
         if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
         {
-            if (blackHawk == 0)
+            if (blackHawk == (int)DataBoolean.FALSE && myFuel >= 50)
             {
                 BuyBlackHawk(50, 1);
                 ChangeValue();
@@ -213,17 +214,17 @@ public class StoreFacade : MonoBehaviour {
         MyFuelText.text = myFuel.ToString();
         MyTimeText.text = restTime.ToString();
 
-        if (addMissileitem == 0) 
+        if (addMissileitem == (int)DataBoolean.FALSE) 
             MyInventroy1.gameObject.SetActive(false);
         else
             MyInventroy1.gameObject.SetActive(true);
 
-        if (assistantitem == 0) 
+        if (assistantitem == (int)DataBoolean.FALSE) 
             MyInventroy2.gameObject.SetActive(false);
         else
             MyInventroy2.gameObject.SetActive(true);
 
-        if (lastBombitem == 0) 
+        if (lastBombitem == (int)DataBoolean.FALSE) 
             MyInventroy3.gameObject.SetActive(false);
         else
             MyInventroy3.gameObject.SetActive(true);

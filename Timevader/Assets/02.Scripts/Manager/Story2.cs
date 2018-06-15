@@ -130,7 +130,7 @@ public class Story2 : MonoBehaviour {
         int k = 879;
 
         while (k <= 527)
-        {
+        {            
             SetPosition(enemyship, new Vector3(0, k, 0));
             k -= 1;
 

@@ -2,33 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum GameState
 {
     Ready,
     Start,
     GameOver
 }
-
-public interface ISubjectable
-{
-    void RegisterObserver(IObserverable o);
-    void RemoveObserver(IObserverable o);
-    void NotifyPlayerLifeToObservers();
-    void NotifyPlayerRestTimeToObservers();
-}
-public interface IObserverable
-{
-    void UpdatePlayerLife(int playerLife);
-    void GetPlayerLife(int playerLife);
-    void UpdatePlayerRestTime(int playerRestTime);
-}
-public interface IDisplayable
-{
-    void DisPlayPlayerLife();
-    void DisplayPlayerRestTime();
-}
-
 /// <summary>
 /// 설님꺼 합치기
 /// </summary>
@@ -39,8 +18,15 @@ public class Boundary1
 }
 
 
-public class PlayerShip : MonoBehaviour , ISubjectable
+public class PlayerShip : MonoBehaviour
 {
+
+    public delegate void NotifyObserver(int PlayerLife);
+    NotifyObserver notifyLifetoObserver;
+    NotifyObserver notifyRestTimeObserver;
+    public InGameController inGameController;
+
+
     [SerializeField]
     private int playerLife;
     [SerializeField]
@@ -57,9 +43,8 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     private int lastBombitem;
 
 
-    List<IObserverable> observerList = new List<IObserverable>();
 
-    GameState NowGameState;
+    GameState nowGameState;
 
 
 
@@ -68,32 +53,23 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     /// </summary>
     [SerializeField]
     private float speed;
-
     public Boundary Boundary;
-
     public GameObject Shot;
     public Transform ShotSpawn;
     public Transform AddedSpawn;
-
     public float fireDelta = 0.2f;
     [SerializeField]
     private float nextFire = 0.2f;
     private float myTime = 0.0f;
-
     Rigidbody rigid;
     Vector3 movement;
-
-
-
     void Shoot(Transform AnySpawn)
     {
         myTime = myTime + Time.deltaTime;
-
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
             Instantiate(Shot, AnySpawn.position, AnySpawn.rotation);
-
             nextFire = nextFire - myTime;
             myTime = 0.0f;
         }
@@ -101,57 +77,63 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     /// <summary>
     /// 설님꺼
     /// </summary>
-
     void Start()
     {
         ///설님꺼
         rigid = GetComponent<Rigidbody>();
         ///설님꺼
-        NowGameState = GameState.Ready;
+        nowGameState = GameState.Ready;
 
         Invoke("GameStart", 2.0f);
 
         //addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
         //assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
         //lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
-       fireDelta = 0.7f;
+        //inGameController = new InGameController();
 
-    GamePlayManager.Instance.PlayerShipNum = 2;
+
+        GamePlayManager.Instance.PlayerShipNum = 1;
 
 
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
             playerLife = 3;
             playerRestTime = 5000;
-
         }
-        if (GamePlayManager.Instance.PlayerShipNum == 2)
+        else if (GamePlayManager.Instance.PlayerShipNum == 2)
         {
-            playerLife = 3;
-            playerRestTime = 5000;
-
+            playerLife = 4;
+            playerRestTime = 3800;
         }
 
-        if (addMissileitem == 1)
+        if (addMissileitem == (int)DataBoolean.TRUE)
         {
             UseAddMissileitem();
             Debug.Log("UseAddMissileitem");
-
         }
-        if (assistantitem == 1)
+        if (assistantitem == (int)DataBoolean.TRUE)
         {
             UseAssistantitem();
             Debug.Log("UseAssistantitem");
         }
-        StartCoroutine("LoseTime");
 
-        NotifyStartDataToObservers();
+        //NotifyStartDataToObservers();
+
+
+        notifyLifetoObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
+        if (notifyLifetoObserver != null)
+            notifyLifetoObserver(playerLife);
+        notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
+        if (notifyRestTimeObserver != null)
+            notifyRestTimeObserver(playerRestTime);
+
+        StartCoroutine("LoseTime");
 
     }
 
     void GameStart()
     {
-        NowGameState = GameState.Start;
+        nowGameState = GameState.Start;
     }
 
 
@@ -171,22 +153,20 @@ public class PlayerShip : MonoBehaviour , ISubjectable
                 {
                     AddMissileItem.gameObject.SetActive(false);
                 }
-                NotifyPlayerLifeToObservers();
+                //NotifyPlayerLifeToObservers();
 
+                notifyLifetoObserver(playerLife);
             }
         }
     }
-
-
     private void Update()
     {
-        if (NowGameState == GameState.Start)
+        if (nowGameState == GameState.Start)
         {
             ///설님꺼
             Shoot(ShotSpawn);
             ///설님꺼
-
-            if (lastBombitem == 1)
+            if (lastBombitem == (int)DataBoolean.TRUE)
             {
                 UseLastBombitem();
                 Debug.Log("UseLastBombitem");
@@ -195,13 +175,12 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         if (playerLife <= 0)
         {
             playerLife = 0;
-            NowGameState = GameState.GameOver;
+            nowGameState = GameState.GameOver;
         }
-
     }
     private void FixedUpdate()
     {
-        if (NowGameState == GameState.Start)
+        if (nowGameState == GameState.Start)
         {
             {
                 float moveHorizontal = Input.GetAxis("Horizontal");
@@ -220,46 +199,11 @@ public class PlayerShip : MonoBehaviour , ISubjectable
         }
 
     }
-
-    public void NotifyStartDataToObservers()
-    {
-        for (int i = 0; i < observerList.Count; i++)
-        {
-            observerList[i].GetPlayerLife(playerLife);
-        }
-    }
-
-    public void NotifyPlayerLifeToObservers()
-    {
-        for (int i = 0; i < observerList.Count; i++)
-        {
-            observerList[i].UpdatePlayerLife(playerLife);
-        }
-
-    }
-    public void NotifyPlayerRestTimeToObservers()
-    {
-        for (int i = 0; i < observerList.Count; i++)
-        {
-            observerList[i].UpdatePlayerRestTime(playerRestTime);
-        }
-    }
-    
-
-    public void RegisterObserver(IObserverable o)
-    {
-        observerList.Add(o);           
-    }
-    public void RemoveObserver(IObserverable o)
-    {
-        observerList.Remove(o);
-    }
-
-
     private IEnumerator LoseTime()
     {
         playerRestTime = playerRestTime - 10;
-        NotifyPlayerRestTimeToObservers();
+        //NotifyPlayerRestTimeToObservers();
+        notifyRestTimeObserver(playerRestTime);
 
         yield return new WaitForSeconds(1.5f);
 
@@ -282,6 +226,56 @@ public class PlayerShip : MonoBehaviour , ISubjectable
     void UseLastBombitem()
     {
         AccountInfo.ChangeLastBombitemData(0);
-
     }
 }
+
+    ///observer Ex///
+    //public interface ISubjectable
+    //{
+    //    void RegisterObserver(IObserverable o);
+    //    void RemoveObserver(IObserverable o);
+    //    void NotifyPlayerLifeToObservers();
+    //    void NotifyPlayerRestTimeToObservers();
+    //}
+    //public interface IObserverable
+    //{
+    //    void UpdatePlayerLife(int playerLife);
+    //    void GetPlayerLife(int playerLife);
+    //    void UpdatePlayerRestTime(int playerRestTime);
+    //}
+    //public interface IDisplayable
+    //{
+    //    void DisPlayPlayerLife();
+    //    void DisplayPlayerRestTime();
+    //}
+    /////////////////////////////////////////////////
+    //public void NotifyStartDataToObservers()
+    //{
+    //    for (int i = 0; i < observerList.Count; i++)
+    //    {
+    //        observerList[i].GetPlayerLife(playerLife);
+    //    }
+    //}
+    //public void NotifyPlayerLifeToObservers()
+    //{
+    //    for (int i = 0; i < observerList.Count; i++)
+    //    {
+    //        observerList[i].UpdatePlayerLife(playerLife);
+    //    }
+    //}
+    //public void NotifyPlayerRestTimeToObservers()
+    //{
+    //    for (int i = 0; i < observerList.Count; i++)
+    //    {
+    //        observerList[i].UpdatePlayerRestTime(playerRestTime);
+    //    }
+    //}
+    //public void RegisterObserver(IObserverable o)
+    //{
+    //    observerList.Add(o);           
+    //}
+    //public void RemoveObserver(IObserverable o)
+    //{
+    //    observerList.Remove(o);
+    //}
+

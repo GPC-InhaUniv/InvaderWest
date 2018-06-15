@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class BossAttribute : MonoBehaviour {
 
-
     public float BossHp;
     public float MaxHp;
 
+    [SerializeField]
+    int decreaseHp;
 
     [SerializeField]
-    private int decreaseHp;
+    int ScoreValue;
 
     [SerializeField]
-    private int ScoreValue;
+    bool dead;
 
     [SerializeField]
-    private bool dead;
+    GameObject explosion;
 
     [SerializeField]
-    private GameObject explosion;
-
-    [SerializeField]
-    private GameObject playerexplosion;
+    GameObject playerexplosion;
 
 
-    private void Start()
+    void Start()
     {
         BossHp = 30000;
         MaxHp = 30000;
