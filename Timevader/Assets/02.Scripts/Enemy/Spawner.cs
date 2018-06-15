@@ -10,9 +10,12 @@ public class Spawner : MonoBehaviour {
     EnemyFactory factory;
 
     [SerializeField]
-    int spawnCount = 3;
+    int spawnCount = 5;
 
     int stageLevel = 1;
+
+    [SerializeField]
+    float SPAWNDELAY = 0.3f, WAVEDELAY = 1.0f;
     
     void Start()
     {
@@ -55,26 +58,43 @@ public class Spawner : MonoBehaviour {
 
     private IEnumerator Stage1()
     {
-        yield return new WaitForSeconds(2.0f);
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Attacking, spawnPoint[0].position, Direction.Curve_RightDown);
-            yield return new WaitForSeconds(0.5f);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Curve_LeftDown);
+            yield return new WaitForSeconds(SPAWNDELAY);
         }
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(WAVEDELAY);
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Zigzag_RightToLeft);
-            yield return new WaitForSeconds(0.5f);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[0].position, Direction.Line_LeftToRight);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Line_RightToLeft);
+            yield return new WaitForSeconds(SPAWNDELAY);
         }
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(WAVEDELAY);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[2].position, Direction.Circle_CounterClockwise);
+            yield return new WaitForSeconds(SPAWNDELAY);
+        }
+        yield return new WaitForSeconds(WAVEDELAY);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[0].position, Direction.Zigzag_LeftToRight);
+            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Zigzag_RightToLeft);
+            yield return new WaitForSeconds(SPAWNDELAY);
+        }
+        yield return new WaitForSeconds(WAVEDELAY);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Attacking, spawnPoint[2].position, Direction.Circle_Clockwise);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(SPAWNDELAY);
         }
+        yield return new WaitForSeconds(WAVEDELAY);
 
         StartSpawn();
     }
