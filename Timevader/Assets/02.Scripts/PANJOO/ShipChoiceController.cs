@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ShipChoiceNum : MonoBehaviour {
+public class ShipChoiceController : MonoBehaviour {
 
     [SerializeField]
     GameObject[] LifeImages;
