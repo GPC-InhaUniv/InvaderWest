@@ -2,34 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemList
+{
+    AddMissileItem = 0,
+    AssistantItem,
+    IncreasingShotSpeedItem,
+}
+
 public class Item : MonoBehaviour {
-
-    public enum ItemKind
-    {
-        AddMissileItem,
-        AssistantItem,
-        IncreasingShotSpeedItem,
-    };
-
     protected Player player;
-    public ItemKind kind;
+    public ItemList kind;
 
     float moveSpeed = 1.0f;
     [SerializeField]
     float RotateValue = 1.0f;
 
-    private void Awake()
+    void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
         transform.Rotate(0.0f, RotateValue, 0.0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
