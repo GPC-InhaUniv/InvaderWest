@@ -29,7 +29,7 @@ public class ShipChoiceController : MonoBehaviour {
 
     int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
 
-    const int initValue = 1; 
+    const int InitValue = 1; 
 
     int playerShipAmount;
 
@@ -63,9 +63,9 @@ public class ShipChoiceController : MonoBehaviour {
         HideSpaceShip();
         playerShips[playerSelectSpaceShipNumber].SetActive(true);
 
-        ChangeStatusText(initValue);
-        OnLifeImage(initValue);
-        CheckSpaceShipLock(initValue);
+        ChangeStatusText(InitValue);
+        OnLifeImage(InitValue);
+        CheckSpaceShipLock(InitValue);
     }
 
     void ChangeInventory()    //수정한사람 황윤우 
@@ -77,10 +77,10 @@ public class ShipChoiceController : MonoBehaviour {
 
     int GetPlayerShipAmount()
     {
-        playerShipAmount = playerShips.Length - initValue; //플레이어가 가진 우주선 갯수
+        playerShipAmount = playerShips.Length - InitValue; //플레이어가 가진 우주선 갯수
         return playerShipAmount;
     }
-    void SetGamePlayManagerData()
+    void SetGamePlayManagerData() //구조체 수정
     {
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); //개선할 것
@@ -139,35 +139,32 @@ public class ShipChoiceController : MonoBehaviour {
 
         switch (choiceNum)
         {
-            case 1:
-                if (choiceNum == 1)
-                {
-                    DisplayStart();
-                }
-                break;
             case 2:
-                if (blackHawk == 1)
-                {               
+                if (blackHawk == 1)             
                     DisplayStart();
-                }
                 else
-                {
                     DisplayLock(choiceNum);
-                }
                 break;
             case 3:
                 if (raptor == 1)
-                {
                     DisplayStart();
-                }
                 else
-                {
                     DisplayLock(choiceNum);
-                }
                 break;
             default:
                 break;
         }
+
+        //if (blackHawk == 0)
+        //    DisplayLock(choiceNum);
+        //if (raptor == 0)
+        //    DisplayLock(choiceNum);
+        //if (!(choiceNum == 1))
+        //    return;
+        //if (!(blackHawk == 1 && raptor == 1))
+        //    return;
+        //else
+        //    DisplayStart();
     }
 
     void DisplayLock(int choiceNum)
@@ -203,7 +200,6 @@ public class ShipChoiceController : MonoBehaviour {
         HideSpaceShip();
         OffLifeImage();
         playerShips[playerSelectSpaceShipNumber].SetActive(false); //버튼 누른 당시 화면 우주선 사라짐
-        //
 
         playerSelectSpaceShipNumber = next; //선택 값 저장
 

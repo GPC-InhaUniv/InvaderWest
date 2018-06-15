@@ -113,13 +113,14 @@ public class DrageEarthRotation : MonoBehaviour {
         {
             Debug.Log("다음 씬으로");
             StartCoroutine(EffectCoroutine());
-
-            if (MainCamera.fieldOfView < 170.0f)
-                HieObject();
-                uIFader.CanvasFadeIn(FadePanel);
-
-                StartCoroutine(WaitTimeForNextScene());
-
+            {
+                if (MainCamera.fieldOfView < 170.0f)
+                {
+                    HieObject();
+                    uIFader.CanvasFadeIn(FadePanel);
+                    StartCoroutine(WaitTimeForNextScene());
+                }
+            }
         }
     }
 
