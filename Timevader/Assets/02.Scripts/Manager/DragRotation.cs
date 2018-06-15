@@ -9,9 +9,6 @@ public class DragRotation : MonoBehaviour {
     public GameObject Earth, Cloud;
     public Text StageInfo;
     public GameObject[] Invaders;
-
-    public GraphicRaycaster gr;
-    PointerEventData ped;
     Vector3 prevPoint;
 
     public float RotateSpeed = 1f;

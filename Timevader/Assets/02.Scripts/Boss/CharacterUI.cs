@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour {
-    private BossAttribute attri;
+    BossAttribute attri;
     public Slider hpBar;
 
 	// Use this for initialization
