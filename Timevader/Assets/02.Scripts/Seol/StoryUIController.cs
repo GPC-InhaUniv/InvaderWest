@@ -27,7 +27,7 @@ public class StoryUIController : MonoBehaviour {
 
     int i = 0;
 
-    void NextPage()
+    public void NextPage()
     {
         storyButtons[i].SetActive(false);
         i++;
@@ -44,7 +44,7 @@ public class StoryUIController : MonoBehaviour {
     {
         confirmPanel.SetActive(false);
     }
-
+    /*
     void SetScale(Button earth, Vector3 scale)
     {
         earth.transform.localScale = scale;
@@ -54,7 +54,7 @@ public class StoryUIController : MonoBehaviour {
     {
         invader.transform.localPosition = position;
     }
-
+    */
     /*
     public static void AddEventTriggerListener(EventTrigger trigger,
                                             EventTriggerType eventType,
@@ -104,7 +104,7 @@ public class StoryUIController : MonoBehaviour {
 
         while (j <= 3.0f)
         {
-            SetScale(earthButton, new Vector3(j, j, j));
+            earthButton.transform.localScale = new Vector3(j, j, j);
             j += 0.1f;
 
             yield return waitsec;
@@ -122,7 +122,8 @@ public class StoryUIController : MonoBehaviour {
 
         while (k > 527)
         {
-            SetPosition(enemyship, new Vector3(0, k, 0));
+            enemyship.transform.localPosition = new Vector3(0,k,0);
+            //SetPosition(enemyship, new Vector3(0, k, 0));
             k -= 1;
 
             yield return waitsec;

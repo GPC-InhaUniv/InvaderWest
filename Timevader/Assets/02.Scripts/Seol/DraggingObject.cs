@@ -1,23 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DraggingShip : MonoBehaviour {
+public class DraggingObject : MonoBehaviour {
 
     float middleValue = 100.0f;
     float increaseValue = 1.0f;
 
     //지구를 돌리는
     [SerializeField]
-    GameObject ship;
+    GameObject arrow;
     
     Vector3 prevPoint;
+    Vector3 currentPoint;
 
-    float ConditionRotation;
+    float ConditionRotation;    
 
-    [SerializeField]
-    [Range(-0.5f, 5f)]
-    float rotateSpeed;
+    //[SerializeField]
+    //[Range(-0.5f, 5f)]
+    //float rotateSpeed;
 
     [SerializeField]
     Camera MainCamera;
@@ -58,18 +60,27 @@ public class DraggingShip : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("click");
-            prevPoint = Input.mousePosition;
+            prevPoint = currentPoint = Input.mousePosition;
+
         }
         if (Input.GetMouseButton(0))
         {
             Debug.Log("Drag");
-            float dragValue = (prevPoint.x - Input.mousePosition.x) / 5 - (prevPoint.y - Input.mousePosition.y);
-            // r^2 = x^2 + y^2
-            Vector3 rotatePower = new Vector3(0, 0, dragValue);
+
+            currentPoint = Input.mousePosition;
+            Vector3 gap = currentPoint - prevPoint;
+            arrow.transform.position += gap;
+            prevPoint = currentPoint;
+
+
+            //float dragValue = (prevPoint.x - Input.mousePosition.x) / 5 - (prevPoint.y - Input.mousePosition.y);
+            //float dragValue = prevPoint.y - Input.mousePosition.y;
+            //Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
             //Debug.Log("roat" + dragValue);
-            ship.transform.Rotate(rotatePower / 2 * rotateSpeed);
-            prevPoint = Input.mousePosition;
+            //ship.transform.Rotate(rotatePower / 2 * rotateSpeed);
+            //arrow.transform.localPosition = 
+            //prevPoint = Input.mousePosition;
         }
     }
 
@@ -87,19 +98,19 @@ public class DraggingShip : MonoBehaviour {
             float dragValue = (prevPoint.x - Input.GetTouch(0).position.x) / 5 - (prevPoint.y - Input.GetTouch(0).position.y);
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
-            ship.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime);
+            //arrow.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime);
 
             prevPoint = Input.GetTouch(0).position;
         }
     }    
-
-    void HieObject()
+    /*
+    void HideObject()
     {
         for (int i = 0; i < otherObject.Length - 1; i++)
         {
             otherObject[i].SetActive(false);
         }
-        ship.SetActive(false);
+        arrow.SetActive(false);
     }    
-    
+    */
 }

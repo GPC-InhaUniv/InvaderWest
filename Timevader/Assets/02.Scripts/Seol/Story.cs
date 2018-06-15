@@ -114,7 +114,7 @@ public class Story : MonoBehaviour {
             SetScale(btnEarth, new Vector3(j, j, j));
             j += 0.1f;
 
-            yield return waitsec;                    
+            yield return waitsec;
             Debug.Log("지구 커져라");           
             
         }        
