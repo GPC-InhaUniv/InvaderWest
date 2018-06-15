@@ -32,17 +32,17 @@ public class Player : MonoBehaviour {
 
     bool hasDoubleMissile = false;
 
-    public void GetItem(Item.ItemKind itemKind)
+    public void GetItem(ItemList itemKind)
     {
         switch (itemKind)
         {
-            case Item.ItemKind.AddMissileItem:
+            case ItemList.AddMissileItem:
                 AddMissile();
                 break;
-            case Item.ItemKind.IncreasingShotSpeedItem:
+            case ItemList.IncreasingShotSpeedItem:
                 IncreasingShotSpeed();
                 break;
-            case Item.ItemKind.AssistantItem:
+            case ItemList.AssistantItem:
                 break;
         }
     }

@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackingEnemy : Enemy{
-    int maxHp = 3, hp;
-    float moveSpeed = 2.0f;
-    float seta = 0;
-    float setaRate = 0.5f;
-    Direction moveDirection;
-    public Direction MoveDirection { set { moveDirection = value; } }
     int attackRate = 11;
     //float attackPower = 1.0f;
+    int maxHp = 3, hp;
+    float seta = 0;
+    float t = 0;
+    Direction moveDirection;
+    public Direction MoveDirection { set { moveDirection = value; } }
 
-    private void Start()
+    void Start()
     {
-        
-        hp = maxHp;
         MissilePool = enemy.MissilePool;
+        hp = maxHp;
         WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Move();
     }
 
-    private IEnumerator Attack()
+    IEnumerator Attack()
     {
         while (true)
         {
@@ -40,11 +38,10 @@ public class AttackingEnemy : Enemy{
                 shot.transform.position = transform.position;
             }
             yield return null;
-
         }
     }
 
-    override public void Move()
+    override protected void Move()
     {
         switch (moveDirection)
         {
@@ -69,30 +66,34 @@ public class AttackingEnemy : Enemy{
                 MoveCircle(false); break;
 
             case Direction.Curve_RightDown:
-                MoveCurve(); break;
+                MoveCurve(true); break;
 
             case Direction.Curve_LeftDown:
-                break;
+                MoveCurve(false); break;
             default: break;
         }
     }
 
-    public void MoveCurve()
+    // TRUE : RightDown, FALSE : LeftDown
+    override protected void MoveCurve(bool sign)
     {
-        //transform.Translate(Vector3.right.x * moveSpeed *3, 0) * Time.deltaTime);
-
+        t += 0.7f * Time.deltaTime;
+        if(sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, t * Mathf.Lerp(0, moveHeight, t), 0) * Time.deltaTime);
+        else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, t * Mathf.Lerp(0, moveHeight, t), 0) * Time.deltaTime);
     }
 
     // TRUE : LeftToRight, FALSE : RightToLeft
-    public void MoveZigzag(bool sign)
+    override protected void MoveZigzag(bool sign)
     {
         if (seta > MAXSETA) seta %= MAXSETA;
-        seta += setaRate;
-        if(sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
-        else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta / curveRate) * moveSpeed * moveHeight, 0) * Time.deltaTime);
+        //seta += setaRate;
+        seta += Time.deltaTime * moveSpeed;
+        if (sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta) * moveHeight, 0) * Time.deltaTime);
+        else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta) * moveHeight, 0) * Time.deltaTime);
     }
-    
-    override public void MoveCircle(bool sign)
+
+    // TRUE : Clockwise, FALSE : CounterClockwise
+    override protected void MoveCircle(bool sign)
     {
         seta -= 1;
         if (seta > MAXSETA) seta %= MAXSETA;
@@ -108,13 +109,14 @@ public class AttackingEnemy : Enemy{
         transform.Translate(new Vector3(x, y, 0) * circleSpeed / 2 * Time.deltaTime);
     }
 
-    override public void Init()
+    override protected void Init()
     {
         seta = 0;
         hp = maxHp;
+        t = 0;
     }
 
-    override public void GetDemage(int damage)
+    override protected void GetDemage(int damage)
     {
         hp -= damage;
         //Debug.Log(gameObject.name + "Damage " + damage);

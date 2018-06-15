@@ -21,12 +21,6 @@ public enum InvaderType
     Attacking,
 }
 
-public enum ItemList
-{
-    Item1 = 0,
-    Item2,
-    Item3
-}
 /*  FlyWeghit Pattern
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
@@ -36,20 +30,19 @@ public class Enemy : MonoBehaviour
     public GameObject[] Items;
 
     protected Enemy enemy;
-    protected int MAXSETA = 360;
+    protected const int MAXSETA = 360;
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
-    protected int curveRate;
-    protected float moveHeight; // Zigzag
-    protected float radius; // Circle
-    protected float circleSpeed;
+    [SerializeField]
+    protected float moveSpeed, moveHeight, circleSpeed;
+    protected float radius;
 
-    private void Awake()
+    void Awake()
     {
-        curveRate = 3;
-        moveHeight = 5f; // Zigzag
-        radius = 4f; // Circle
-        circleSpeed = 6f;
+        moveSpeed = 5.0f;
+        moveHeight = 6.0f; // Zigzag, Curve에서 사용하는 높이 변화량
+        radius = 4.0f; // Circle
+        circleSpeed = 4.0f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
     }
 
@@ -58,35 +51,39 @@ public class Enemy : MonoBehaviour
         return MissilePool;
     }
 
-    virtual public void Move() { }
-    virtual public void MoveCircle(bool sign) { }
-    virtual public void Init() { }
-    virtual public void GetDemage(int damage) { }
+    virtual protected void Move() { }
+    virtual protected void MoveCircle(bool sign) { }
+    virtual protected void MoveZigzag(bool sign) { }
+    virtual protected void MoveCurve(bool sign) { }
+    virtual protected void Init() { }
+    virtual protected void GetDemage(int damage) { }
 
-    public void Explode()
+    protected void Explode()
     {
         Debug.Log("EXPLODE");
         if (Random.Range(0, 2) == 0) // 50%
             Wrecked();
 
         if (Random.Range(0, 5) == 0) // 20%
-            DropItem(ItemList.Item1);
+            DropItem(ItemList.AddMissileItem);
         ReturnToPool();
     }
 
-    public void DropItem(ItemList num)
+    void DropItem(ItemList num)
     {
         Debug.Log((int)num);
         Instantiate(Items[0], transform.position, Quaternion.identity);
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
-    public void Wrecked() 
+
+    void Wrecked() 
     {
         Debug.Log("WRECKED");
        Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
-    private void OnTriggerEnter(Collider other)
+
+    void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt")
         {
@@ -94,13 +91,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "BackGround")
             ReturnToPool();
     }
 
-    public void ReturnToPool()
+    void ReturnToPool()
     {
         // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
         Init();
