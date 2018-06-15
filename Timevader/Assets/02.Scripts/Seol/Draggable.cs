@@ -94,6 +94,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(draggingObject);
+
+
         if(enemyship != null)
             enemyship.SetActive(true);
         btnStory.interactable = true;
