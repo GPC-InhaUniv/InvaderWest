@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour {
 
-    private int moveVlaue = 1;
+    int moveVlaue = 1;
 
     [SerializeField]
-    private float moveSpeed = 3.5f;
+    float moveSpeed = 3.5f;
 
-    private float leftLimitX;
-    private float rightLimitX;
+    float leftLimitX;
+    float rightLimitX;
 
     void Start()
     {
         leftLimitX = -3.0f;
         rightLimitX = 3.0f;
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         BossMove();
     }

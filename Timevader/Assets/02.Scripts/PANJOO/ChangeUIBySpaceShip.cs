@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class ChangeUIBySpaceShip : MonoBehaviour {
 
     [SerializeField]
-    private Text SpaceShipSelectNumText;
+    Text SpaceShipSelectNumText;
     [SerializeField]
-    private Text SpaceShipNameText;
+    Text SpaceShipNameText;
 
     [SerializeField]
-    private GameObject[] SpaceShipObject;
+    GameObject[] SpaceShipObject;
 
 }
