@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 public class StageLoad : MonoBehaviour {
 
     [SerializeField]
-    int? StageNumber;
+    int? stageNumber;
+    public int? StageNumber { get { return stageNumber; } set { stageNumber = value; } }
     StageController stageController;
 
-    private void Start()
+    void Start()
     {
         stageController = FindObjectOfType<StageController>();
     }
@@ -24,8 +25,8 @@ public class StageLoad : MonoBehaviour {
         Debug.Log("접근할 수 없는 스테이지");
     }
 
-    public void SetStageNumber(int? num)
-    {
-        StageNumber = num;
-    }
+    //public void SetStageNumber(int? num)
+    //{
+    //    StageNumber = num;
+    //}
 }

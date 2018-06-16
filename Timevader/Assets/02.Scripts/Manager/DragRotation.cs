@@ -15,8 +15,12 @@ public class DragRotation : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
+            prevPoint = Input.mousePosition;
+
+        else if (Input.GetMouseButton(0))
         {
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
@@ -27,7 +31,7 @@ public class DragRotation : MonoBehaviour {
                 TouchSlide();
             }
         }
-        if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
             prevPoint = Input.mousePosition;
     }
 
@@ -38,7 +42,7 @@ public class DragRotation : MonoBehaviour {
         //    Debug.Log("click");
         //    prevPoint = Input.mousePosition;
         //}
-        //else 
+        //else
         if (Input.GetMouseButton(0))
         {
             //Debug.Log("Drag");

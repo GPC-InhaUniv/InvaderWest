@@ -27,12 +27,15 @@ public class TriggerCheck : MonoBehaviour {
             int StageNumber;
             int.TryParse(info.GetStageLv(), out StageNumber);
 
-            stageLoad.SetStageNumber(StageNumber);
+            stageLoad.StageNumber = StageNumber;
             StageLv.text = "Stage" + info.GetStageLv();
             StageInfo.text = info.GetStageInfo();
         }
-        //if (!int.TryParse(info.GetStageLv(), out stageLoad.StageNumber))
+
+        //int stageNumber;
+        //if (!int.TryParse(info.GetStageLv(), out stageNumber))
         //    Debug.Log("Stage Lv을 받아오는데 실패");
+        //stageLoad.StageNumber = stageNumber;
     }
 
     private void OnTriggerExit(Collider other)
@@ -41,6 +44,6 @@ public class TriggerCheck : MonoBehaviour {
         other.gameObject.GetComponent<Animator>().enabled = false;
         StageLv.text = string.Empty;
         StageInfo.text = string.Empty;
-        stageLoad.SetStageNumber(null);
+        stageLoad.StageNumber = null;
     }
 }
