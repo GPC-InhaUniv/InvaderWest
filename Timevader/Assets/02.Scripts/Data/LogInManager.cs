@@ -7,6 +7,7 @@ using PlayFab.ClientModels;
 using System.Text.RegularExpressions;
 public class LogInManager : MonoBehaviour
 {
+    //로그인창 , 등록창 전환//
     [SerializeField]
     private List<GameObject> menus = new List<GameObject>();
 
@@ -24,12 +25,13 @@ public class LogInManager : MonoBehaviour
     private InputField RegisterConfirmPassword;
 
     public GameObject ErrorPanel;
-
+    //로그인//
     public void Login()
     {
         AccountInfo.Login(loginUsername.text, loginUserPassword.text);
         GamePlayManager.Instance.PlayerName = loginUsername.text;
     }
+    //등록//
     public void Register()
     {
         ////@"(?x) 공백제거
@@ -38,7 +40,6 @@ public class LogInManager : MonoBehaviour
         //\p{P}| 기호
         //\p{S})) 문장기호
         //.{6,}" 6개이상
-
         string minString = @"(?x)^(?=.*(\d|\p{P}|\p{S})).{6,}";
 
         if (Regex.IsMatch(RegisterUsername.text, minString) && Regex.IsMatch(RegisterPassword.text, minString))
@@ -61,6 +62,7 @@ public class LogInManager : MonoBehaviour
     {
         ManagerFuncion.ChangeMenu(menus.ToArray(), i);
     }
+    //Register 완료,오류 필드초기화//
     public void ClearInputField()
     {
         RegisterUsername.text = "";
@@ -68,10 +70,12 @@ public class LogInManager : MonoBehaviour
         RegisterPassword.text = "";
         RegisterConfirmPassword.text = "";
     }
+    //에러메세지 표시//
     void ShowErrorMessange()
     {
         ErrorPanel.gameObject.SetActive(true);
     }
+    //등록 완료시 Login창으로 돌아가기//
     public void ReturnRegisterPanel()
     {
         ErrorPanel.gameObject.SetActive(false);

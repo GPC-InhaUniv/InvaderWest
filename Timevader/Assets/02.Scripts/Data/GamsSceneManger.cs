@@ -5,13 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GamsSceneManger : MonoBehaviour {
 
-
-
-    private void Awake()
-    {
-
-    }
-
+    //Test 씬 이동 편하게//
     public void GoLogInScene()
     {
         SceneManager.LoadScene("LogIn");

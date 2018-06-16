@@ -271,7 +271,7 @@ public class ShipChoiceController : MonoBehaviour {
             case 2: AccountInfo.ChangeBlackHawkData(1);
                 blackHawk = blackHawk + 1;
                 break;
-            case 3: AccountInfo.ChangeRaptoritemData(1);
+            case 3: AccountInfo.ChangeRaptorData(1);
                 raptor = raptor + 1;
                 break;
             default:

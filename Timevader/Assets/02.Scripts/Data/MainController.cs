@@ -26,8 +26,6 @@ public class MainController : MonoBehaviour {
     // Use this for initialization
     void Start()
     { 
-
-        UserNickname = GamePlayManager.Instance.PlayerName;
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         myFuel = AccountInfo.Instance.Fuel;
         resttime = AccountInfo.Instance.Time;

@@ -26,8 +26,6 @@ public class GamePlayManager : MonoBehaviour {
         set { playerName = value; }
     }
 
-
-
     private void Awake()
     {
         if (instance != this)
@@ -35,11 +33,9 @@ public class GamePlayManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
        
     }
-
     public void SelecPlayer()
     {
         Debug.Log(playerShipNum);
         Debug.Log(PlayerShipNum);
     }
-
 }

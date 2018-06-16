@@ -17,7 +17,6 @@ public class Boundary1
     public float xMin, xMax, yMin, yMax;
 }
 
-
 public class PlayerShip : MonoBehaviour
 {
 
@@ -26,7 +25,6 @@ public class PlayerShip : MonoBehaviour
     NotifyObserver notifyRestTimeObserver;
     public InGameController inGameController;
 
-
     [SerializeField]
     private int playerLife;
     [SerializeField]
@@ -34,15 +32,13 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     private int playerfirerapid;
     [SerializeField]
-    private int addMissileitem;
+    private int addMissileItem;
     public GameObject AddMissileItem;
     [SerializeField]
-    private int assistantitem;
+    private int assistantItem;
     private bool assistant;
     [SerializeField]
-    private int lastBombitem;
-
-
+    private int lastBombItem;
 
     GameState nowGameState;
 
@@ -82,19 +78,21 @@ public class PlayerShip : MonoBehaviour
         ///설님꺼
         rigid = GetComponent<Rigidbody>();
         ///설님꺼
+        
+
         nowGameState = GameState.Ready;
 
         Invoke("GameStart", 2.0f);
 
-        //addMissileitem = int.Parse(AccountInfo.Instance.AddMissileitem);
-        //assistantitem = int.Parse(AccountInfo.Instance.Assistantitem);
-        //lastBombitem = int.Parse(AccountInfo.Instance.LastBombitem);
-        //inGameController = new InGameController();
+        //Test 끝나면 주석제거하기//
+        //addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
+        //assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
+        //lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
 
 
         GamePlayManager.Instance.PlayerShipNum = 1;
 
-
+        //Test 플레이어//
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
             playerLife = 3;
@@ -105,21 +103,20 @@ public class PlayerShip : MonoBehaviour
             playerLife = 4;
             playerRestTime = 3800;
         }
+        //Test//
 
-        if (addMissileitem == (int)DataBoolean.TRUE)
+        if (addMissileItem == (int)DataBoolean.TRUE)
         {
-            UseAddMissileitem();
-            Debug.Log("UseAddMissileitem");
+            UseAddMissileItem();
+            Debug.Log("UseAddMissileItem");
         }
-        if (assistantitem == (int)DataBoolean.TRUE)
+        if (assistantItem == (int)DataBoolean.TRUE)
         {
-            UseAssistantitem();
-            Debug.Log("UseAssistantitem");
+            UseAssistantItem();
+            Debug.Log("UseAssistantItem");
         }
 
-        //NotifyStartDataToObservers();
-
-
+        //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
         notifyLifetoObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
         if (notifyLifetoObserver != null)
             notifyLifetoObserver(playerLife);
@@ -127,18 +124,18 @@ public class PlayerShip : MonoBehaviour
         if (notifyRestTimeObserver != null)
             notifyRestTimeObserver(playerRestTime);
 
+        //시간 빼앗기 시작//
         StartCoroutine("LoseTime");
-
     }
-
+    //게임시작//
     void GameStart()
     {
         nowGameState = GameState.Start;
     }
-
-
+    
     public void OnTriggerEnter(Collider other)
     {
+        // Test Tag를 Factory로 지정//
         if (other.gameObject.CompareTag("Factory"))
         {
             if (assistant == true)
@@ -153,8 +150,6 @@ public class PlayerShip : MonoBehaviour
                 {
                     AddMissileItem.gameObject.SetActive(false);
                 }
-                //NotifyPlayerLifeToObservers();
-
                 notifyLifetoObserver(playerLife);
             }
         }
@@ -166,10 +161,10 @@ public class PlayerShip : MonoBehaviour
             ///설님꺼
             Shoot(ShotSpawn);
             ///설님꺼
-            if (lastBombitem == (int)DataBoolean.TRUE)
+            if (lastBombItem == (int)DataBoolean.TRUE)
             {
-                UseLastBombitem();
-                Debug.Log("UseLastBombitem");
+                UseLastBombItem();
+                Debug.Log("UseLastBombItem");
             }
         }
         if (playerLife <= 0)
@@ -180,6 +175,7 @@ public class PlayerShip : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //설님꺼//
         if (nowGameState == GameState.Start)
         {
             {
@@ -197,35 +193,32 @@ public class PlayerShip : MonoBehaviour
                 );
             }
         }
-
+        //설님꺼//
     }
     private IEnumerator LoseTime()
     {
         playerRestTime = playerRestTime - 10;
-        //NotifyPlayerRestTimeToObservers();
         notifyRestTimeObserver(playerRestTime);
 
         yield return new WaitForSeconds(1.5f);
-
         StartCoroutine("LoseTime");
     }
-
     //미사일 아이템 사용
-    void UseAddMissileitem()
+    void UseAddMissileItem()
     {
         AddMissileItem.gameObject.SetActive(true);
-        AccountInfo.ChangeAddMissileitemData(0);
+        AccountInfo.ChangeAddMissileItemData(0);
 
     }
-    void UseAssistantitem()
+    void UseAssistantItem()
     {
         assistant = true;
-        AccountInfo.ChangeAssistantitemData(0);
+        AccountInfo.ChangeAssistantItemData(0);
 
     }
-    void UseLastBombitem()
+    void UseLastBombItem()
     {
-        AccountInfo.ChangeLastBombitemData(0);
+        AccountInfo.ChangeLastBombItemData(0);
     }
 }
 

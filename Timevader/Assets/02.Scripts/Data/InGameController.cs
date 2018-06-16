@@ -4,22 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
  
 
-
 public class InGameController : MonoBehaviour
 {
     public GameObject GameWinResultPanel;
     public GameObject GameLoseResultPanel;
 
     public Text RestTimeScoreText;
-
     public Image[] LifeImage;
 
     [SerializeField]
-    private int? playerRestTime = null;
-
+    private int playerRestTime;
     [SerializeField]
     private int playerLife;
 
+    //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
     {
         Debug.Log(playerLife);
@@ -37,7 +35,8 @@ public class InGameController : MonoBehaviour
             Debug.Log("UpdatePlayerLife");
         }
     }
-    //플레이어 시간//
+
+    //플레이어 남은 시간 업데이트//
     public void UpdatePlayerRestTime(int playerRestTime)
     {
         Debug.Log(playerRestTime);
@@ -55,12 +54,14 @@ public class InGameController : MonoBehaviour
             Debug.Log("UpdatePlayerRestTime");
         }       
     }
+    //남은시간 보여주기//
     public void DisplayPlayerRestTime()
     {
         RestTimeScoreText.text = playerRestTime.ToString();
         Debug.Log(playerRestTime);
     }
 
+    //남은 라이프 보여주기//
     public void DisPlayPlayerLifeImage(int life)
     {
         //Debug.Log("go");
