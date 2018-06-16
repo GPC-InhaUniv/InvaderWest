@@ -12,27 +12,27 @@ public class DrageEarthRotation : MonoBehaviour {
 
     //지구를 돌리는
     [SerializeField]
-    GameObject Earth;
+    GameObject Earth, Cloud;
 
-    [SerializeField]
-    GameObject Cloud;
+    [SerializeField] //로그인 조건 만족시 사라짐
+    GameObject[] otherObject;
+
     Vector3 prevPoint;
 
-    float ConditionRotation;
-    
     [SerializeField]
     [Range(-0.5f,5f)]
     float rotateSpeed;
+
+    float ConditionRotation;
 
     [SerializeField]
     Camera MainCamera;
 
     UIFader uIFader;
+
     [SerializeField]
     CanvasGroup FadePanel;
 
-    [SerializeField] //로그인 조건 만족시 사라짐
-    GameObject[] otherObject;
 
     void FixedUpdate()
     {
@@ -90,19 +90,11 @@ public class DrageEarthRotation : MonoBehaviour {
         {
             Debug.Log("다음 씬으로");
             StartCoroutine(EffectCoroutine());
-            {
-                if (MainCamera.fieldOfView < 170.0f)
-                {
-                    HieObject();
-                    uIFader.CanvasFadeIn(FadePanel);
-                    StartCoroutine(WaitTimeForNextScene());
-                }
-            }
 
             if (MainCamera.fieldOfView < 170.0f)
             {
-                HieObject();
-                uIFader.CanvasFadeIn(FadePanel);
+                HideObject(); //씬이 넘어가기전 오브젝트 숨김
+                uIFader.CanvasFadeIn(FadePanel); 
 
                 StartCoroutine(WaitTimeForNextScene());
             }
@@ -110,7 +102,7 @@ public class DrageEarthRotation : MonoBehaviour {
         }
     }
 
-    void HieObject()
+    void HideObject() //오브젝트 숨김
     {
         for (int i = 0; i < otherObject.Length-1; i++)
         {
@@ -118,6 +110,14 @@ public class DrageEarthRotation : MonoBehaviour {
         }
         Earth.SetActive(false);
         Cloud.SetActive(false);
+    }
+
+    void NextEffect()
+    {
+        MainCamera.fieldOfView += increaseValue; //1씩 증가하다가
+
+        if (MainCamera.fieldOfView > middleValue) //middleVlaue 보다 커지면 바로 +77 목표값 179
+            increaseValue = 77.0f;
     }
 
     IEnumerator EffectCoroutine()
@@ -138,11 +138,4 @@ public class DrageEarthRotation : MonoBehaviour {
         SceneManager.LoadScene("Main");
     }
 
-    void NextEffect()
-    {
-        MainCamera.fieldOfView += increaseValue;
-
-        if (MainCamera.fieldOfView > middleValue)
-            increaseValue = 77.0f;        
-    }
 }

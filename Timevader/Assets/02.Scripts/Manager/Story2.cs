@@ -8,27 +8,27 @@ using UnityEngine.UI;
 public class Story2 : MonoBehaviour {
         
     [SerializeField]
-    private Button btnEarth;
+    Button btnEarth;
     [SerializeField]
-    private GameObject SelectPanel;
+    GameObject SelectPanel;
     [SerializeField]
-    private GameObject ConfirmPanel;
+    GameObject ConfirmPanel;
 
     [SerializeField]
-    private GameObject[] btnStories;
+    GameObject[] btnStories;
 
     [SerializeField]
-    private Button btnStory1;
+    Button btnStory1;
 
     [SerializeField]
-    private GameObject enemyship;
+    GameObject enemyship;
 
     [SerializeField]
-    private Button easyBtn;
+    Button easyBtn;
     [SerializeField]
-    private Button normalBtn;
+    Button normalBtn;
     [SerializeField]
-    private Button hardBtn;
+    Button hardBtn;
 
     int i = 0;
     
@@ -95,7 +95,7 @@ public class Story2 : MonoBehaviour {
             return;
     }
     
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (btnEarth.transform.localScale.x > 2.8)
         {
@@ -105,7 +105,7 @@ public class Story2 : MonoBehaviour {
 
     }
 
-    private IEnumerator ZoomEarth()
+    IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
 

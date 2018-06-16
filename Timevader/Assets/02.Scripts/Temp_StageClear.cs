@@ -7,7 +7,7 @@ public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
     private GameObject camRotater, clearInfoPanel, player;
 
-    float ZOONVALUE = 30.0f, INITVALUE = 60.0f;
+    const float ZOONVALUE = 30.0f, INITVALUE = 60.0f;
     float t = 0f;
 
     enum GameState

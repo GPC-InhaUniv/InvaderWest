@@ -96,7 +96,7 @@ public class StoryUIController : MonoBehaviour {
             return;
     }
 
-    private IEnumerator ZoomEarth()
+    IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
 
@@ -114,7 +114,7 @@ public class StoryUIController : MonoBehaviour {
 
     }
 
-    private IEnumerator MoveInvader()
+    IEnumerator MoveInvader()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
 
