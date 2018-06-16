@@ -11,20 +11,20 @@ public class Boundary
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    private float speed;
+    float speed;
 
     [SerializeField]
     Boundary Boundary;
 
     public GameObject Shot;
     [SerializeField]
-    private Transform shotSpawn, addedSpawn;
+    Transform shotSpawn, addedSpawn;
 
     [SerializeField]
-    private float fireDelta = 0.5f;
+    float fireDelta = 0.5f;
 
-    private float nextFire = 0.5f;
-    private float myTime = 0.0f;
+    float nextFire = 0.5f;
+    float myTime = 0.0f;
 
     Vector3 movement;
 
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void Update()
+    void Update()
     {
         if (hasDoubleMissile == true)
         {
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
             Shoot(shotSpawn);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         MovePlayer();
     }

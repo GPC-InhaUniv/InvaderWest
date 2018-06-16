@@ -8,21 +8,21 @@ using UnityEngine.EventSystems;
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
-    private Vector2 draggingOffset = new Vector2(0.0f, 40.0f);
-    private GameObject draggingObject;
-    private RectTransform canvasRectTransform;
+    Vector2 draggingOffset = new Vector2(0.0f, 40.0f);
+    GameObject draggingObject;
+    RectTransform canvasRectTransform;
 
     [SerializeField]
-    private GameObject enemyship;
+    GameObject enemyship;
 
     [SerializeField]
-    private GameObject playership;
+    GameObject playership;
 
     [SerializeField]
-    private Button btnStory;
+    Button btnStory;
 
     [SerializeField]
-    private Button btnStory6;
+    Button btnStory6;
 
     // 드래그 제어, 드래그 중인 아이콘의 위치 설정
     public void UpdateDraggingObjectPos(PointerEventData eventData)

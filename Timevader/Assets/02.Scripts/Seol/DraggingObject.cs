@@ -31,7 +31,7 @@ public class DraggingObject : MonoBehaviour {
     {
         ActionClickOrDarg();
     }
-    private void Start()
+    void Start()
     {
         ConditionRotation = 0.90f;
     }
@@ -49,7 +49,6 @@ public class DraggingObject : MonoBehaviour {
                 // 지구 회전
                 Debug.Log("Raycast Hit");
                 ClickOrDrag();
-                //TouchSlide();
             }
         }
     }
@@ -83,26 +82,6 @@ public class DraggingObject : MonoBehaviour {
             //prevPoint = Input.mousePosition;
         }
     }
-
-    void TouchSlide()
-    {
-        /*    폰 조작   */
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            Debug.Log("Touch");
-            prevPoint = Input.mousePosition;
-        }
-        if (Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            Debug.Log("Slide");
-            float dragValue = (prevPoint.x - Input.GetTouch(0).position.x) / 5 - (prevPoint.y - Input.GetTouch(0).position.y);
-            Vector3 rotatePower = new Vector3(0, 0, dragValue);
-
-            //arrow.transform.Rotate(rotatePower / 2 * rotateSpeed * Time.deltaTime);
-
-            prevPoint = Input.GetTouch(0).position;
-        }
-    }    
     /*
     void HideObject()
     {

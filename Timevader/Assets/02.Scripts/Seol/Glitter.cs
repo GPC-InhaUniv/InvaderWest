@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class Glitter : MonoBehaviour
 {
     [SerializeField]
-    private Text TipText;
+    Text TipText;
     [SerializeField]
-    private float waitSecond = 0.3f;
+    float waitSecond = 0.3f;
     [SerializeField]
-    private int CountMaxValue = 15;
+    int CountMaxValue = 15;
 
-    private Color textWhiteColor;
-    private Color textHideColor;
+    Color textWhiteColor;
+    Color textHideColor;
     
     void Start()
     {
