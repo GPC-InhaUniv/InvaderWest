@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceShipStatus : MonoBehaviour {
+public class SpaceShipStatus : MonoBehaviour
+{
+    public ShipStatus staus;
+}
+
+[System.Serializable]
+public struct ShipStatus
+{
     [SerializeField]
-    float speed;//set하면 넘겨주기 !!
+    float speed;
     public float Speed { get { return speed; } }
 
     [SerializeField]
@@ -18,4 +25,5 @@ public class SpaceShipStatus : MonoBehaviour {
     [SerializeField]
     int spaceShipPrice;
     public int SpaceShipPrice { get { return spaceShipPrice; } }
+
 }
