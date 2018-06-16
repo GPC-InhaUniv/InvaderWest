@@ -29,14 +29,14 @@ public class ShipChoiceController : MonoBehaviour {
 
     int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
 
-    const int InitValue = 1; 
-
     int playerShipAmount;
 
-    List<string> playerShipsName = new List<string>();
-    List<string> playerShipsSpeed = new List<string>();
-    List<int> playerShipsLife = new List<int>();
-    List<int> playerShipsPrice = new List<int>();
+    List<ShipStatus> status = new List<ShipStatus>();
+
+    //List<string> playerShipsName = new List<string>();
+    //List<string> playerShipsSpeed = new List<string>();
+    //List<int> playerShipsLife = new List<int>();
+    //List<int> playerShipsPrice = new List<int>();
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
@@ -63,9 +63,9 @@ public class ShipChoiceController : MonoBehaviour {
         HideSpaceShip();
         playerShips[playerSelectSpaceShipNumber].SetActive(true);
 
-        ChangeStatusText(InitValue);
-        OnLifeImage(InitValue);
-        CheckSpaceShipLock(InitValue);
+        ChangeStatusText(1);
+        OnLifeImage(1);
+        CheckSpaceShipLock(1);
     }
 
     void ChangeInventory()    //수정한사람 황윤우 
@@ -77,7 +77,7 @@ public class ShipChoiceController : MonoBehaviour {
 
     int GetPlayerShipAmount()
     {
-        playerShipAmount = playerShips.Length - InitValue; //플레이어가 가진 우주선 갯수
+        playerShipAmount = playerShips.Length - 1; // 배열에 FakeShip을 추가했기에 1을 뺍니다.
         return playerShipAmount;
     }
     void SetGamePlayManagerData() //구조체 수정
@@ -93,23 +93,24 @@ public class ShipChoiceController : MonoBehaviour {
     {
         for (int i = 0; i < playerShips.Length; i++)
         {
-            playerShipsName.Add(playerShips[i].GetComponent<SpaceShipStatus>().SpaceShipName);
-            playerShipsSpeed.Add(playerShips[i].GetComponent<SpaceShipStatus>().Speed.ToString());
-            playerShipsLife.Add(playerShips[i].GetComponent<SpaceShipStatus>().Life);
-            playerShipsPrice.Add(playerShips[i].GetComponent<SpaceShipStatus>().SpaceShipPrice);
+            status.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus);
+            //playerShipsName.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus.name1);
+            //playerShipsSpeed.Add(playerShips[i].GetComponent<SpaceShipStatus>().Speed.ToString());
+            //playerShipsLife.Add(playerShips[i].GetComponent<SpaceShipStatus>().Life);
+            //playerShipsPrice.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus.GetPrice());
         }
     }
 
     void ChangeStatusText(int choiceNum)
     {
         SpaceShipSelectNumText.text = "(" + playerSelectSpaceShipNumber + " / " + playerShipAmount + ")";
-        SpaceShipNameText.text = playerShipsName[playerSelectSpaceShipNumber];
-        SpaceShipSpeedText.text = playerShipsSpeed[playerSelectSpaceShipNumber];
+        SpaceShipNameText.text = status[playerSelectSpaceShipNumber].SpaceShipName;
+        SpaceShipSpeedText.text = status[playerSelectSpaceShipNumber].Speed.ToString();
     }
 
     void OnLifeImage(int choiceNum)
     {
-        for(int i = 0; i < playerShipsLife[choiceNum]; i++)
+        for(int i = 0; i < status[choiceNum].Life; i++)
         {
             LifeImages[i].SetActive(true);
         }
@@ -139,6 +140,9 @@ public class ShipChoiceController : MonoBehaviour {
 
         switch (choiceNum)
         {
+            case 1:
+                DisplayStart();
+                break;
             case 2:
                 if (blackHawk == 1)             
                     DisplayStart();
@@ -154,17 +158,6 @@ public class ShipChoiceController : MonoBehaviour {
             default:
                 break;
         }
-
-        //if (blackHawk == 0)
-        //    DisplayLock(choiceNum);
-        //if (raptor == 0)
-        //    DisplayLock(choiceNum);
-        //if (!(choiceNum == 1))
-        //    return;
-        //if (!(blackHawk == 1 && raptor == 1))
-        //    return;
-        //else
-        //    DisplayStart();
     }
 
     void DisplayLock(int choiceNum)
@@ -172,7 +165,7 @@ public class ShipChoiceController : MonoBehaviour {
         FuelImage.SetActive(true);
         BuyButton.SetActive(true);
         LockImage.SetActive(true);
-        NoticeText.text = playerShipsPrice[choiceNum].ToString();
+        NoticeText.text = status[choiceNum].SpaceShipPrice.ToString(); //구조체로 수정함
     }
     void DisplayStart()
     {
@@ -221,7 +214,7 @@ public class ShipChoiceController : MonoBehaviour {
             WarningPopUpPanel.SetActive(true);
         else
         {
-            myFuel = myFuel - playerShipsPrice[playerSelectSpaceShipNumber];
+            myFuel = myFuel - status[playerSelectSpaceShipNumber].SpaceShipPrice;
             ChangeSpaceShipData(playerSelectSpaceShipNumber);
             CheckSpaceShipLock(playerSelectSpaceShipNumber);
 
@@ -233,7 +226,7 @@ public class ShipChoiceController : MonoBehaviour {
 
     bool CheckEnoughFuel(int choiceNum) //가진 재화가 선택한 기체의 재화보다 많은가?
     {
-        if (myFuel < playerShipsPrice[choiceNum]) //재화 부족
+        if (myFuel < status[choiceNum].SpaceShipPrice) //재화 부족
         {
             return false;
         }
