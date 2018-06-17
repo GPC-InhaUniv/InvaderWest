@@ -26,19 +26,19 @@ public class PlayerShip : MonoBehaviour
     public InGameController inGameController;
 
     [SerializeField]
-    private int playerLife;
+    int playerLife;
     [SerializeField]
-    private int playerRestTime;
+    int playerRestTime;
     [SerializeField]
-    private int playerfirerapid;
+    int playerfirerapid;
     [SerializeField]
-    private int addMissileItem;
+    int addMissileItem;
     public GameObject AddMissileItem;
     [SerializeField]
-    private int assistantItem;
-    private bool assistant;
+    int assistantItem;
+    bool assistant;
     [SerializeField]
-    private int lastBombItem;
+    int lastBombItem;
 
     GameState nowGameState;
 
@@ -78,7 +78,7 @@ public class PlayerShip : MonoBehaviour
         ///설님꺼
         rigid = GetComponent<Rigidbody>();
         ///설님꺼
-        
+
 
         nowGameState = GameState.Ready;
 
@@ -132,8 +132,8 @@ public class PlayerShip : MonoBehaviour
     {
         nowGameState = GameState.Start;
     }
-    
-    public void OnTriggerEnter(Collider other)
+
+    void OnTriggerEnter(Collider other)
     {
         // Test Tag를 Factory로 지정//
         if (other.gameObject.CompareTag("Factory"))
@@ -154,7 +154,7 @@ public class PlayerShip : MonoBehaviour
             }
         }
     }
-    private void Update()
+    void Update()
     {
         if (nowGameState == GameState.Start)
         {
@@ -173,7 +173,7 @@ public class PlayerShip : MonoBehaviour
             nowGameState = GameState.GameOver;
         }
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         //설님꺼//
         if (nowGameState == GameState.Start)
@@ -195,7 +195,7 @@ public class PlayerShip : MonoBehaviour
         }
         //설님꺼//
     }
-    private IEnumerator LoseTime()
+    IEnumerator LoseTime()
     {
         playerRestTime = playerRestTime - 10;
         notifyRestTimeObserver(playerRestTime);

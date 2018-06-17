@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniP : MonoBehaviour {
+public class MiniP : MonoBehaviour
+{
 
     public GameObject Player;
 
@@ -14,18 +15,19 @@ public class MiniP : MonoBehaviour {
 
     public float fireDelta = 0.35f;
 
-    private float nextFire = 0.35f;
-    private float myTime = 0.0f;
-    private float rotateSpeed = 5.0f;
+    float nextFire = 0.35f;
+    float myTime = 0.0f;
+    float rotateSpeed = 5.0f;
 
     Rigidbody rigid;
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
 
         //고정//
-        RotationAxis.transform.Rotate(new Vector3( 0f, Player.transform.position.y, 0f), rotateSpeed);
+        RotationAxis.transform.Rotate(new Vector3(0f, Player.transform.position.y, 0f), rotateSpeed);
 
         Shoot(ShotSpawn);
 
@@ -38,7 +40,7 @@ public class MiniP : MonoBehaviour {
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
-            Instantiate(Shot,new Vector3( AnySpawn.position.x,AnySpawn.position.y,0.0f), Quaternion.identity);
+            Instantiate(Shot, new Vector3(AnySpawn.position.x, AnySpawn.position.y, 0.0f), Quaternion.identity);
 
             nextFire = nextFire - myTime;
             myTime = 0.0f;
