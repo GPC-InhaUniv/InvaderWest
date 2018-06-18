@@ -44,6 +44,19 @@ public class StoryUIController : MonoBehaviour {
     {
         confirmPanel.SetActive(false);
     }
+
+    bool isZoomed()
+    {
+        if (earthButton.transform.localScale.x > 2.7)
+        {
+            storyButton1.interactable = true;
+            earthButton.interactable = false;
+            return false;
+        }
+
+        return true;
+    }
+
     /*
     void SetScale(Button earth, Vector3 scale)
     {
@@ -77,13 +90,7 @@ public class StoryUIController : MonoBehaviour {
     }
     
     void FixedUpdate()
-    {
-        if (earthButton.transform.localScale.x > 2.8)
-        {
-            storyButton1.interactable = true;
-            earthButton.interactable = false;
-        }
-
+    {       
         if (enemyship != null)
         {
             if (enemyship.activeSelf == true)
@@ -98,8 +105,17 @@ public class StoryUIController : MonoBehaviour {
 
     IEnumerator ZoomEarth()
     {
-        WaitForSeconds waitsec = new WaitForSeconds(0.1f);
+        WaitForSeconds waitsec = new WaitForSeconds(0.04f);
+        
+        while (isZoomed())
+        {
+            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime);
 
+            yield return waitsec;
+            Debug.Log("지구 커져라");
+        }            
+        
+        /*
         float j = 1;
 
         while (j <= 3.0f)
@@ -109,22 +125,21 @@ public class StoryUIController : MonoBehaviour {
 
             yield return waitsec;
             Debug.Log("지구 커져라");
-
         }
-
+        */
     }
 
     IEnumerator MoveInvader()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
 
-        int k = 879;
+        int height = 879;
 
-        while (k > 527)
+        while (height > 527)
         {
-            enemyship.transform.localPosition = new Vector3(0,k,0);
+            enemyship.transform.localPosition = new Vector3(0, height, 0);
             //SetPosition(enemyship, new Vector3(0, k, 0));
-            k -= 1;
+            height -= 1;
 
             yield return waitsec;
             Debug.Log("침략군 강림");
@@ -132,9 +147,10 @@ public class StoryUIController : MonoBehaviour {
         }
 
     }
-
+    
     void OnClickEarthButton()
     {
         StartCoroutine(ZoomEarth());
     }
+    
 }
