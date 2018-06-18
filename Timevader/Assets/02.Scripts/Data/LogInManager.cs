@@ -58,9 +58,11 @@ public class LogInManager : MonoBehaviour
             ShowErrorMessange();
         }
     }
-    public void ChangeMenu(int i)
+    public void ChangeMenu(int change)
     {
-        ManagerFuncion.ChangeMenu(menus.ToArray(), i);
+        // change = 0   -> Login Panal
+        // change = 1   -> Register Panal
+        ManagerFuncion.ChangeMenu(menus.ToArray(), change);
     }
     //Register 완료,오류 필드초기화//
     public void ClearInputField()

@@ -31,6 +31,7 @@ public class StoreFacade : MonoBehaviour
     //구입 관련//
     public Text BuyExPlainText;
     public Button BuyButton;
+    //구매 확인창//
     public GameObject ConfirmationPanal;
 
     int myFuel;
@@ -144,7 +145,7 @@ public class StoreFacade : MonoBehaviour
     }
 
 
-    public void BuyItem()
+    public void OnBoughtItem()
     {
         if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
         {
@@ -158,7 +159,7 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
             if (assistantItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -170,7 +171,7 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
         {
             if (lastBombItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -182,7 +183,7 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
             if (raptor == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -194,7 +195,7 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
+        else
         {
             if (blackHawk == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -280,9 +281,14 @@ public class StoreFacade : MonoBehaviour
         CheckInventory();
 
     }
-    //void ShowConfirmPanal(int itemNum)
-    //{
+    public void OnShowConfirmPanal()
+    {
+        ConfirmationPanal.gameObject.SetActive(true);
+    }
+    public void OnBackToMenu()
+    {
+        ConfirmationPanal.gameObject.SetActive(false);
 
-    //}
-    
+    }
+
 }
