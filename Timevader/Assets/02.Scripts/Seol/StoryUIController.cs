@@ -109,7 +109,7 @@ public class StoryUIController : MonoBehaviour {
         
         while (isZoomed())
         {
-            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime);
+            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime/20);
 
             yield return waitsec;
             Debug.Log("지구 커져라");
