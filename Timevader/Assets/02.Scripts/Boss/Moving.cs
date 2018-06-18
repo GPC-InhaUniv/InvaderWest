@@ -32,7 +32,7 @@ public class Moving : MonoBehaviour {
         {
             moveVlaue = 1;
         }
-        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime * moveVlaue);
+        transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime); //지용님 수정사항 반영
     }
 
 }

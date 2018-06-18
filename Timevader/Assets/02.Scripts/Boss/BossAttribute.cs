@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class BossAttribute : MonoBehaviour {
 
-    public float BossHp;
-    public float MaxHp;
+    public int BossHp;
+    public int MaxHp;
 
     [SerializeField]
-    int decreaseHp;
+    int decreaseHp, ScoreValue;
 
     [SerializeField]
-    int ScoreValue;
-
-    [SerializeField]
-    bool dead;
+    bool isdead;
 
     [SerializeField]
     GameObject explosion;
-
-    [SerializeField]
-    GameObject playerexplosion;
-
 
     void Start()
     {
@@ -29,36 +22,28 @@ public class BossAttribute : MonoBehaviour {
         MaxHp = 30000;
         decreaseHp = 15;
         ScoreValue = 10;
-        dead = false;
+
+        isdead = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Boundary") //해당 스크립트를 적용한 것이 바운더리에 충돌한다면
-        {
-            return;
-        }
         if(other.tag == "Enemy")
         {
             return;
         }
-        if(other.tag == "Bolt")
+        else if(other.tag == "Bolt")
         {
-            Instantiate(explosion, transform.position, transform.rotation);
+            Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
             BossHp -= 10;
+            DestroyObject(other.gameObject);
 
             if(BossHp == 0)
-            {             
-                Instantiate(playerexplosion, transform.position, transform.rotation);
+            {                           
                 Destroy(gameObject);
 
-                dead = true;
+                isdead = true;
             }             
-        }
-        
-        if (other.tag == "Player") //플레이어가 부딪힌다면
-        {
-            Instantiate(playerexplosion, other.transform.position, other.transform.rotation);
         }
     }
 }
