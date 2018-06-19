@@ -27,17 +27,6 @@ public class ShipChoiceController : MonoBehaviour {
     [SerializeField]
     Text StartText, BuyText;
 
-    int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
-
-    int playerShipAmount;
-
-    List<ShipStatus> status = new List<ShipStatus>();
-
-    //List<string> playerShipsName = new List<string>();
-    //List<string> playerShipsSpeed = new List<string>();
-    //List<int> playerShipsLife = new List<int>();
-    //List<int> playerShipsPrice = new List<int>();
-
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
     [SerializeField]
@@ -45,10 +34,13 @@ public class ShipChoiceController : MonoBehaviour {
     [SerializeField]
     Text RestTimeText;
 
-    int myFuel;
-    int restTime;
-    int blackHawk;
-    int raptor;
+    List<ShipStatus> status = new List<ShipStatus>(); //구조체
+
+    int myFuel, restTime, blackHawk, raptor;
+
+    int playerSelectSpaceShipNumber; // 초기값 or 플레이어가 고른 값 
+
+    int playerShipAmount; //플레이어가 가진 우주선의 총합
 
     void Start ()
     {
@@ -68,19 +60,18 @@ public class ShipChoiceController : MonoBehaviour {
         CheckSpaceShipLock(1);
     }
 
-    void ChangeInventory()    //수정한사람 황윤우 
+    void ChangeInventory()   //수정한사람 황윤우 
     {
         FuelScoreText.text = myFuel.ToString();
         RestTimeText.text = restTime.ToString();
     }
-
 
     int GetPlayerShipAmount()
     {
         playerShipAmount = playerShips.Length - 1; // 배열에 FakeShip을 추가했기에 1을 뺍니다.
         return playerShipAmount;
     }
-    void SetGamePlayManagerData() //구조체 수정
+    void SetGamePlayManagerData() 
     {
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); //개선할 것
@@ -94,10 +85,6 @@ public class ShipChoiceController : MonoBehaviour {
         for (int i = 0; i < playerShips.Length; i++)
         {
             status.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus);
-            //playerShipsName.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus.name1);
-            //playerShipsSpeed.Add(playerShips[i].GetComponent<SpaceShipStatus>().Speed.ToString());
-            //playerShipsLife.Add(playerShips[i].GetComponent<SpaceShipStatus>().Life);
-            //playerShipsPrice.Add(playerShips[i].GetComponent<SpaceShipStatus>().staus.GetPrice());
         }
     }
 
@@ -143,12 +130,14 @@ public class ShipChoiceController : MonoBehaviour {
             case 1:
                 DisplayStart();
                 break;
+
             case 2:
                 if (blackHawk == 1)             
                     DisplayStart();
                 else
                     DisplayLock(choiceNum);
                 break;
+
             case 3:
                 if (raptor == 1)
                     DisplayStart();

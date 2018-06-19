@@ -123,28 +123,24 @@ public class Story2 : MonoBehaviour {
 
     }
 
-    private IEnumerator MoveInvader()
+    IEnumerator MoveInvader()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.1f);
 
         int k = 879;
 
         while (k <= 527)
-        {            
+        {
             SetPosition(enemyship, new Vector3(0, k, 0));
             k -= 1;
 
             yield return waitsec;
             Debug.Log("침략군 강림");
-
         }
-
     }
 
     public void OnClickEarthButton()
     {
         StartCoroutine(ZoomEarth());        
     }
- 
-    
 }

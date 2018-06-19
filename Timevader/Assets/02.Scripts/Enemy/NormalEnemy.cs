@@ -14,6 +14,7 @@ public class NormalEnemy : Enemy {
         hp = maxHp;
         WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
+        factory = enemy.factory;
     }
 
     void FixedUpdate()
@@ -58,7 +59,6 @@ public class NormalEnemy : Enemy {
     override protected void MoveCurve(bool sign)
     {
         t += 0.7f * Time.deltaTime;
-        Debug.Log("t: " + t);
         if (sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, t * Mathf.Lerp(0, moveHeight, t), 0) * Time.deltaTime);
         else transform.Translate(new Vector3(Vector3.right.x * moveSpeed, t * Mathf.Lerp(0, moveHeight, t), 0) * Time.deltaTime);
     }
@@ -95,6 +95,7 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
         t = 0;
+        factory.normalPool.ReturnToPool(this.gameObject);
     }
 
     override protected void GetDemage(int damage)
@@ -102,5 +103,10 @@ public class NormalEnemy : Enemy {
         hp -= damage;
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
+    }
+
+    override public  void SetDirection(Direction dir)
+    {
+        moveDirection = dir;
     }
 }

@@ -28,28 +28,30 @@ public class Enemy : MonoBehaviour
     public ObjectPool MissilePool;
     public GameObject WreckedShip;
     public GameObject[] Items;
-
-    protected Enemy enemy;
-    protected const int MAXSETA = 360;
-    protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
+    public EnemyFactory factory;
 
     [SerializeField]
     protected float moveSpeed, moveHeight, circleSpeed;
     protected float radius;
+    
+    protected Enemy enemy;
+    protected const int MAXSETA = 360;
+    protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
     void Awake()
     {
         moveSpeed = 5.0f;
         moveHeight = 6.0f; // Zigzag, Curve에서 사용하는 높이 변화량
-        radius = 4.0f; // Circle
+        radius = 5.0f; // Circle
         circleSpeed = 4.0f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
+        factory = GetComponent<EnemyFactory>();
     }
 
-    protected ObjectPool GetMissilePool()
-    {
-        return MissilePool;
-    }
+    //protected ObjectPool GetMissilePool()
+    //{
+    //    return MissilePool;
+    //}
 
     virtual protected void Move() { }
     virtual protected void MoveCircle(bool sign) { }
@@ -93,8 +95,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "BackGround")
-            ReturnToPool();
+        if (other.gameObject.tag == "BackGround") ReturnToPool();
     }
 
     void ReturnToPool()
@@ -103,4 +104,6 @@ public class Enemy : MonoBehaviour
         Init();
         this.gameObject.SetActive(false);
     }
+
+    virtual public void SetDirection(Direction dir) { }
 }

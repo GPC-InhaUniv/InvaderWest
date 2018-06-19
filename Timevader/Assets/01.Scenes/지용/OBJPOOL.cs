@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*  ObjectPool Pattern
- *  GameManager에 배치할 것 */
-public class ObjectPool : MonoBehaviour {
-
-    public string TargetObject = string.Empty; // ObjectPool 구분을 위해 오브젝트 표기를 위한 변수
+public class OBJPOOL : MonoBehaviour {
 
     [SerializeField]
     private GameObject pooledObject;
     [SerializeField]
     private int poolSize = 21;
-    Queue<GameObject> pool; // 여유가 있으면 activeInHieracrchy 쓰지말고 queue로 할 것
+    Queue<GameObject> pool;
 
-    void Start()
+    private void Start()
     {
         CreatePool();
     }
@@ -31,10 +27,18 @@ public class ObjectPool : MonoBehaviour {
         //Debug.Log("pool 생성 완료");
     }
 
+    public void SetObject(GameObject obj)
+    {
+        pooledObject = obj;
+    }
+
     public GameObject GetFromPool()
     {
-        if (pool.Count != 0)
+        //Debug.Log("GetFromPool 실행");
+        for (int i = 0; i < poolSize; i++)
+        {
             return pool.Dequeue();
+        }
         Debug.Log("Pool에 남은 enemy가 부족합니다.");
         return null;
     }
