@@ -80,7 +80,7 @@ public class StoreFacade : MonoBehaviour
             }
 
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
         {
             ItemExplain.text = "Item2 is AssistantItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
@@ -95,7 +95,7 @@ public class StoreFacade : MonoBehaviour
                 BuyButton.interactable = false;
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
         {
             ItemExplain.text = "Item3 is LastBombItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
@@ -110,7 +110,7 @@ public class StoreFacade : MonoBehaviour
                 BuyButton.interactable = false;
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
         {
             ItemExplain.text = "Item4 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
@@ -125,7 +125,7 @@ public class StoreFacade : MonoBehaviour
                 BuyButton.interactable = false;
             }
         }
-        if (ItemScrollRect.horizontalNormalizedPosition >= 0.875f)
+        else
         {
             ItemExplain.text = "Item5 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 1.0f;
