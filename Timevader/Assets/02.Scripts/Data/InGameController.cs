@@ -90,7 +90,7 @@ public class InGameController : MonoBehaviour
     //플레이어 남은 시간 업데이트//
     public void UpdatePlayerRestTime(int playerRestTime)
     {
-        Debug.Log(playerRestTime);
+        //Debug.Log(playerRestTime);
 
         this.playerRestTime = playerRestTime;
 
@@ -109,7 +109,7 @@ public class InGameController : MonoBehaviour
     void DisplayPlayerRestTime()
     {
         RestTimeScoreText.text = playerRestTime.ToString();
-        Debug.Log(playerRestTime);
+        //Debug.Log(playerRestTime);
     }
 
     //남은 라이프 보여주기//
