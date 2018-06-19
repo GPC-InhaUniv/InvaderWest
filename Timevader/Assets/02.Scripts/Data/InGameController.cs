@@ -17,6 +17,29 @@ public class InGameController : MonoBehaviour
     [SerializeField]
     int playerLife;
 
+    //판주//
+    //BossAttribute attri;
+
+    //[SerializeField]
+    // Slider hpBar;
+    //void Start()
+    //{
+    //    attri = gameObject.GetComponent<BossAttribute>();
+
+    //}
+    //void Update()
+    //{
+    //    hpBar.value = attri.BossHp / attri.MaxHp;
+    //}
+    //판주//
+
+
+    //게임에서 승리 했을 경우//
+    public void UpdateBossLife()
+    {
+
+
+    }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
     {

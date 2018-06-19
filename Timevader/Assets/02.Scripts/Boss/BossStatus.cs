@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BossStatus : MonoBehaviour {
 
-    public int BossHp;
-    public int MaxHp;
+    public float BossHp;
+    public float MaxHp;
 
     [SerializeField]
     int decreaseHp, ScoreValue;
@@ -32,19 +32,15 @@ public class BossStatus : MonoBehaviour {
     {
         BossMove();
     }
-
-    void Update()
-    {
-        hpBar.value = BossHp / MaxHp;
-    }
+   
 
     void Start()
     {
         leftLimitX = -2.5f;
         rightLimitX = 2.5f;
 
-        BossHp = 30000;
-        MaxHp = 30000;
+        BossHp = 100;
+        MaxHp = 100;
         decreaseHp = 15;
         ScoreValue = 10;
 
@@ -63,6 +59,14 @@ public class BossStatus : MonoBehaviour {
 
             BossHp -= 10;
             DestroyObject(other.gameObject);
+
+            hpBar.value = BossHp / MaxHp;
+            Debug.Log(hpBar.value);
+            Debug.Log("boss hp  "+BossHp);
+            Debug.Log("max hp "+MaxHp);
+            Debug.Log("BossHp / MaxHp  " + BossHp / MaxHp);
+
+
 
             if (BossHp == 0)
             {

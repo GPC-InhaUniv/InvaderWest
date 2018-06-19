@@ -5,7 +5,7 @@ using UnityEngine;
 public enum GameState
 {
     Ready,
-    Start,
+    Started,
     GameOver
 }
 /// <summary>
@@ -130,7 +130,7 @@ public class PlayerShip : MonoBehaviour
     //게임시작//
     void GameStart()
     {
-        nowGameState = GameState.Start;
+        nowGameState = GameState.Started;
     }
 
     void OnTriggerEnter(Collider other)
@@ -156,7 +156,7 @@ public class PlayerShip : MonoBehaviour
     }
     void Update()
     {
-        if (nowGameState == GameState.Start)
+        if (nowGameState == GameState.Started)
         {
             ///설님꺼
             Shoot(ShotSpawn);
@@ -176,7 +176,7 @@ public class PlayerShip : MonoBehaviour
     void FixedUpdate()
     {
         //설님꺼//
-        if (nowGameState == GameState.Start)
+        if (nowGameState == GameState.Started)
         {
             {
                 float moveHorizontal = Input.GetAxis("Horizontal");
