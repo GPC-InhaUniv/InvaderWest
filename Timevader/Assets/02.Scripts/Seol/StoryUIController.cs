@@ -44,7 +44,7 @@ public class StoryUIController : MonoBehaviour {
     {
         confirmPanel.SetActive(false);
     }
-
+    /*
     bool isZoomed()
     {
         if (earthButton.transform.localScale.x > 2.7)
@@ -55,17 +55,6 @@ public class StoryUIController : MonoBehaviour {
         }
 
         return true;
-    }
-
-    /*
-    void SetScale(Button earth, Vector3 scale)
-    {
-        earth.transform.localScale = scale;
-    }
-
-    void SetPosition(GameObject invader, Vector3 position)
-    {
-        invader.transform.localPosition = position;
     }
     */
     /*
@@ -83,14 +72,28 @@ public class StoryUIController : MonoBehaviour {
 
     void Start()
     {
-        earthButton.onClick.AddListener(OnClickEarthButton);
+        //earthButton.onClick.AddListener(OnClickEarthButton);
 
         //EventTrigger trigger = GetComponentInParent<EventTrigger>();
         //trigger.OnMove(EventTriggerType.Move, AxisEventData eventData); 
     }
-    
+
+    void Update()
+    {
+        
+    }
+
     void FixedUpdate()
-    {       
+    {
+        earthButton.transform.localScale += Vector3.Lerp(new Vector3(0.01f, 0.01f, 0.01f), new Vector3(0.01f, 0.01f, 0.01f), Time.deltaTime);
+
+        if (earthButton.transform.localScale.x > 2.5)
+        {
+            earthButton.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            storyButton1.interactable = true;
+            earthButton.interactable = false;
+        }
+
         if (enemyship != null)
         {
             if (enemyship.activeSelf == true)
@@ -102,7 +105,7 @@ public class StoryUIController : MonoBehaviour {
         else
             return;
     }
-
+    /*
     IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.04f);
@@ -113,21 +116,9 @@ public class StoryUIController : MonoBehaviour {
 
             yield return waitsec;
             Debug.Log("지구 커져라");
-        }            
-        
-        /*
-        float j = 1;
-
-        while (j <= 3.0f)
-        {
-            earthButton.transform.localScale = new Vector3(j, j, j);
-            j += 0.1f;
-
-            yield return waitsec;
-            Debug.Log("지구 커져라");
-        }
-        */
+        }             
     }
+    */
 
     IEnumerator MoveInvader()
     {
@@ -145,12 +136,13 @@ public class StoryUIController : MonoBehaviour {
             Debug.Log("침략군 강림");
 
         }
-
     }
-    
+
+    /*
     void OnClickEarthButton()
     {
         StartCoroutine(ZoomEarth());
     }
+    */
     
 }
