@@ -22,13 +22,24 @@ public class MainController : MonoBehaviour {
     [SerializeField]
     string myFuel;
     string resttime;
+    int stageData;
 
     // Use this for initialization
     void Start()
-    { 
+    {
+        //수정중//
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
+
+        stageData = int.Parse(AccountInfo.Instance.StageData);
+        Debug.Log(stageData);
+
+
+        GamePlayManager.Instance.stageData = stageData;
         myFuel = AccountInfo.Instance.Fuel;
         resttime = AccountInfo.Instance.Time;
+
+        Debug.Log(stageData);
+
 
         DisplayText();
         HideSpaceShips();
