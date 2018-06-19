@@ -8,7 +8,7 @@ public class BossStatus : MonoBehaviour {
     delegate void NotifyObserver(float bossLife, float maxBossLife);
 
     NotifyObserver notifyLifeToObserver;
-    public InGameController inGameController;
+    public InGameController InGameController;
 
     [SerializeField]
     PlayerShip playerShip;
@@ -55,7 +55,7 @@ public class BossStatus : MonoBehaviour {
         isdead = false;
 
         //게임컨트롤러에게 알리기 보스가 맞았다고//
-        notifyLifeToObserver = new NotifyObserver(inGameController.UpdateBossLife);
+        notifyLifeToObserver = new NotifyObserver(InGameController.UpdateBossLife);
         //if (notifyLifeToObserver != null)
         //    notifyLifeToObserver(BossHp, MaxHp);
         Debug.Log(BossHp / MaxHp);
@@ -76,31 +76,30 @@ public class BossStatus : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (nowGameState == GameState.Started)
+
+        if (other.tag == "Enemy")
         {
-            if (other.tag == "Enemy")
+            return;
+        }
+        else if (other.tag == "Bolt")
+        {
+            Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
+
+            BossHp -= 10;
+            DestroyObject(other.gameObject);
+
+            //게임컨트롤러에게 알리기 보스가 맞았다고//
+            if (notifyLifeToObserver != null)
+                notifyLifeToObserver(BossHp, MaxHp);
+
+            if (BossHp == 0)
             {
-                return;
-            }
-            else if (other.tag == "Bolt")
-            {
-                Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
+                Destroy(gameObject);
 
-                BossHp -= 10;
-                DestroyObject(other.gameObject);
-
-                //게임컨트롤러에게 알리기 보스가 맞았다고//
-                if (notifyLifeToObserver != null)
-                    notifyLifeToObserver(BossHp, MaxHp);
-
-                if (BossHp == 0)
-                {
-                    Destroy(gameObject);
-
-                    isdead = true;
-                }
+                isdead = true;
             }
         }
+
     }
 
     void BossMove()

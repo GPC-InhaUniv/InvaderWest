@@ -15,12 +15,13 @@ public class StageController : MonoBehaviour {
     Text WarRateText = null;
 
     [SerializeField]
-    int NextStage = 1;
+    int NextStage;
 
     int AllStageCount = 3;
 
     private void Start()
     {
+        NextStage = GetNextStageInfo();
         StageEffect();
         SetWarRateText();
     }
@@ -47,6 +48,9 @@ public class StageController : MonoBehaviour {
 
     public int GetNextStageInfo()
     {
+        //다음스테이지 데이터에서 불러오기//
+        NextStage = int.Parse(AccountInfo.Instance.StageData);
+        Debug.Log(NextStage);
         return NextStage;
     }
 }

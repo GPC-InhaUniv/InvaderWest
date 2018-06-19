@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class InGameController : MonoBehaviour
@@ -33,7 +34,7 @@ public class InGameController : MonoBehaviour
     void Start()
     {
         bosshpBar.value = 1.0f;
-        recentStage = int.Parse(AccountInfo.Instance.StageData);
+       // recentStage = int.Parse(AccountInfo.Instance.StageData);
     }
 
     //보스 라이프 업데이트//
@@ -51,7 +52,7 @@ public class InGameController : MonoBehaviour
             //AccountInfo.ChangeRestTimeData(playerRestTime);
             //다음 스테이지값 저장//
             int nextStageNum = 1;
-            recentStage = int.Parse(AccountInfo.Instance.StageData);
+
             if (recentStage <= 2)
             {
                 AccountInfo.ChangeStageData(recentStage + nextStageNum);
@@ -126,9 +127,27 @@ public class InGameController : MonoBehaviour
     }
 
 
-    public void OnGoNextStage()
+    public void OnGoToNextStage()
     {
-
+        if (recentStage == 1)
+        {
+            SceneManager.LoadScene("Stage2");
+        }
+        else if (recentStage == 2)
+        {
+            SceneManager.LoadScene("Stage3");
+        }
+        else
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
-
+    public void OnBackToMain()
+    {
+        SceneManager.LoadScene("Main");
+    }
+    public void OnGoToShop()
+    {
+        SceneManager.LoadScene("Shop");
+    }
 }
