@@ -33,27 +33,37 @@ public class Spawner : MonoBehaviour {
         }
     }
 
+    void SetSpawn(Enemy e, Direction direction)
+    {
+        e.SetDirection(direction);
+
+        if (e is AttackingEnemy)
+        {
+            AttackingEnemy ae = e as AttackingEnemy;
+            ae.StartCoroutine("Attack");
+        }
+    }
+
     void SpawnEnemy(InvaderType type, Vector3 spawnPoint, Direction moveDirection)
     {
         GameObject enemy = factory.GetEnemy(type);
+        if (!enemy) // pool이 비었을 때는 실행하지 않음
+        {
+            Debug.Log("enemy를 받아오지 못했습니다.");
+            return;
+        }
+
+        Enemy e = enemy.GetComponent<Enemy>();
+        if (!e)
+        {
+            Debug.Log("enemy 스크립트를 찾을 수 없습니다.");
+            return;
+        }
+
         enemy.transform.position = spawnPoint;
         enemy.transform.rotation = Quaternion.identity;
         enemy.SetActive(true);
-        //NormalEnemy ne;
-        //AttackingEnemy ae;
-
-        if (enemy.GetComponent<NormalEnemy>())
-        {
-            //Debug.Log("NormalEnemy 스크립트");
-            enemy.GetComponent<NormalEnemy>().MoveDirection = moveDirection; /* ※※지속적인 GetCompoent※※ */
-        }
-        else if (enemy.GetComponent<AttackingEnemy>())
-        {
-            //Debug.Log("AttackingEnemy 스크립트");
-            enemy.GetComponent<AttackingEnemy>().MoveDirection = moveDirection; /* ※※지속적인 GetCompoent※※ */
-            enemy.GetComponent<AttackingEnemy>().StartCoroutine("Attack"); /* ※※지속적인 GetCompoent※※ */
-        }
-        else Debug.Log("enemy 스크립트를 찾을 수 없습니다.");
+        SetSpawn(e, moveDirection);
     }
 
     private IEnumerator Stage1()
@@ -68,8 +78,8 @@ public class Spawner : MonoBehaviour {
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, spawnPoint[0].position, Direction.Line_LeftToRight);
-            SpawnEnemy(InvaderType.Attacking, spawnPoint[1].position, Direction.Line_RightToLeft);
+            SpawnEnemy(InvaderType.Normal, spawnPoint[0].position, Direction.Line_LeftToRight);
+            SpawnEnemy(InvaderType.Normal, spawnPoint[1].position, Direction.Line_RightToLeft);
             yield return new WaitForSeconds(SPAWNDELAY);
         }
         yield return new WaitForSeconds(WAVEDELAY);
