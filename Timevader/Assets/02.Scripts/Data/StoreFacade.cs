@@ -187,7 +187,6 @@ public class StoreFacade : MonoBehaviour
         {
             if (raptor == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyRaptor(50, 1);
                 ChangeValue();
             }
             else
@@ -199,7 +198,6 @@ public class StoreFacade : MonoBehaviour
         {
             if (blackHawk == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyBlackHawk(50, 1);
                 ChangeValue();
             }
             else
@@ -261,26 +259,7 @@ public class StoreFacade : MonoBehaviour
 
 
     }
-     void BuyRaptor(int price, int itemCount)
-    {
-        myFuel = myFuel - price;
-        raptor = itemCount;
-        AccountInfo.ChangeFuelData(myFuel);
 
-        AccountInfo.ChangeRaptorData(1);
-        CheckInventory();
-
-    }
-     void BuyBlackHawk(int price, int itemCount)
-    {
-        myFuel = myFuel - price;
-        blackHawk = itemCount;
-        AccountInfo.ChangeFuelData(myFuel);
-
-        AccountInfo.ChangeBlackHawkData(1);
-        CheckInventory();
-
-    }
     public void OnShowConfirmPanal()
     {
         ConfirmationPanal.gameObject.SetActive(true);

@@ -8,20 +8,16 @@ public enum GameState
     Started,
     GameOver
 }
-/// <summary>
-/// 설님꺼 합치기
-/// </summary>
 [System.Serializable]
 public class Boundary1
 {
     public float xMin, xMax, yMin, yMax;
 }
-
 public class PlayerShip : MonoBehaviour
 {
+    delegate void NotifyObserver(int playerLife);
 
-    public delegate void NotifyObserver(int PlayerLife);
-    NotifyObserver notifyLifetoObserver;
+    NotifyObserver notifyLifeToObserver;
     NotifyObserver notifyRestTimeObserver;
     public InGameController inGameController;
 
@@ -33,20 +29,18 @@ public class PlayerShip : MonoBehaviour
     int playerfirerapid;
     [SerializeField]
     int addMissileItem;
+
     public GameObject AddMissileItem;
+
     [SerializeField]
     int assistantItem;
     bool assistant;
     [SerializeField]
     int lastBombItem;
 
-    GameState nowGameState;
+    public GameState NowGameState;
 
 
-
-    /// <summary>
-    /// 설님꺼
-    /// </summary>
     [SerializeField]
     private float speed;
     public Boundary Boundary;
@@ -70,17 +64,12 @@ public class PlayerShip : MonoBehaviour
             myTime = 0.0f;
         }
     }
-    /// <summary>
-    /// 설님꺼
-    /// </summary>
+
     void Start()
     {
-        ///설님꺼
         rigid = GetComponent<Rigidbody>();
-        ///설님꺼
 
-
-        nowGameState = GameState.Ready;
+        NowGameState = GameState.Ready;
 
         Invoke("GameStart", 2.0f);
 
@@ -104,8 +93,7 @@ public class PlayerShip : MonoBehaviour
             playerRestTime = 3800;
         }
         //Test//
-
-        if (addMissileItem == (int)DataBoolean.TRUE)
+        if (addMissileItem == (int)DataBoolean.TRUE || GamePlayManager.Instance.PlayerShipNum == 1)
         {
             UseAddMissileItem();
             Debug.Log("UseAddMissileItem");
@@ -117,12 +105,11 @@ public class PlayerShip : MonoBehaviour
         }
 
         //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
-        notifyLifetoObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
-        if (notifyLifetoObserver != null)
-            notifyLifetoObserver(playerLife);
+        notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
+        if (notifyLifeToObserver != null)
+            notifyLifeToObserver(playerLife);
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
-        if (notifyRestTimeObserver != null)
-            notifyRestTimeObserver(playerRestTime);
+
 
         //시간 빼앗기 시작//
         StartCoroutine("LoseTime");
@@ -130,7 +117,7 @@ public class PlayerShip : MonoBehaviour
     //게임시작//
     void GameStart()
     {
-        nowGameState = GameState.Started;
+        NowGameState = GameState.Started;
     }
 
     void OnTriggerEnter(Collider other)
@@ -150,13 +137,14 @@ public class PlayerShip : MonoBehaviour
                 {
                     AddMissileItem.gameObject.SetActive(false);
                 }
-                notifyLifetoObserver(playerLife);
+                if (notifyLifeToObserver != null)
+                    notifyLifeToObserver(playerLife);
             }
         }
     }
     void Update()
     {
-        if (nowGameState == GameState.Started)
+        if (NowGameState == GameState.Started)
         {
             ///설님꺼
             Shoot(ShotSpawn);
@@ -170,13 +158,13 @@ public class PlayerShip : MonoBehaviour
         if (playerLife <= 0)
         {
             playerLife = 0;
-            nowGameState = GameState.GameOver;
+            NowGameState = GameState.GameOver;
         }
     }
     void FixedUpdate()
     {
         //설님꺼//
-        if (nowGameState == GameState.Started)
+        if (NowGameState == GameState.Started)
         {
             {
                 float moveHorizontal = Input.GetAxis("Horizontal");
@@ -198,7 +186,8 @@ public class PlayerShip : MonoBehaviour
     IEnumerator LoseTime()
     {
         playerRestTime = playerRestTime - 10;
-        notifyRestTimeObserver(playerRestTime);
+        if (notifyRestTimeObserver != null)
+            notifyRestTimeObserver(playerRestTime);
 
         yield return new WaitForSeconds(1.5f);
         StartCoroutine("LoseTime");
@@ -206,8 +195,10 @@ public class PlayerShip : MonoBehaviour
     //미사일 아이템 사용
     void UseAddMissileItem()
     {
-        AddMissileItem.gameObject.SetActive(true);
-        AccountInfo.ChangeAddMissileItemData(0);
+        if (AddMissileItem.gameObject.activeSelf != true)
+            AddMissileItem.gameObject.SetActive(true);
+
+        //AccountInfo.ChangeAddMissileItemData(0);
 
     }
     void UseAssistantItem()

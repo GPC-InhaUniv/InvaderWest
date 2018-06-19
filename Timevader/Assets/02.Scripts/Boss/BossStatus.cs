@@ -4,6 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BossStatus : MonoBehaviour {
+    //윤우//
+    delegate void NotifyObserver(float bossLife, float maxBossLife);
+
+    NotifyObserver notifyLifeToObserver;
+    public InGameController inGameController;
+
+    [SerializeField]
+    PlayerShip playerShip;
+    GameState nowGameState;
+    //윤우//
 
     public float BossHp;
     public float MaxHp;
@@ -18,9 +28,6 @@ public class BossStatus : MonoBehaviour {
     GameObject explosion;
 
     [SerializeField]
-    Slider hpBar;
-
-    [SerializeField]
     float moveSpeed = 3.5f;
 
     int moveVlaue = 1;
@@ -28,14 +35,15 @@ public class BossStatus : MonoBehaviour {
     float leftLimitX;
     float rightLimitX;
 
-    void FixedUpdate()
-    {
-        BossMove();
-    }
+
    
 
     void Start()
     {
+        
+        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
+        nowGameState = playerShip.NowGameState;
+
         leftLimitX = -2.5f;
         rightLimitX = 2.5f;
 
@@ -45,34 +53,52 @@ public class BossStatus : MonoBehaviour {
         ScoreValue = 10;
 
         isdead = false;
+
+        //게임컨트롤러에게 알리기 보스가 맞았다고//
+        notifyLifeToObserver = new NotifyObserver(inGameController.UpdateBossLife);
+        //if (notifyLifeToObserver != null)
+        //    notifyLifeToObserver(BossHp, MaxHp);
+        Debug.Log(BossHp / MaxHp);
+
+    }
+
+    void FixedUpdate()
+    {
+        if (nowGameState == GameState.Started)
+        {
+            BossMove();
+        }
+    }
+    private void Update()
+    {
+        nowGameState = playerShip.NowGameState;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (nowGameState == GameState.Started)
         {
-            return;
-        }
-        else if (other.tag == "Bolt")
-        {
-            Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
-
-            BossHp -= 10;
-            DestroyObject(other.gameObject);
-
-            hpBar.value = BossHp / MaxHp;
-            Debug.Log(hpBar.value);
-            Debug.Log("boss hp  "+BossHp);
-            Debug.Log("max hp "+MaxHp);
-            Debug.Log("BossHp / MaxHp  " + BossHp / MaxHp);
-
-
-
-            if (BossHp == 0)
+            if (other.tag == "Enemy")
             {
-                Destroy(gameObject);
+                return;
+            }
+            else if (other.tag == "Bolt")
+            {
+                Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
 
-                isdead = true;
+                BossHp -= 10;
+                DestroyObject(other.gameObject);
+
+                //게임컨트롤러에게 알리기 보스가 맞았다고//
+                if (notifyLifeToObserver != null)
+                    notifyLifeToObserver(BossHp, MaxHp);
+
+                if (BossHp == 0)
+                {
+                    Destroy(gameObject);
+
+                    isdead = true;
+                }
             }
         }
     }
