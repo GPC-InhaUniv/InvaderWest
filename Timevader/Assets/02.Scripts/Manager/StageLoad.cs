@@ -20,10 +20,14 @@ public class StageLoad : MonoBehaviour {
         Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + stageController.GetNextStageInfo());
         if (StageNumber == stageController.GetNextStageInfo())
         {
-            SceneManager.LoadScene("Stage" + StageNumber);
+            //test//
+            // SceneManager.LoadScene("Stage" + StageNumber);
+            SceneManager.LoadScene("Test_Stage3");
         }
         Debug.Log("접근할 수 없는 스테이지");
     }
+
+    
 
     //public void SetStageNumber(int? num)
     //{

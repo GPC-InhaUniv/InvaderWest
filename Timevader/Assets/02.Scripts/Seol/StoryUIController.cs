@@ -109,14 +109,31 @@ public class StoryUIController : MonoBehaviour {
     IEnumerator ZoomEarth()
     {
         WaitForSeconds waitsec = new WaitForSeconds(0.04f);
-        
+
         while (isZoomed())
         {
-            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime/20);
+            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime / 20);
 
             yield return waitsec;
             Debug.Log("지구 커져라");
+<<<<<<< HEAD
         }             
+=======
+        }
+
+        /*
+        float j = 1;
+
+        while (j <= 3.0f)
+        {
+            earthButton.transform.localScale = new Vector3(j, j, j);
+            j += 0.1f;
+
+            yield return waitsec;
+            Debug.Log("지구 커져라");
+        }
+        */
+>>>>>>> 2247150b2bbf89ef555286324fcbbfa59f85d795
     }
     */
 

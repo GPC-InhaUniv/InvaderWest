@@ -19,7 +19,6 @@ public class GamePlayManager : MonoBehaviour {
         set { playerShipNum = value; }
     }
     private string playerName;
-
     public string PlayerName
     {
         get { return playerName; }

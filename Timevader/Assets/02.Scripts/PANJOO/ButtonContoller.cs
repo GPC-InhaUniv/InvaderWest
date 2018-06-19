@@ -25,4 +25,9 @@ public class ButtonContoller : MonoBehaviour {
     {
         SceneManager.LoadScene("Intro");
     }
+    public void QuitGame()
+    {
+        Debug.Log("게임 종료");
+        Application.Quit();
+    }
 }

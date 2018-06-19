@@ -24,7 +24,7 @@ public class AccountInfo : MonoBehaviour
         set { info = value; }
     }
     
-    public string Fuel, Time, AddMissileItem, AssistantItem, LastBombItem, Raptor, BlackHawk, BestScore, RestTime, NextStage;
+    public string Fuel, Time, AddMissileItem, AssistantItem, LastBombItem, Raptor, BlackHawk, BestScore, RestTime, StageData;
 
     private void Awake()
     {
@@ -126,7 +126,7 @@ public class AccountInfo : MonoBehaviour
                 {"BestScore", "0" },
                 {"RestTime" , "0" },
                 //스테이지 저장//
-                {"NextStage" , "1" },
+                {"StageData" , "1" },
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserDataInLogIn, ManagerFuncion.OnAPIError);
@@ -247,13 +247,13 @@ public class AccountInfo : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
     }
-    public static void ChangeNextStageData(int nextStage)
+    public static void ChangeStageData(int stageData)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"NextStage", ""+nextStage+""},
+                {"NextStage", ""+stageData+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
@@ -323,7 +323,7 @@ public class AccountInfo : MonoBehaviour
         instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
         instance.RestTime = result.Data["RestTime"].Value;
         instance.BestScore = result.Data["BestScore"].Value;
-        instance.NextStage = result.Data["NextStage"].Value;
+        instance.StageData = result.Data["StageData"].Value;
 
     }
     public static void SetShopList(GetUserDataResult result)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MiniP : MonoBehaviour
 {
+    [SerializeField]
+    PlayerShip playerShip;
+    GameState nowGameState;
 
     public GameObject Player;
 
@@ -21,15 +24,24 @@ public class MiniP : MonoBehaviour
 
     Rigidbody rigid;
 
+    void Start()
+    {
+        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
+        nowGameState = playerShip.NowGameState;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        nowGameState = playerShip.NowGameState;
 
-        //고정//
-        RotationAxis.transform.Rotate(new Vector3(0f, Player.transform.position.y, 0f), rotateSpeed);
+        if (nowGameState == GameState.Started)
+        {
+            //고정//
+            RotationAxis.transform.Rotate(new Vector3(0f, Player.transform.position.y, 0f), rotateSpeed);
 
-        Shoot(ShotSpawn);
+            Shoot(ShotSpawn);
+        }
 
     }
 

@@ -17,6 +17,7 @@ public class AttackingEnemy : Enemy{
         hp = maxHp;
         WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
+        factory = enemy.factory;
     }
 
     void FixedUpdate()
@@ -114,6 +115,7 @@ public class AttackingEnemy : Enemy{
         seta = 0;
         hp = maxHp;
         t = 0;
+        factory.AttackingPool.ReturnToPool(this.gameObject);
     }
 
     override protected void GetDemage(int damage)
@@ -121,5 +123,10 @@ public class AttackingEnemy : Enemy{
         hp -= damage;
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
+    }
+
+    override public void SetDirection(Direction dir)
+    {
+        moveDirection = dir;
     }
 }
