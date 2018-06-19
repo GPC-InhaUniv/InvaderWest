@@ -9,9 +9,9 @@ public class ObjectPool : MonoBehaviour {
     public string TargetObject = string.Empty; // ObjectPool 구분을 위해 오브젝트 표기를 위한 변수
 
     [SerializeField]
-    private GameObject pooledObject;
+    GameObject pooledObject;
     [SerializeField]
-    private int poolSize = 21;
+    int poolSize = 21;
     Queue<GameObject> pool; // 여유가 있으면 activeInHieracrchy 쓰지말고 queue로 할 것
 
     void Start()
