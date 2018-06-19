@@ -9,7 +9,9 @@ public class LogoController : MonoBehaviour {
     [SerializeField]
     private CanvasGroup[] UIElement;
 
+    [SerializeField]
     private float waitSecond = 2.0f;
+    [SerializeField]
     private float fadeSecond = 1.5f;
 
     [SerializeField]
