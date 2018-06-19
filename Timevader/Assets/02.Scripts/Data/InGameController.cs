@@ -18,7 +18,7 @@ public class InGameController : MonoBehaviour
     [SerializeField]
     int playerLife;
     [SerializeField]
-    int recentStage;
+    int stageData;
 
 
 
@@ -53,15 +53,18 @@ public class InGameController : MonoBehaviour
             //다음 스테이지값 저장//
             int nextStageNum = 1;
 
-            if (recentStage <= 2)
+            if (stageData <= 2)
             {
-                AccountInfo.ChangeStageData(recentStage + nextStageNum);
-                Debug.Log(recentStage + nextStageNum);
+                AccountInfo.ChangeStageData(stageData + nextStageNum);
+                GamePlayManager.Instance.stageData = stageData+nextStageNum;
+                Debug.Log(stageData + nextStageNum);
 
             }
             else
             {
                 AccountInfo.ChangeStageData(nextStageNum);
+                GamePlayManager.Instance.stageData = nextStageNum;
+
                 Debug.Log(nextStageNum);
 
             }
@@ -129,11 +132,11 @@ public class InGameController : MonoBehaviour
 
     public void OnGoToNextStage()
     {
-        if (recentStage == 1)
+        if (stageData == 1)
         {
             SceneManager.LoadScene("Stage2");
         }
-        else if (recentStage == 2)
+        else if (stageData == 2)
         {
             SceneManager.LoadScene("Stage3");
         }

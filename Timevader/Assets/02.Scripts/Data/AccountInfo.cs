@@ -253,7 +253,7 @@ public class AccountInfo : MonoBehaviour
         {
             Data = new Dictionary<string, string>()
             {
-                {"NextStage", ""+stageData+""},
+                {"StageData", ""+stageData+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);

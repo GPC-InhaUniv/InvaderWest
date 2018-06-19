@@ -79,7 +79,7 @@ public class PlayerShip : MonoBehaviour
         //lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
 
 
-        GamePlayManager.Instance.PlayerShipNum = 1;
+        //GamePlayManager.Instance.PlayerShipNum = 1;
 
         //Test 플레이어//
         if (GamePlayManager.Instance.PlayerShipNum == 1)
@@ -122,8 +122,8 @@ public class PlayerShip : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Test Tag를 Factory로 지정//
-        if (other.gameObject.CompareTag("Factory"))
+        // Test Tag를 Enemy로 지정//
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (assistant == true)
             {

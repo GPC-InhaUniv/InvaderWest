@@ -24,6 +24,14 @@ public class GamePlayManager : MonoBehaviour {
         get { return playerName; }
         set { playerName = value; }
     }
+    [SerializeField]
+    private int StageData;
+    public int stageData
+    {
+        get { return StageData; }
+        set { StageData = value; }
+    }
+
 
     private void Awake()
     {
