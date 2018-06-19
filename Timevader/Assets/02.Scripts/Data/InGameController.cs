@@ -16,7 +16,57 @@ public class InGameController : MonoBehaviour
     int playerRestTime;
     [SerializeField]
     int playerLife;
+    [SerializeField]
+    int recentStage;
 
+
+
+
+    //판주//
+    [SerializeField]
+    Slider bosshpBar;
+    [SerializeField]
+    float bossLife;
+    [SerializeField]
+    float maxBossLife;
+    //판주//
+    void Start()
+    {
+        bosshpBar.value = 1.0f;
+        recentStage = int.Parse(AccountInfo.Instance.StageData);
+    }
+
+    //보스 라이프 업데이트//
+    public void UpdateBossLife(float bossLife, float maxBossLife)
+    {
+        this.bossLife = bossLife;
+        if (this.bossLife > 0)
+        {
+            bosshpBar.value = bossLife / maxBossLife;
+            Debug.Log("BossHp / MaxHp  " + bossLife / maxBossLife);
+        }
+        else
+        {
+            bosshpBar.value = bossLife / maxBossLife;
+            //AccountInfo.ChangeRestTimeData(playerRestTime);
+            //다음 스테이지값 저장//
+            int nextStageNum = 1;
+            recentStage = int.Parse(AccountInfo.Instance.StageData);
+            if (recentStage <= 2)
+            {
+                AccountInfo.ChangeStageData(recentStage + nextStageNum);
+                Debug.Log(recentStage + nextStageNum);
+
+            }
+            else
+            {
+                AccountInfo.ChangeStageData(nextStageNum);
+                Debug.Log(nextStageNum);
+
+            }
+            GameWinResultPanel.gameObject.SetActive(true);
+        }
+    }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
     {
@@ -75,5 +125,10 @@ public class InGameController : MonoBehaviour
         }
     }
 
+
+    public void OnGoNextStage()
+    {
+
+    }
 
 }
