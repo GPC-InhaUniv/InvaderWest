@@ -121,7 +121,7 @@ public class StoryUIController : MonoBehaviour {
 =======
         }
 
-        /*
+        
         float j = 1;
 
         while (j <= 3.0f)
@@ -132,7 +132,7 @@ public class StoryUIController : MonoBehaviour {
             yield return waitsec;
             Debug.Log("지구 커져라");
         }
-        */
+        
 >>>>>>> 2247150b2bbf89ef555286324fcbbfa59f85d795
     }
     */

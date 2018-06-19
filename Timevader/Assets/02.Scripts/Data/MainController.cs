@@ -33,13 +33,8 @@ public class MainController : MonoBehaviour {
         stageData = int.Parse(AccountInfo.Instance.StageData);
         Debug.Log(stageData);
 
-
-        GamePlayManager.Instance.stageData = stageData;
         myFuel = AccountInfo.Instance.Fuel;
         resttime = AccountInfo.Instance.Time;
-
-        Debug.Log(stageData);
-
 
         DisplayText();
         HideSpaceShips();

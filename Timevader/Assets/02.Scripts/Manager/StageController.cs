@@ -49,7 +49,7 @@ public class StageController : MonoBehaviour {
     public int GetNextStageInfo()
     {
         //다음스테이지 데이터에서 불러오기//
-        NextStage = GamePlayManager.Instance.stageData;
+        NextStage = int.Parse(AccountInfo.Instance.StageData);
         Debug.Log(NextStage);
         return NextStage;
     }

@@ -133,15 +133,21 @@ public class AccountInfo : MonoBehaviour
     }
     static void OnSetUserDataInLogIn(UpdateUserDataResult result)
     {
-        Debug.Log("Successfully updated user data");
         SetUserDataInStart();
+        Debug.Log("Successfully updated user data");
     }
 
-    static void OnSetUserData(UpdateUserDataResult result)
+    static void OnUpdateUserDataInShop(UpdateUserDataResult result)
     {
+        SetUserDataInShop();
         Debug.Log("Successfully updated user data");
-        SetUserDataInShop();       
     }
+    static void OnUpdateUserDataInGame(UpdateUserDataResult result)
+    {
+        SetUserDataInGame();
+        Debug.Log("Successfully updated user data");
+    }
+
 
     //재화 데이타 변경 함수// 
     public static void ChangeFuelData(int fuel)
@@ -153,7 +159,7 @@ public class AccountInfo : MonoBehaviour
                 {"Fuel", ""+fuel+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
     public static void ChangeTimeData(int time)
     {
@@ -164,7 +170,7 @@ public class AccountInfo : MonoBehaviour
                 {"Time", ""+time+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
 
     //소모성 아이템 데이타 변경 함수//
@@ -177,7 +183,7 @@ public class AccountInfo : MonoBehaviour
                 {"AddMissileItem", ""+addMissileItem+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
     public static void ChangeAssistantItemData(int assistantItem)
     {
@@ -188,7 +194,7 @@ public class AccountInfo : MonoBehaviour
                 {"AssistantItem", ""+assistantItem+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
     public static void ChangeLastBombItemData(int lastBombItem)
     {
@@ -199,7 +205,7 @@ public class AccountInfo : MonoBehaviour
                 {"LastBombItem", ""+lastBombItem+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
     public static void ChangeRaptorData(int raptor)
     {
@@ -210,7 +216,7 @@ public class AccountInfo : MonoBehaviour
                 {"Raptor", ""+raptor+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
     public static void ChangeBlackHawkData(int blackHawk)
     {
@@ -221,7 +227,7 @@ public class AccountInfo : MonoBehaviour
                 {"BlackHawk", ""+blackHawk+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
 
     //시스템 관련 데이타 변경 함수//
@@ -234,7 +240,7 @@ public class AccountInfo : MonoBehaviour
                 {"BestScore", ""+bestScore+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
     }
     public static void ChangeRestTimeData(int restTime)
     {
@@ -245,7 +251,7 @@ public class AccountInfo : MonoBehaviour
                 {"RestTime", ""+restTime+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
     }
     public static void ChangeStageData(int stageData)
     {
@@ -256,7 +262,7 @@ public class AccountInfo : MonoBehaviour
                 {"StageData", ""+stageData+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnSetUserData, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
     }
 
     //시작시 유저 데이타 셋팅//
@@ -312,8 +318,32 @@ public class AccountInfo : MonoBehaviour
         }
         else
         {
-
             SetShopList(result);
+            Debug.Log("ShopData set up complete");
+        }
+    }
+    public static void SetUserDataInGame()
+    {
+        GetUserDataRequest request = new GetUserDataRequest()
+        {
+            Keys = null
+        };
+
+        PlayFabClientAPI.GetUserData(request, OnSetUserDataInGame, ManagerFuncion.OnAPIError);
+    }
+    public static void OnSetUserDataInGame(GetUserDataResult result)
+    {
+        result.DataVersion = 1;
+        Debug.Log("Got user data:");
+        if (!result.Data.ContainsKey("Fuel"))
+        {
+            Debug.Log("Now Creating Data");
+            SetUserData();
+
+        }
+        else
+        {
+            SetInfoList(result);
             Debug.Log("ShopData set up complete");
         }
     }
