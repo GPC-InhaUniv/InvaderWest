@@ -11,6 +11,10 @@ public enum DataBoolean
 
 public class StoreFacade : MonoBehaviour
 {
+    float FIRSTITEMRANGE = 0.125f;
+    float SECONDITEMRANGE = 0.375f;
+    float THIRDITEMRANGE = 0.625f;
+    float FOURTHITEMRANGE = 0.875f;
 
 
     //재화관련//
@@ -64,7 +68,7 @@ public class StoreFacade : MonoBehaviour
     public void ChangeValue()
     {
 
-        if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
+        if (ItemScrollRect.horizontalNormalizedPosition < FIRSTITEMRANGE)
         {
             ItemExplain.text = "Item1 is AddMissileItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
@@ -80,7 +84,8 @@ public class StoreFacade : MonoBehaviour
             }
 
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= FIRSTITEMRANGE
+                 &&ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
         {
             ItemExplain.text = "Item2 is AssistantItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
@@ -95,7 +100,8 @@ public class StoreFacade : MonoBehaviour
                 BuyButton.interactable = false;
             }
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= SECONDITEMRANGE
+                 && ItemScrollRect.horizontalNormalizedPosition < THIRDITEMRANGE)
         {
             ItemExplain.text = "Item3 is LastBombItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
@@ -110,7 +116,8 @@ public class StoreFacade : MonoBehaviour
                 BuyButton.interactable = false;
             }
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= THIRDITEMRANGE
+                 && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
         {
             ItemExplain.text = "Item4 Will be added later";
             ItemScrollRect.horizontalNormalizedPosition = 0.75f;
@@ -147,7 +154,7 @@ public class StoreFacade : MonoBehaviour
 
     public void OnBoughtItem()
     {
-        if (ItemScrollRect.horizontalNormalizedPosition < 0.125f)
+        if (ItemScrollRect.horizontalNormalizedPosition < FIRSTITEMRANGE)
         {
             if (addMissileItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -159,7 +166,8 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.125f && ItemScrollRect.horizontalNormalizedPosition < 0.375)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= FIRSTITEMRANGE
+                 && ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
         {
             if (assistantItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -171,7 +179,8 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.375f && ItemScrollRect.horizontalNormalizedPosition < 0.625f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= SECONDITEMRANGE
+                 && ItemScrollRect.horizontalNormalizedPosition < THIRDITEMRANGE)
         {
             if (lastBombItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
@@ -183,7 +192,8 @@ public class StoreFacade : MonoBehaviour
                 Debug.Log("이미 보유중입니다.");
             }
         }
-        else if (ItemScrollRect.horizontalNormalizedPosition >= 0.625f && ItemScrollRect.horizontalNormalizedPosition < 0.875f)
+        else if (ItemScrollRect.horizontalNormalizedPosition >= THIRDITEMRANGE
+                 && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
         {
             if (raptor == (int)DataBoolean.FALSE && myFuel >= 50)
             {

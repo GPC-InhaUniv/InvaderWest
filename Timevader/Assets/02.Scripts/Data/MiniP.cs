@@ -5,7 +5,6 @@ using UnityEngine;
 public class MiniP : MonoBehaviour
 {
     [SerializeField]
-    PlayerShip playerShip;
     GameState nowGameState;
 
     public GameObject Player;
@@ -26,15 +25,13 @@ public class MiniP : MonoBehaviour
 
     void Start()
     {
-        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-        nowGameState = playerShip.NowGameState;
+        StartCoroutine("checkGameState");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        nowGameState = playerShip.NowGameState;
-
         if (nowGameState == GameState.Started)
         {
             //고정//
@@ -43,6 +40,12 @@ public class MiniP : MonoBehaviour
             Shoot(ShotSpawn);
         }
 
+    }
+    IEnumerator checkGameState()
+    {
+        nowGameState = GamePlayManager.Instance.NowGameState;
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine("checkGameState");
     }
 
     void Shoot(Transform AnySpawn)

@@ -11,7 +11,6 @@ public class BossStatus : MonoBehaviour {
     public InGameController InGameController;
 
     [SerializeField]
-    PlayerShip playerShip;
     GameState nowGameState;
     //윤우//
 
@@ -41,8 +40,7 @@ public class BossStatus : MonoBehaviour {
     void Start()
     {
         
-        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-        nowGameState = playerShip.NowGameState;
+        StartCoroutine("checkGameState");
 
         leftLimitX = -2.5f;
         rightLimitX = 2.5f;
@@ -69,10 +67,7 @@ public class BossStatus : MonoBehaviour {
             BossMove();
         }
     }
-    private void Update()
-    {
-        nowGameState = playerShip.NowGameState;
-    }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -85,7 +80,7 @@ public class BossStatus : MonoBehaviour {
         {
             Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
 
-            BossHp -= 0;
+            BossHp -= 10;
             DestroyObject(other.gameObject);
 
             //게임컨트롤러에게 알리기 보스가 맞았다고//
@@ -94,8 +89,9 @@ public class BossStatus : MonoBehaviour {
 
             if (BossHp == 0)
             {
-                Destroy(gameObject);
 
+                GamePlayManager.Instance.NowGameState = GameState.GameOver;
+                Destroy(gameObject);
                 isdead = true;
             }
         }
@@ -113,5 +109,12 @@ public class BossStatus : MonoBehaviour {
             moveVlaue = 1;
         }
         transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime); //지용님 수정사항 반영
+    }
+    IEnumerator checkGameState()
+    {
+        nowGameState = GamePlayManager.Instance.NowGameState;
+        Debug.Log(nowGameState);
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine("checkGameState");
     }
 }

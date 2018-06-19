@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    Ready,
+    Started,
+    GameOver
+}
+
 public class GamePlayManager : MonoBehaviour {
 
 
@@ -31,12 +38,22 @@ public class GamePlayManager : MonoBehaviour {
         get { return StageData; }
         set { StageData = value; }
     }
+    private GameState nowGameState;
+
+    public GameState NowGameState
+    {
+        get { return nowGameState; }
+        set { nowGameState = value; }
+    }
+
 
 
     private void Awake()
     {
         if (instance != this)
             instance = this;
+
+        NowGameState = GameState.Ready;
         DontDestroyOnLoad(gameObject);
        
     }

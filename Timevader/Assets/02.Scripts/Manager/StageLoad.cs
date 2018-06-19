@@ -20,7 +20,6 @@ public class StageLoad : MonoBehaviour {
         Debug.Log("stagenumber : " + StageNumber + "   , Nextstage : " + stageController.GetNextStageInfo());
         if (StageNumber == stageController.GetNextStageInfo())
         {
-            //test//
             // SceneManager.LoadScene("Stage" + StageNumber);
             SceneManager.LoadScene("Test_Stage3");
         }

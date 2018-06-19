@@ -49,56 +49,56 @@ public class InGameController : MonoBehaviour
         else
         {
             bosshpBar.value = bossLife / maxBossLife;
-            //AccountInfo.ChangeRestTimeData(playerRestTime);
+            AccountInfo.ChangeRestTimeData(playerRestTime);
 
-            int nextStageNum = 1;
+            //int nextStageNum = 1;
 
-            if (stageData <= 2)
-            {
-                AccountInfo.ChangeStageData(stageData + nextStageNum);
-                GamePlayManager.Instance.stageData = stageData + nextStageNum;
-                Debug.Log(stageData + nextStageNum);
+            //if (stageData <= 2)
+            //{
+            //    AccountInfo.ChangeStageData(stageData + nextStageNum);
+            //    GamePlayManager.Instance.stageData = stageData + nextStageNum;
+            //    Debug.Log(stageData + nextStageNum);
 
-            }
-            else
-            {
-                AccountInfo.ChangeStageData(nextStageNum);
-                GamePlayManager.Instance.stageData = nextStageNum;
+            //}
+            //else
+            //{
+            //    AccountInfo.ChangeStageData(nextStageNum);
+            //    GamePlayManager.Instance.stageData = nextStageNum;
 
-                Debug.Log(nextStageNum);
+            //    Debug.Log(nextStageNum);
 
-            }
-            GameWinResultPanel.gameObject.SetActive(true);
+            //}
+            //GameWinResultPanel.gameObject.SetActive(true);
 
 
-           // StartCoroutine("WinResult");
+            StartCoroutine("WinResult");
         }
                 
     }
-    //IEnumerator WinResult()
-    //{            
-    //    ////다음 스테이지값 저장//
-    //    //int nextStageNum = 1;
+    IEnumerator WinResult()
+    {
+        //다음 스테이지값 저장//
+        int nextStageNum = 1;
 
-    //    //if (stageData <= 2)
-    //    //{
-    //    //    AccountInfo.ChangeStageData(stageData + nextStageNum);
-    //    //    GamePlayManager.Instance.stageData = stageData + nextStageNum;
-    //    //    Debug.Log(stageData + nextStageNum);
+        if (stageData <= 2)
+        {
+            AccountInfo.ChangeStageData(stageData + nextStageNum);
+            GamePlayManager.Instance.stageData = stageData + nextStageNum;
+            Debug.Log(stageData + nextStageNum);
 
-    //    //}
-    //    //else
-    //    //{
-    //    //    AccountInfo.ChangeStageData(nextStageNum);
-    //    //    GamePlayManager.Instance.stageData = nextStageNum;
+        }
+        else
+        {
+            AccountInfo.ChangeStageData(nextStageNum);
+            GamePlayManager.Instance.stageData = nextStageNum;
 
-    //    //    Debug.Log(nextStageNum);
+            Debug.Log(nextStageNum);
 
-    //    //}
-    //    //yield return new WaitForSeconds(1.0f);
-    //    //GameWinResultPanel.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(1.0f);
+        GameWinResultPanel.gameObject.SetActive(true);
 
-    //}
+    }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
     {
@@ -166,7 +166,7 @@ public class InGameController : MonoBehaviour
         }
         else if (stageData == 2)
         {
-            SceneManager.LoadScene("Stage3");
+            SceneManager.LoadScene("Test_Stage3");
         }
         else
         {

@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState
-{
-    Ready,
-    Started,
-    GameOver
-}
+
 [System.Serializable]
 public class Boundary1
 {
@@ -37,20 +32,20 @@ public class PlayerShip : MonoBehaviour
     bool assistant;
     [SerializeField]
     int lastBombItem;
-
-    public GameState NowGameState;
+    [SerializeField]
+    GameState nowGameState;
 
 
     [SerializeField]
-    private float speed;
+    float speed;
     public Boundary Boundary;
     public GameObject Shot;
     public Transform ShotSpawn;
     public Transform AddedSpawn;
     public float fireDelta = 0.2f;
     [SerializeField]
-    private float nextFire = 0.2f;
-    private float myTime = 0.0f;
+    float nextFire = 0.2f;
+    float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement;
     void Shoot(Transform AnySpawn)
@@ -69,7 +64,7 @@ public class PlayerShip : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
 
-        NowGameState = GameState.Ready;
+        StartCoroutine("checkGameState");
 
         Invoke("GameStart", 2.0f);
 
@@ -117,7 +112,7 @@ public class PlayerShip : MonoBehaviour
     //게임시작//
     void GameStart()
     {
-        NowGameState = GameState.Started;
+        GamePlayManager.Instance.NowGameState = GameState.Started;
     }
 
     void OnTriggerEnter(Collider other)
@@ -144,7 +139,7 @@ public class PlayerShip : MonoBehaviour
     }
     void Update()
     {
-        if (NowGameState == GameState.Started)
+        if (nowGameState == GameState.Started)
         {
             ///설님꺼
             Shoot(ShotSpawn);
@@ -158,13 +153,15 @@ public class PlayerShip : MonoBehaviour
         if (playerLife <= 0)
         {
             playerLife = 0;
-            NowGameState = GameState.GameOver;
+            nowGameState = GameState.GameOver;
         }
+
     }
+
     void FixedUpdate()
     {
         //설님꺼//
-        if (NowGameState == GameState.Started)
+        if (nowGameState == GameState.Started)
         {
             {
                 float moveHorizontal = Input.GetAxis("Horizontal");
@@ -185,12 +182,15 @@ public class PlayerShip : MonoBehaviour
     }
     IEnumerator LoseTime()
     {
-        playerRestTime = playerRestTime - 10;
-        if (notifyRestTimeObserver != null)
-            notifyRestTimeObserver(playerRestTime);
-
+        if (nowGameState == GameState.Started)
+        {
+            playerRestTime = playerRestTime - 10;
+            if (notifyRestTimeObserver != null)
+                notifyRestTimeObserver(playerRestTime);
+        }
         yield return new WaitForSeconds(1.5f);
         StartCoroutine("LoseTime");
+
     }
     //미사일 아이템 사용
     void UseAddMissileItem()
@@ -205,11 +205,16 @@ public class PlayerShip : MonoBehaviour
     {
         assistant = true;
         AccountInfo.ChangeAssistantItemData(0);
-
     }
     void UseLastBombItem()
     {
         AccountInfo.ChangeLastBombItemData(0);
+    }
+    IEnumerator checkGameState()
+    {
+        nowGameState = GamePlayManager.Instance.NowGameState;
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine("checkGameState");
     }
 }
 
