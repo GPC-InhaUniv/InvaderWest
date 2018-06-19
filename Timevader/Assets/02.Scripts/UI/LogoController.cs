@@ -43,6 +43,8 @@ public class LogoController : MonoBehaviour {
         uIFader.CanvasFadeIn(UIElement[0]);
         yield return new WaitForSeconds(fadeSecond);
         uIFader.CanvasFadeOut(UIElement[0]);
+        uIFader.CanvasFadeIn(UIElement[3]);
+        yield return new WaitForSeconds(fadeSecond);
 
         roginSet.SetActive(true);
     }
