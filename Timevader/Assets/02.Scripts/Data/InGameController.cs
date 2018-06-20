@@ -158,18 +158,18 @@ public class InGameController : MonoBehaviour
     }
     public void OnGoToNextStage()
     {
-        //if (stageData == 1)
-        //{
-        //    SceneManager.LoadScene("Stage2");
-        //}
-        //else if (stageData == 2)
-        //{
-        //    SceneManager.LoadScene("Test_Stage3");
-        //}
-        //else
-        //{
-        //    SceneManager.LoadScene("Main");
-        //}
+        if (stageData == 1)
+        {
+            SceneManager.LoadScene("Stage2");
+        }
+        else if (stageData == 2)
+        {
+            SceneManager.LoadScene("Test_Stage3");
+        }
+        else
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
     public void OnBackToMain()
     {
