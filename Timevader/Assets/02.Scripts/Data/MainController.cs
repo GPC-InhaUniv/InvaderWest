@@ -27,9 +27,11 @@ public class MainController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        
         //수정중//
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         UserNickname = GamePlayManager.Instance.PlayerName;
+
 
         stageData = int.Parse(AccountInfo.Instance.StageData);
         Debug.Log(stageData);
@@ -48,6 +50,25 @@ public class MainController : MonoBehaviour {
         RestTimeText.text = restTime.ToString();
         WelcomeText.text = UserNickname + "님 환영합니다.";
     }
+    private void FixedUpdate()
+    {
+        UpDownSpaceShipEffect(playerSelectSpaceShipNumber);
+    }
+
+    public void UpDownSpaceShipEffect(int playerNumber)
+    {
+        float a = 0.1f;
+        if (SpaceShips[playerNumber - 1].transform.localPosition.y < 2.0f)
+        {
+            a = 0.1f;
+        }
+        else if (SpaceShips[playerNumber - 1].transform.localPosition.y > 1.5f)
+        {
+            a = -0.1f;
+        }
+        SpaceShips[playerNumber - 1].transform.Translate(Vector3.up * 5.0f * Time.deltaTime * a);
+    }
+
     void HideSpaceShips()
     {
         for(int i = 0; i < SpaceShips.Length; i++)
@@ -62,12 +83,14 @@ public class MainController : MonoBehaviour {
         {
             case 1:
                 SpaceShips[0].SetActive(true);
+
                 break;
             case 2:
                 SpaceShips[1].SetActive(true);
                 break;
             case 3:
                 SpaceShips[2].SetActive(true);
+
                 break;
             default:
                 break;
