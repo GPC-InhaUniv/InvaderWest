@@ -25,10 +25,7 @@ public enum InvaderType
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    public ObjectPool MissilePool;
-    public GameObject WreckedShip;
     public GameObject[] Items;
-    //public EnemyFactory factory;
 
     [SerializeField] [Range(0, 100)]
     int ItemDropProbability; // 20%
@@ -51,7 +48,6 @@ public class Enemy : MonoBehaviour
         radius = 5.0f; // Circle
         circleSpeed = 4.0f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
-        //factory = GetComponent<EnemyFactory>();
     }
 
     virtual protected void Move() { }

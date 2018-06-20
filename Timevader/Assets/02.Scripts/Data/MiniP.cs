@@ -55,7 +55,8 @@ public class MiniP : MonoBehaviour
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
-            Instantiate(Shot, new Vector3(AnySpawn.position.x, AnySpawn.position.y, 0.0f), Quaternion.identity);
+            GameObject shot = PoolController.instance.GetFromPool(PoolType.BoltPool);
+            //Instantiate(Shot, new Vector3(AnySpawn.position.x, AnySpawn.position.y, 0.0f), Quaternion.identity);
 
             nextFire = nextFire - myTime;
             myTime = 0.0f;
