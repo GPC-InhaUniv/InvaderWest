@@ -50,23 +50,10 @@ public class MainController : MonoBehaviour {
         RestTimeText.text = restTime.ToString();
         WelcomeText.text = UserNickname + "님 환영합니다.";
     }
-    private void FixedUpdate()
-    {
-        UpDownSpaceShipEffect(playerSelectSpaceShipNumber);
-    }
 
-    public void UpDownSpaceShipEffect(int playerNumber)
+    void FixedUpdate()
     {
-        float a = 0.1f;
-        if (SpaceShips[playerNumber - 1].transform.localPosition.y < 2.0f)
-        {
-            a = 0.1f;
-        }
-        else if (SpaceShips[playerNumber - 1].transform.localPosition.y > 1.5f)
-        {
-            a = -0.1f;
-        }
-        SpaceShips[playerNumber - 1].transform.Translate(Vector3.up * 5.0f * Time.deltaTime * a);
+       
     }
 
     void HideSpaceShips()
