@@ -39,6 +39,7 @@ public class DrageEarthRotation : MonoBehaviour {
         ActionClickOrDarg();
         NextScene();
     }
+
     void Start()
     {
         ConditionRotation = 0.90f;
@@ -98,7 +99,6 @@ public class DrageEarthRotation : MonoBehaviour {
 
                 StartCoroutine(WaitTimeForNextScene());
             }
-
         }
     }
 
