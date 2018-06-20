@@ -155,29 +155,38 @@ public class PlayerShip : MonoBehaviour
             playerLife = 0;
             nowGameState = GameState.GameOver;
         }
+        if(nowGameState == GameState.GameOver)
+        {
+            StartCoroutine("isGameOver");
+        }
 
     }
-
+    //게임오버 -> 플레이어 위치 원점으로//
+    IEnumerator isGameOver()
+    {
+        rigid.constraints = RigidbodyConstraints.FreezeAll;
+        yield return new WaitForSeconds(0.2f);
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, new Vector3(0.0f, -4.0f, 0.0f), 0.1f);
+        //rigid.constraints = RigidbodyConstraints.None;
+    }
     void FixedUpdate()
     {
         //설님꺼//
         if (nowGameState == GameState.Started)
         {
-            {
-                float moveHorizontal = Input.GetAxis("Horizontal");
-                float moveVertical = Input.GetAxis("Vertical");
 
-                movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-                rigid.velocity = movement * speed;
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-                rigid.position = new Vector3
-                (
-                    Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
-                    Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
-                    0.0f
-                );
-            }
+            movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
+            rigid.velocity = movement * speed;
         }
+        rigid.position = new Vector3
+        (
+            Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
+            Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
+            0.0f
+        );
         //설님꺼//
     }
     IEnumerator LoseTime()
