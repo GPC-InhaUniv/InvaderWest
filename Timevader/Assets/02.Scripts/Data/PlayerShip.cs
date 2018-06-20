@@ -181,23 +181,26 @@ public class PlayerShip : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //설님꺼//
+        MovePlayer();
+    }
+
+    /* 지용 */
+    void MovePlayer()
+    {
         if (nowGameState == GameState.Started)
         {
-
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
-
-            movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-            rigid.velocity = movement * speed;
+            if (Input.GetMouseButton(0))
+            {
+                movement = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+                transform.position = Vector3.Lerp(transform.position, movement, Time.deltaTime * speed);
+            }
+            transform.position = new Vector3
+            (
+                Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
+                Mathf.Clamp(transform.position.y, Boundary.yMin, Boundary.yMax),
+                0.0f
+            );
         }
-        rigid.position = new Vector3
-        (
-            Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
-            Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
-            0.0f
-        );
-        //설님꺼//
     }
     IEnumerator LoseTime()
     {
@@ -211,6 +214,7 @@ public class PlayerShip : MonoBehaviour
         StartCoroutine("LoseTime");
 
     }
+    ie
     //미사일 아이템 사용
     void UseAddMissileItem()
     {
