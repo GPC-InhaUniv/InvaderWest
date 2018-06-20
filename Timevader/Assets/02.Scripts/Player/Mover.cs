@@ -21,7 +21,7 @@ public class Mover : MonoBehaviour {
         if(isPlayer)
             if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Boss") ReturnToPool();
         else
-            if (other.gameObject.tag == "Player") ReturnToPool();
+            if (other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt") ReturnToPool();
     }
 
     void OnTriggerExit(Collider other)

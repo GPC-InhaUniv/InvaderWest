@@ -81,7 +81,7 @@ public class BossStatus : MonoBehaviour {
             Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
 
             BossHp -= 10;
-            DestroyObject(other.gameObject);
+            //DestroyObject(other.gameObject);
 
             //게임컨트롤러에게 알리기 보스가 맞았다고//
             if (notifyLifeToObserver != null)

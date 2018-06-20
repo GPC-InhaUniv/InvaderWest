@@ -39,7 +39,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     float speed;
     public Boundary Boundary;
-    public GameObject Shot;
+    //public GameObject Shot;
     public Transform ShotSpawn;
     public Transform AddedSpawn;
     public float fireDelta = 0.2f;
@@ -54,7 +54,17 @@ public class PlayerShip : MonoBehaviour
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
-            Instantiate(Shot, AnySpawn.position, AnySpawn.rotation);
+            //Instantiate(Shot, AnySpawn.position, AnySpawn.rotation);
+            GameObject shot =  PoolController.instance.GetFromPool(PoolType.BoltPool);
+            if (shot == null)
+            {
+                Debug.Log("Pool에 남은 미사일이 부족합니다.");
+                return;
+            }
+            shot.transform.position = transform.position;
+            shot.transform.rotation = Quaternion.identity;
+            shot.SetActive(true);
+            shot = null; // 초기화
             nextFire = nextFire - myTime;
             myTime = 0.0f;
         }
