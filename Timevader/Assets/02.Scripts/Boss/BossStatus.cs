@@ -78,7 +78,7 @@ public class BossStatus : MonoBehaviour {
         }
         else if (other.tag == "Bolt")
         {
-            Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
+            //Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
 
             BossHp -= 10;
             //DestroyObject(other.gameObject);
@@ -95,7 +95,6 @@ public class BossStatus : MonoBehaviour {
                 isdead = true;
             }
         }
-
     }
 
     void BossMove()
@@ -110,6 +109,7 @@ public class BossStatus : MonoBehaviour {
         }
         transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime); //지용님 수정사항 반영
     }
+
     IEnumerator checkGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
