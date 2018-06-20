@@ -86,7 +86,7 @@ public class Spawner : MonoBehaviour {
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, spawnPoint[2].position, Direction.Circle_CounterClockwise);
+            SpawnEnemy(InvaderType.Normal, spawnPoint[2].position, Direction.Circle_CounterClockwise);
             yield return new WaitForSeconds(SPAWNDELAY);
         }
         yield return new WaitForSeconds(WAVEDELAY);
@@ -101,7 +101,7 @@ public class Spawner : MonoBehaviour {
 
         for (int i = 0; i < spawnCount; i++)
         {
-            SpawnEnemy(InvaderType.Attacking, spawnPoint[2].position, Direction.Circle_Clockwise);
+            SpawnEnemy(InvaderType.Normal, spawnPoint[2].position, Direction.Circle_Clockwise);
             yield return new WaitForSeconds(SPAWNDELAY);
         }
         yield return new WaitForSeconds(WAVEDELAY);
