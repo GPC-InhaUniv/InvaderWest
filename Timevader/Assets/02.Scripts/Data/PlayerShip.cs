@@ -214,7 +214,7 @@ public class PlayerShip : MonoBehaviour
         StartCoroutine("LoseTime");
 
     }
-    ie
+    
     //미사일 아이템 사용
     void UseAddMissileItem()
     {
