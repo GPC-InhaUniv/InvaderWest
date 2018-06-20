@@ -31,15 +31,10 @@ public class BossStatus : MonoBehaviour {
 
     int moveVlaue = 1;
 
-    float leftLimitX;
-    float rightLimitX;
-
-
-   
+    float leftLimitX, rightLimitX;
 
     void Start()
     {
-        
         StartCoroutine("checkGameState");
 
         leftLimitX = -2.5f;
@@ -57,7 +52,6 @@ public class BossStatus : MonoBehaviour {
         //if (notifyLifeToObserver != null)
         //    notifyLifeToObserver(BossHp, MaxHp);
         Debug.Log(BossHp / MaxHp);
-
     }
 
     void FixedUpdate()
@@ -67,7 +61,6 @@ public class BossStatus : MonoBehaviour {
             BossMove();
         }
     }
-
 
     void OnTriggerEnter(Collider other)
     {
@@ -89,7 +82,6 @@ public class BossStatus : MonoBehaviour {
 
             if (BossHp == 0)
             {
-
                 GamePlayManager.Instance.NowGameState = GameState.GameOver;
                 Destroy(gameObject);
                 isdead = true;
