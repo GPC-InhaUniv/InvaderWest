@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class BossEffectPoolObject : MonoBehaviour {
 
-    public string PoolItemName = string.Empty;
     [SerializeField]
     GameObject PoolObjEffect;
-    [SerializeField]
-    GameObject BossObj;
 
     [SerializeField]
-    int PoolAmount = 20;
+    GameObject SpawnObj;
 
-    public static Queue<GameObject> PoolObjsEffect;
+    [SerializeField]
+    int PoolAmount = 10;
+
+    Queue<GameObject> PoolObjsEffect;
 
 
     void Start()
@@ -27,20 +27,20 @@ public class BossEffectPoolObject : MonoBehaviour {
 
         for (int i = 0; i < PoolAmount; i++)
         {
-            GameObject obj_A = Instantiate(PoolObjEffect);
+            GameObject Effectobj = Instantiate(PoolObjEffect);
 
-            obj_A.transform.parent = BossObj.transform;
+            Effectobj.transform.parent = SpawnObj.transform; //BossObj 밑으로 생성
 
-            obj_A.SetActive(false);
+            Effectobj.SetActive(false);
 
-            PoolObjsEffect.Enqueue(obj_A);
+            PoolObjsEffect.Enqueue(Effectobj);
         }
         Debug.Log("objpool 이펙트 생성 완료 ");
     }
 
     public GameObject GetPooledObject()
     {
-        if (PoolObjsEffect.Count != 0)
+        if(PoolObjsEffect.Count != 0)
             return PoolObjsEffect.Dequeue();
 
         Debug.Log("Pool에 이펙트가 없음.");
@@ -50,6 +50,9 @@ public class BossEffectPoolObject : MonoBehaviour {
 
     public void ReturnToPool(GameObject obj)
     {
+
         PoolObjsEffect.Enqueue(obj);
+
+        obj.SetActive(false);
     }
 }
