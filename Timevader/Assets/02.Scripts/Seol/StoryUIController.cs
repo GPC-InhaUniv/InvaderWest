@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StoryUIController : MonoBehaviour {
@@ -24,6 +25,11 @@ public class StoryUIController : MonoBehaviour {
     Button normalButton;
     [SerializeField]
     Button hardButton;
+    
+    [SerializeField]
+    Text confirmDifficultyText;
+
+    int year = 0;
 
     int i = 0;
 
@@ -34,132 +40,55 @@ public class StoryUIController : MonoBehaviour {
         storyButtons[i].SetActive(true);
     }
 
+    public void EasyButtonClicked()
+    {        
+        year = 50000;
+        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+    }
+
+    public void NormalButtonClicked()
+    {
+        year = 25000;
+        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+    }
+
+    public void HardButtonClicked()
+    {
+        year = 13000;
+        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+    }
+
     void SelectOK()
     {
-        //AccountInfo.ChangeRestTimeData(50000);
-        //SceneManager.LoadScene("Main");
+        AccountInfo.ChangeRestTimeData(year);
+        SceneManager.LoadScene("Main");
     }
 
     void SelectCancel()
     {
         confirmPanel.SetActive(false);
     }
-    /*
-    bool isZoomed()
+
+    void ZoomEarth()
     {
-        if (earthButton.transform.localScale.x > 2.7)
+        earthButton.transform.localScale += Vector3.Lerp(new Vector3(0.02f, 0.02f, 0.02f), new Vector3(0.02f, 0.02f, 0.02f), Time.deltaTime);
+
+        if (earthButton.transform.localScale.x > 1.8)
         {
+            earthButton.transform.localScale = new Vector3(1.8f, 1.8f, 1.8f);
             storyButton1.interactable = true;
             earthButton.interactable = false;
-            return false;
         }
-
-        return true;
     }
-    */
-    /*
-    public static void AddEventTriggerListener(EventTrigger trigger,
-                                            EventTriggerType eventType,
-                                            System.Action<BaseEventData> callback)
+
+    void MoveInvader()
     {
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = eventType;
-        entry.callback = new EventTrigger.TriggerEvent();
-        entry.callback.AddListener(new UnityEngine.Events.UnityAction<BaseEventData>(callback));
-        trigger.triggers.Add(entry);
-    }
-    */
-
-    void Start()
-    {
-        //earthButton.onClick.AddListener(OnClickEarthButton);
-
-        //EventTrigger trigger = GetComponentInParent<EventTrigger>();
-        //trigger.OnMove(EventTriggerType.Move, AxisEventData eventData); 
-    }
-
-    void Update()
-    {
-        
-    }
+        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, 0.1f, 0), new Vector3(0, 0.1f, 0), Time.deltaTime);
+    }    
 
     void FixedUpdate()
     {
-        earthButton.transform.localScale += Vector3.Lerp(new Vector3(0.01f, 0.01f, 0.01f), new Vector3(0.01f, 0.01f, 0.01f), Time.deltaTime);
-
-        if (earthButton.transform.localScale.x > 2.5)
-        {
-            earthButton.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
-            storyButton1.interactable = true;
-            earthButton.interactable = false;
-        }
-
-        if (enemyship != null)
-        {
-            if (enemyship.activeSelf == true)
-            {
-                StartCoroutine(MoveInvader());
-                Debug.Log("적");
-            }
-        }
-        else
-            return;
-    }
-    /*
-    IEnumerator ZoomEarth()
-    {
-        WaitForSeconds waitsec = new WaitForSeconds(0.04f);
-
-        while (isZoomed())
-        {
-            earthButton.transform.localScale += Vector3.Lerp(transform.localScale, transform.localScale * 0.01f, Time.deltaTime / 20);
-
-            yield return waitsec;
-            Debug.Log("지구 커져라");
-<<<<<<< HEAD
-        }             
-=======
-        }
-
-        
-        float j = 1;
-
-        while (j <= 3.0f)
-        {
-            earthButton.transform.localScale = new Vector3(j, j, j);
-            j += 0.1f;
-
-            yield return waitsec;
-            Debug.Log("지구 커져라");
-        }
-        
->>>>>>> 2247150b2bbf89ef555286324fcbbfa59f85d795
-    }
-    */
-
-    IEnumerator MoveInvader()
-    {
-        WaitForSeconds waitsec = new WaitForSeconds(0.1f);
-
-        int height = 879;
-
-        while (height > 527)
-        {
-            enemyship.transform.localPosition = new Vector3(0, height, 0);
-            //SetPosition(enemyship, new Vector3(0, k, 0));
-            height -= 1;
-
-            yield return waitsec;
-            Debug.Log("침략군 강림");
-
-        }
+        ZoomEarth();        
     }
 
-    /*
-    void OnClickEarthButton()
-    {
-        StartCoroutine(ZoomEarth());
-    }
-    */
-    
 }
