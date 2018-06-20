@@ -8,7 +8,7 @@ public class WreckedEnemy : Enemy{
     void Start()
     {
         hp = maxHp;
-        WreckedShip = enemy.WreckedShip;
+        //WreckedShip = enemy.WreckedShip;
     }
 
     void FixedUpdate()

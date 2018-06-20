@@ -14,8 +14,8 @@ public class Moving : MonoBehaviour {
 
     void Start()
     {
-        leftLimitX = -3.0f;
-        rightLimitX = 3.0f;
+        leftLimitX = -2.0f;
+        rightLimitX = 2.0f;
     }
     void FixedUpdate()
     {
