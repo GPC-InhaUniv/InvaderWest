@@ -33,6 +33,8 @@ public class Mover : MonoBehaviour {
     // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
     void ReturnToPool()
     {
+        if(isPlayer) PoolController.instance.ReturnToPool(PoolType.BoltPool, this.gameObject);
+        else PoolController.instance.ReturnToPool(PoolType.EnemyBoltPool, this.gameObject);
         this.gameObject.SetActive(false);
     }
 }

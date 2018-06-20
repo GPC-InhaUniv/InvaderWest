@@ -44,7 +44,7 @@ public class InGameController : MonoBehaviour
         if (this.bossLife > 0)
         {
             bosshpBar.value = bossLife / maxBossLife;
-            Debug.Log("BossHp / MaxHp  " + bossLife / maxBossLife);
+            //Debug.Log("BossHp / MaxHp  " + bossLife / maxBossLife);
         }
         else
         {

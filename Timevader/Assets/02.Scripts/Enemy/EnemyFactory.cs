@@ -13,7 +13,7 @@ public class EnemyFactory : MonoBehaviour {
             case InvaderType.Normal:
                 invader = PoolController.instance.GetFromPool(PoolType.NormalPool); break;
             case InvaderType.Attacking:
-                invader = PoolController.instance.GetFromPool(PoolType.AttackingPool); break;
+                invader = PoolController.instance.GetFromPool(PoolType.AttackingPool); break; 
             default: break;
         }
         return invader;

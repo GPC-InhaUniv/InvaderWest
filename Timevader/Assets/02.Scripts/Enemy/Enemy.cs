@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     public ObjectPool MissilePool;
     public GameObject WreckedShip;
     public GameObject[] Items;
-    public EnemyFactory factory;
+    //public EnemyFactory factory;
 
     [SerializeField] [Range(0, 100)]
     int ItemDropProbability; // 20%
@@ -51,13 +51,8 @@ public class Enemy : MonoBehaviour
         radius = 5.0f; // Circle
         circleSpeed = 4.0f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
-        factory = GetComponent<EnemyFactory>();
+        //factory = GetComponent<EnemyFactory>();
     }
-
-    //protected ObjectPool GetMissilePool()
-    //{
-    //    return MissilePool;
-    //}
 
     virtual protected void Move() { }
     virtual protected void MoveCircle(bool sign) { }
@@ -80,7 +75,11 @@ public class Enemy : MonoBehaviour
     void DropItem(ItemList num)
     {
         Debug.Log((int)num);
-        Instantiate(Items[0], transform.position, Quaternion.identity);
+        GameObject item = PoolController.instance.GetFromPool(PoolType.ItemPool);
+        item.transform.position = transform.position;
+        item.transform.rotation = Quaternion.identity;
+        item.SetActive(true);
+        //Instantiate(Items[0], transform.position, Quaternion.identity);
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
@@ -88,7 +87,11 @@ public class Enemy : MonoBehaviour
     void Wrecked() 
     {
         Debug.Log("WRECKED");
-       Instantiate(WreckedShip, transform.position, Quaternion.identity);
+        GameObject wreckedShip = PoolController.instance.GetFromPool(PoolType.WreckedPool);
+        wreckedShip.transform.position = transform.position;
+        wreckedShip.transform.rotation = Quaternion.identity;
+        wreckedShip.SetActive(true);
+        //Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
 
     void OnTriggerEnter(Collider other)

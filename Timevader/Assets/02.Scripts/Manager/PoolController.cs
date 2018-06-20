@@ -31,25 +31,22 @@ public class PoolController : MonoBehaviour {
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-    }
 
-    void Start()
-    {
         CreateAllPools();
     }
 
     void CreateAllPools()
     {
-        CreatePool(normalPool, normalPoolSize, normalPrefab);
-        CreatePool(attackingPool, attackingPoolSize, attackingPrefab);
-        CreatePool(boltPool, boltPoolSize, boltPrefab);
-        CreatePool(enemyBoltPool, enemyBoltPoolSize, enemyBoltPrefab);
-        CreatePool(wreckedPool, wreckedPoolSize, wreckedPrefab);
-        CreatePool(itemPool, itemPoolSize, itemPrefab);
-        CreatePool(explosionPool, explosionPoolSize, explosionPrefab);
+        CreatePool(ref normalPool, normalPoolSize, normalPrefab);
+        CreatePool(ref attackingPool, attackingPoolSize, attackingPrefab);
+        CreatePool(ref boltPool, boltPoolSize, boltPrefab);
+        CreatePool(ref enemyBoltPool, enemyBoltPoolSize, enemyBoltPrefab);
+        CreatePool(ref wreckedPool, wreckedPoolSize, wreckedPrefab);
+        CreatePool(ref itemPool, itemPoolSize, itemPrefab);
+        CreatePool(ref explosionPool, explosionPoolSize, explosionPrefab);
     }
 
-    void CreatePool(Queue<GameObject> pool, int size, GameObject prefab)
+    void CreatePool(ref Queue<GameObject> pool, int size, GameObject prefab)
     {
         pool = new Queue<GameObject>();
         for (int i = 0; i < size; i++)
@@ -78,7 +75,7 @@ public class PoolController : MonoBehaviour {
     // type을 통해 해당 Pool을 반환하는 함수
     Queue<GameObject> FindPool(PoolType type)
     {
-        switch(type)
+        switch (type)
         {
             case PoolType.NormalPool:
                 return normalPool;

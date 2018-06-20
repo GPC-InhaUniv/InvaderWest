@@ -13,11 +13,10 @@ public class AttackingEnemy : Enemy{
 
     void Start()
     {
-        MissilePool = enemy.MissilePool;
         hp = maxHp;
-        WreckedShip = enemy.WreckedShip;
+        //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
-        factory = enemy.factory;
+        //factory = enemy.factory;
     }
 
     void FixedUpdate()
@@ -30,8 +29,8 @@ public class AttackingEnemy : Enemy{
         while (true)
         {
             yield return new WaitForSeconds((float)Random.Range(5, attackRate) / 10);
-            
-            GameObject shot = MissilePool.GetFromPool();
+
+            GameObject shot = PoolController.instance.GetFromPool(PoolType.EnemyBoltPool);
             if (shot != null)
             {
                 shot.transform.rotation = Quaternion.identity;

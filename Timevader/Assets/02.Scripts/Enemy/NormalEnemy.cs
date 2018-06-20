@@ -12,9 +12,9 @@ public class NormalEnemy : Enemy {
     void Start()
     {
         hp = maxHp;
-        WreckedShip = enemy.WreckedShip;
+        //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
-        factory = enemy.factory;
+        //factory = enemy.factory;
     }
 
     void FixedUpdate()
