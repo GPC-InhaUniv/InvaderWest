@@ -156,8 +156,6 @@ public class InGameController : MonoBehaviour
             }
         }
     }
-
-
     public void OnGoToNextStage()
     {
         if (stageData == 1)
@@ -180,5 +178,15 @@ public class InGameController : MonoBehaviour
     public void OnGoToShop()
     {
         SceneManager.LoadScene("Shop");
+    }
+    public void OnPaused()
+    {
+        Time.timeScale = 0;
+        Debug.Log(Time.timeScale);
+    }
+    public void OnResumed()
+    {
+        Time.timeScale = 1;
+        Debug.Log(Time.timeScale);
     }
 }
