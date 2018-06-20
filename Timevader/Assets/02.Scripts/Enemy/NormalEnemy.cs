@@ -95,7 +95,7 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
         t = 0;
-        factory.normalPool.ReturnToPool(this.gameObject);
+        PoolController.instance.ReturnToPool(PoolType.NormalPool, this.gameObject);
     }
 
     override protected void GetDemage(int damage)

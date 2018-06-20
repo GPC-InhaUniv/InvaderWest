@@ -30,6 +30,12 @@ public class Enemy : MonoBehaviour
     public GameObject[] Items;
     public EnemyFactory factory;
 
+    [SerializeField] [Range(0, 100)]
+    int ItemDropProbability; // 20%
+
+    [SerializeField] [Range(0, 100)]
+    int WreckProbability; // 50%
+
     [SerializeField]
     protected float moveSpeed, moveHeight, circleSpeed;
     protected float radius;
@@ -63,10 +69,10 @@ public class Enemy : MonoBehaviour
     protected void Explode()
     {
         Debug.Log("EXPLODE");
-        if (Random.Range(0, 2) == 0) // 50%
+        if (Random.Range(1, 100) <= WreckProbability)
             Wrecked();
 
-        if (Random.Range(0, 5) == 0) // 20%
+        if (Random.Range(1, 100) <= ItemDropProbability)
             DropItem(ItemList.AddMissileItem);
         ReturnToPool();
     }
