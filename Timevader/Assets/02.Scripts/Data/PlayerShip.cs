@@ -39,15 +39,46 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     float speed;
     public Boundary Boundary;
-    //public GameObject Shot;
-    public Transform ShotSpawn;
-    public Transform AddedSpawn;
+
     public float fireDelta = 0.2f;
     [SerializeField]
     float nextFire = 0.2f;
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement;
+
+
+    //public GameObject Shot;
+    [SerializeField]
+    Transform shotSpawn, addedSpawn;
+    //player합치기//
+    bool hasDoubleMissile = false;
+    public void GetItem(ItemList itemKind)
+    {
+        switch (itemKind)
+        {
+            case ItemList.AddMissileItem:
+                AddMissile();
+                break;
+            case ItemList.IncreasingShotSpeedItem:
+                IncreasingShotSpeed();
+                break;
+            case ItemList.AssistantItem:
+                break;
+        }
+    }
+
+    void AddMissile()
+    {
+        hasDoubleMissile = true;
+        Shoot(addedSpawn);
+    }
+    //player합치기//
+
+    void IncreasingShotSpeed()
+    {
+        fireDelta = 0.3f;
+    }
     void Shoot(Transform AnySpawn)
     {
         myTime = myTime + Time.deltaTime;
@@ -152,7 +183,13 @@ public class PlayerShip : MonoBehaviour
         if (nowGameState == GameState.Started)
         {
             ///설님꺼
-            Shoot(ShotSpawn);
+            if (hasDoubleMissile == true)
+            {
+                Shoot(shotSpawn);
+                Shoot(addedSpawn);
+            }
+            else
+                Shoot(shotSpawn);
             ///설님꺼
             if (lastBombItem == (int)DataBoolean.TRUE)
             {
@@ -181,23 +218,26 @@ public class PlayerShip : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //설님꺼//
+        MovePlayer();
+    }
+
+    /* 지용 */
+    void MovePlayer()
+    {
         if (nowGameState == GameState.Started)
         {
-
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
-
-            movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-            rigid.velocity = movement * speed;
+            if (Input.GetMouseButton(0))
+            {
+                movement = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+                transform.position = Vector3.Lerp(transform.position, movement, Time.deltaTime * speed);
+            }
+            transform.position = new Vector3
+            (
+                Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
+                Mathf.Clamp(transform.position.y, Boundary.yMin, Boundary.yMax),
+                0.0f
+            );
         }
-        rigid.position = new Vector3
-        (
-            Mathf.Clamp(rigid.position.x, Boundary.xMin, Boundary.xMax),
-            Mathf.Clamp(rigid.position.y, Boundary.yMin, Boundary.yMax),
-            0.0f
-        );
-        //설님꺼//
     }
     IEnumerator LoseTime()
     {
@@ -211,6 +251,7 @@ public class PlayerShip : MonoBehaviour
         StartCoroutine("LoseTime");
 
     }
+    
     //미사일 아이템 사용
     void UseAddMissileItem()
     {

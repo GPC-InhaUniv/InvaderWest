@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DraggingObject : MonoBehaviour {
@@ -12,42 +13,56 @@ public class DraggingObject : MonoBehaviour {
     GameObject arrow;
     
     Vector3 prevPoint;
-    Vector3 currentPoint;
 
     float conditionMoving;
-
-    [SerializeField]
-    [Range(-0.5f, 5f)]
-    float moveSpeed;
+    
+    float moveSpeed = 2;
     
     [SerializeField]
     Camera MainCamera;
     
     [SerializeField] //로그인 조건 만족시 사라짐
     GameObject[] otherObject;
-    
+
+    PointerEventData ped;
+
     void Start()
     {
-        //conditionMoving = 0.90f;
-    }    
+        ped = new PointerEventData(null);
+    }
+    /*
+    public void ActionClickOrDarg()
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Debug.Log("클릭");
 
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("Raycast Hit");
+                TouchSlide();
+            }
+        }
+    }
+    */
     public void TouchSlide()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*    폰 조작   */
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            Debug.Log("click");
+            Debug.Log("Touch");
             prevPoint = Input.mousePosition;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetTouch(0).phase == TouchPhase.Moved)
         {
-            Debug.Log("Drag");
-            
+            Debug.Log("Slide");
             Vector3 movePower = new Vector3(0, Input.mousePosition.y - prevPoint.y, 0);
 
-            //Debug.Log("roat" + dragValue);
             arrow.transform.Translate(movePower);
             
-            prevPoint = Input.mousePosition;
+            prevPoint = Input.GetTouch(0).position;
         }
     }
 

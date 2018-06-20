@@ -10,7 +10,7 @@ public class SwipingObject : MonoBehaviour {
     float speed = 0;
     Vector3 startPos;
 
-    void Update()
+    public void Swipe()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -26,5 +26,10 @@ public class SwipingObject : MonoBehaviour {
 
         transform.Translate(0, this.speed, 0);
         this.speed *= 0.98f;
+    }
+
+    void Update()
+    {
+        
     }
 }

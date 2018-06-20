@@ -9,8 +9,7 @@ public class Moving : MonoBehaviour {
     [SerializeField]
     float moveSpeed = 3.5f;
 
-    float leftLimitX;
-    float rightLimitX;
+    float leftLimitX, rightLimitX;
 
     void Start()
     {
