@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour {
-    public ObjectPool normalPool, AttackingPool;
+    //public ObjectPool normalPool, AttackingPool;
     
     public GameObject GetEnemy(InvaderType type)
     {
@@ -11,9 +11,9 @@ public class EnemyFactory : MonoBehaviour {
         switch(type)
         {
             case InvaderType.Normal:
-                invader = normalPool.GetFromPool(); break;
+                invader = PoolController.instance.GetFromPool(PoolType.NormalPool); break;
             case InvaderType.Attacking:
-                invader = AttackingPool.GetFromPool(); break;
+                invader = PoolController.instance.GetFromPool(PoolType.AttackingPool); break;
             default: break;
         }
         return invader;

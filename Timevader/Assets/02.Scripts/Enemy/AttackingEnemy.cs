@@ -115,7 +115,7 @@ public class AttackingEnemy : Enemy{
         seta = 0;
         hp = maxHp;
         t = 0;
-        factory.AttackingPool.ReturnToPool(this.gameObject);
+        PoolController.instance.ReturnToPool(PoolType.AttackingPool, this.gameObject);
     }
 
     override protected void GetDemage(int damage)
