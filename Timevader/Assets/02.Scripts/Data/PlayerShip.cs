@@ -39,15 +39,46 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     float speed;
     public Boundary Boundary;
-    //public GameObject Shot;
-    public Transform ShotSpawn;
-    public Transform AddedSpawn;
+
     public float fireDelta = 0.2f;
     [SerializeField]
     float nextFire = 0.2f;
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement;
+
+
+    //public GameObject Shot;
+    [SerializeField]
+    Transform shotSpawn, addedSpawn;
+    //player합치기//
+    bool hasDoubleMissile = false;
+    public void GetItem(ItemList itemKind)
+    {
+        switch (itemKind)
+        {
+            case ItemList.AddMissileItem:
+                AddMissile();
+                break;
+            case ItemList.IncreasingShotSpeedItem:
+                IncreasingShotSpeed();
+                break;
+            case ItemList.AssistantItem:
+                break;
+        }
+    }
+
+    void AddMissile()
+    {
+        hasDoubleMissile = true;
+        Shoot(addedSpawn);
+    }
+    //player합치기//
+
+    void IncreasingShotSpeed()
+    {
+        fireDelta = 0.3f;
+    }
     void Shoot(Transform AnySpawn)
     {
         myTime = myTime + Time.deltaTime;
@@ -152,7 +183,13 @@ public class PlayerShip : MonoBehaviour
         if (nowGameState == GameState.Started)
         {
             ///설님꺼
-            Shoot(ShotSpawn);
+            if (hasDoubleMissile == true)
+            {
+                Shoot(shotSpawn);
+                Shoot(addedSpawn);
+            }
+            else
+                Shoot(shotSpawn);
             ///설님꺼
             if (lastBombItem == (int)DataBoolean.TRUE)
             {
