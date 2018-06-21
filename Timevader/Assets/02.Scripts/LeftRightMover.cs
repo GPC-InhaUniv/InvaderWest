@@ -8,6 +8,7 @@ public class LeftRightMover : MonoBehaviour {
     [SerializeField]
     float moveSpeed;
 
+    [SerializeField]
     float leftLimitX, rightLimitX;
 
     [SerializeField]
@@ -16,9 +17,6 @@ public class LeftRightMover : MonoBehaviour {
     void Start()
     {
         StartCoroutine("checkGameState");
-
-        leftLimitX = -2.0f;
-        rightLimitX = 2.0f;
     }
 
     void FixedUpdate()
