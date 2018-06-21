@@ -6,7 +6,9 @@ public enum GameState
 {
     Ready,
     Started,
-    GameOver
+    Win,
+    WinEvent,
+    Lose,
 }
 
 public class GamePlayManager : MonoBehaviour {

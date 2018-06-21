@@ -16,7 +16,6 @@ public class PlayerShip : MonoBehaviour
 
     public GameObject AddMissileItem;
 
-    public InGameController inGameController;
     public Boundary Boundary;
 
     [SerializeField]
@@ -42,6 +41,9 @@ public class PlayerShip : MonoBehaviour
     GameState nowGameState;
     [SerializeField]
     AudioSource shotAudioSource;
+    [SerializeField]
+    InGameController inGameController;
+
 
 
     public float fireDelta = 0.2f;
@@ -51,6 +53,57 @@ public class PlayerShip : MonoBehaviour
     Vector3 movement;
     bool hasDoubleMissile = false;
 
+    void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+
+        StartCoroutine("checkGameState");
+
+        Invoke("GameStart", 2.0f);
+
+        inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
+
+        //Test 끝나면 주석제거하기//
+        //addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
+        //assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
+        //lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
+
+
+        //GamePlayManager.Instance.PlayerShipNum = 1;
+
+        //Test 플레이어//
+        if (GamePlayManager.Instance.PlayerShipNum == 1)
+        {
+            playerLife = 3;
+            playerRestTime = 5000;
+        }
+        else if (GamePlayManager.Instance.PlayerShipNum == 2)
+        {
+            playerLife = 4;
+            playerRestTime = 3800;
+        }
+        //Test//
+        if (addMissileItem == (int)DataBoolean.TRUE || GamePlayManager.Instance.PlayerShipNum == 1)
+        {
+            UseAddMissileItem();
+            Debug.Log("UseAddMissileItem");
+        }
+        if (assistantItem == (int)DataBoolean.TRUE)
+        {
+            UseAssistantItem();
+            Debug.Log("UseAssistantItem");
+        }
+
+        //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
+        notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
+        if (notifyLifeToObserver != null)
+            notifyLifeToObserver(playerLife);
+        notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
+
+
+        //시간 빼앗기 시작//
+        StartCoroutine("LoseTime");
+    }
     void FixedUpdate()
     {
         MovePlayer();
@@ -107,55 +160,7 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        rigid = GetComponent<Rigidbody>();
 
-        StartCoroutine("checkGameState");
-
-        Invoke("GameStart", 2.0f);
-
-        //Test 끝나면 주석제거하기//
-        //addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
-        //assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
-        //lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
-
-
-        //GamePlayManager.Instance.PlayerShipNum = 1;
-
-        //Test 플레이어//
-        if (GamePlayManager.Instance.PlayerShipNum == 1)
-        {
-            playerLife = 3;
-            playerRestTime = 5000;
-        }
-        else if (GamePlayManager.Instance.PlayerShipNum == 2)
-        {
-            playerLife = 4;
-            playerRestTime = 3800;
-        }
-        //Test//
-        if (addMissileItem == (int)DataBoolean.TRUE || GamePlayManager.Instance.PlayerShipNum == 1)
-        {
-            UseAddMissileItem();
-            Debug.Log("UseAddMissileItem");
-        }
-        if (assistantItem == (int)DataBoolean.TRUE)
-        {
-            UseAssistantItem();
-            Debug.Log("UseAssistantItem");
-        }
-
-        //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
-        notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
-        if (notifyLifeToObserver != null)
-            notifyLifeToObserver(playerLife);
-        notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
-
-
-        //시간 빼앗기 시작//
-        StartCoroutine("LoseTime");
-    }
     //게임시작//
     void GameStart()
     {
@@ -208,9 +213,9 @@ public class PlayerShip : MonoBehaviour
         if (playerLife <= 0)
         {
             playerLife = 0;
-            GamePlayManager.Instance.NowGameState = GameState.GameOver;
+            GamePlayManager.Instance.NowGameState = GameState.Lose;
         }
-        if(nowGameState == GameState.GameOver)
+        if(nowGameState == GameState.Win)
         {
             StartCoroutine("isGameOver");
         }
