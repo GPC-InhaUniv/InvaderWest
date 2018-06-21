@@ -33,7 +33,6 @@ public class DrageEarthRotation : MonoBehaviour {
     [SerializeField]
     CanvasGroup FadePanel;
 
-
     void FixedUpdate()
     {
         ActionClickOrDarg();
