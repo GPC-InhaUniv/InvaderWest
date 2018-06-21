@@ -27,12 +27,15 @@ public class InGameController : MonoBehaviour
     float bossLife;
     [SerializeField]
     float maxBossLife;
+
     //판주//
     void Start()
     {
-        bosshpBar.value = 1.0f;
+        StartCoroutine(IncreaseHpBar());
+
         stageData = int.Parse(AccountInfo.Instance.StageData);
     }
+
 
     //보스 라이프 업데이트//
     public void UpdateBossLife(float bossLife, float maxBossLife)
@@ -71,6 +74,16 @@ public class InGameController : MonoBehaviour
             StartCoroutine("WinResult");
         }
                 
+    }
+    IEnumerator IncreaseHpBar()
+    {
+        float hpValue = 0.03f;
+        if(bosshpBar.value < 1.0f)
+        {
+            bosshpBar.value += hpValue;
+        }
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(IncreaseHpBar());
     }
     IEnumerator WinResult()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalEnemy : Enemy {
-    int maxHp = 3, hp;
+    int maxHp = 1, hp;
     float seta = 0;
     float t = 0;
     Direction moveDirection;
@@ -14,6 +14,7 @@ public class NormalEnemy : Enemy {
         hp = maxHp;
         //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
+        destroyAudio = enemy.destroyAudio;
         //factory = enemy.factory;
     }
 

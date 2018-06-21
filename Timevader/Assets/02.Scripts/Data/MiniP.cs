@@ -7,7 +7,7 @@ public class MiniP : MonoBehaviour
     [SerializeField]
     GameState nowGameState;
 
-    public GameObject Player;
+    GameObject Player;
 
 
     public GameObject Shot;
@@ -26,11 +26,10 @@ public class MiniP : MonoBehaviour
     void Start()
     {
         StartCoroutine("checkGameState");
+        Player = GameObject.FindWithTag("Player");
 
     }
-
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (nowGameState == GameState.Started)
         {
@@ -39,8 +38,8 @@ public class MiniP : MonoBehaviour
 
             Shoot(ShotSpawn);
         }
-
     }
+
     IEnumerator checkGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
