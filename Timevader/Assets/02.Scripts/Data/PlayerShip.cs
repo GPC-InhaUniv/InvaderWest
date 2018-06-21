@@ -50,10 +50,7 @@ public class PlayerShip : MonoBehaviour
 
     float myTime = 0.0f;
     Rigidbody rigid;
-<<<<<<< HEAD
     Vector3 movement, prevPosition, currentPosition;
-=======
-    Vector3 movement;
     bool hasDoubleMissile = false;
 
     void Start()
@@ -111,7 +108,6 @@ public class PlayerShip : MonoBehaviour
     {
         MovePlayer();
     }
->>>>>>> b11b9acd5f86fa1ffaaf7a0174ea3ede930078d0
 
     public void GetItem(ItemList itemKind)
     {
@@ -163,55 +159,6 @@ public class PlayerShip : MonoBehaviour
 
         }
     }
-
-<<<<<<< HEAD
-=======
-    void Start()
-    {
-        rigid = GetComponent<Rigidbody>();
-        StartCoroutine("checkGameState");
-
-        Invoke("GameStart", 2.0f);
-
-        //Test 끝나면 주석제거하기//
-        //addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
-        //assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
-        //lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
-
-
-        //GamePlayManager.Instance.PlayerShipNum = 1;
-
-        //Test 플레이어//
-        if (GamePlayManager.Instance.PlayerShipNum == 1)
-        {
-            playerLife = 3;
-            playerRestTime = 5000;
-        }
-        else if (GamePlayManager.Instance.PlayerShipNum == 2)
-        {
-            playerLife = 4;
-            playerRestTime = 3800;
-        }
-        //Test//
-        if (addMissileItem == (int)DataBoolean.TRUE || GamePlayManager.Instance.PlayerShipNum == 1)
-        {
-            UseAddMissileItem();
-            Debug.Log("UseAddMissileItem");
-        }
-        if (assistantItem == (int)DataBoolean.TRUE)
-        {
-            UseAssistantItem();
-            Debug.Log("UseAssistantItem");
-        }
-
-        //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
-        notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
-        if (notifyLifeToObserver != null)
-            notifyLifeToObserver(playerLife);
-        notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
-
->>>>>>> c9155f572de75ebe2b194bde052b17150133a1c4
-
     //게임시작//
     void GameStart()
     {
