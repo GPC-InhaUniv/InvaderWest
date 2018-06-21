@@ -45,8 +45,7 @@ public class PlayerShip : MonoBehaviour
     float nextFire = 0.2f;
     float myTime = 0.0f;
     Rigidbody rigid;
-    Vector3 movement;
-
+    Vector3 movement, prevPosition, currentPosition;
 
     //public GameObject Shot;
     [SerializeField]
@@ -104,7 +103,6 @@ public class PlayerShip : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-
         StartCoroutine("checkGameState");
 
         Invoke("GameStart", 2.0f);
@@ -228,9 +226,31 @@ public class PlayerShip : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                movement = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-                transform.position = Vector3.Lerp(transform.position, movement, Time.deltaTime * speed);
+                currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+                transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * speed);
             }
+
+            //if (Input.GetMouseButton(0))
+            //{
+            //    currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+            //    movement = currentPosition - prevPosition;
+            //    Debug.Log("movement : " + movement);
+            //    if (DistanceCompare(movement))
+            //    {
+            //        movement = movement.normalized;
+            //        transform.Translate(new Vector3(movement.x, 0.0f, movement.y) * Time.deltaTime * speed);
+            //    }
+            //    prevPosition = currentPosition;
+            //}
+
+            //if (Input.GetMouseButton(0))
+            //{
+            //    currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+            //    movement = currentPosition - prevPosition;
+            //    transform.position = Vector3.Lerp(transform.position, transform.position + movement, Time.deltaTime * speed);
+            //    prevPosition = currentPosition;
+            //}
+
             transform.position = new Vector3
             (
                 Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
@@ -239,6 +259,15 @@ public class PlayerShip : MonoBehaviour
             );
         }
     }
+    //[SerializeField]
+    //float gap = 1.0f;
+    //bool DistanceCompare(Vector3 movement)
+    //{
+    //    float distance = movement.x * movement.x + movement.y * movement.y;
+    //    if (distance >= gap) return true;
+    //    else return false;
+    //}
+
     IEnumerator LoseTime()
     {
         if (nowGameState == GameState.Started)
