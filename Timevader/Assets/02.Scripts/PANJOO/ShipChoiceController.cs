@@ -263,6 +263,6 @@ public class ShipChoiceController : MonoBehaviour {
 
     public void OnClickedChangeSceneToSelectStageButton() //스타트 버튼 온클릭
     {
-        SceneManager.LoadScene("StageSelect");
+        SceneManager.LoadScene("SelectStage");
     }
 }

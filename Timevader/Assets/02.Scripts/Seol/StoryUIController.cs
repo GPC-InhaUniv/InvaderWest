@@ -15,6 +15,8 @@ public class StoryUIController : MonoBehaviour {
 
     [SerializeField]
     Button storyButton1;
+    [SerializeField]
+    Button storyButton4;
 
     [SerializeField]
     GameObject enemyship;
@@ -29,15 +31,24 @@ public class StoryUIController : MonoBehaviour {
     [SerializeField]
     Text confirmDifficultyText;
 
-    int year = 0;
+    [SerializeField]
+    float earthSize = 2.2f;
 
-    int i = 0;
+    int year = 0;
+    int pageNum = 0;
+
+    int invaderHeight = 535;
+
+    void FixedUpdate()
+    {
+        ZoomEarth();
+    }
 
     public void NextPage()
     {
-        storyButtons[i].SetActive(false);
-        i++;
-        storyButtons[i].SetActive(true);
+        storyButtons[pageNum].SetActive(false);
+        pageNum++;
+        storyButtons[pageNum].SetActive(true);
     }
 
     public void EasyButtonClicked()
@@ -73,22 +84,36 @@ public class StoryUIController : MonoBehaviour {
     {
         earthButton.transform.localScale += Vector3.Lerp(new Vector3(0.02f, 0.02f, 0.02f), new Vector3(0.02f, 0.02f, 0.02f), Time.deltaTime);
 
-        if (earthButton.transform.localScale.x > 1.8)
+        if (earthButton.transform.localScale.x > earthSize)
         {
-            earthButton.transform.localScale = new Vector3(1.8f, 1.8f, 1.8f);
+            earthButton.transform.localScale = new Vector3(earthSize, earthSize, earthSize);
             storyButton1.interactable = true;
             earthButton.interactable = false;
         }
-    }
+    }   
 
-    void MoveInvader()
+    public void MoveInvader()
     {
         enemyship.transform.position -= Vector3.Lerp(new Vector3(0, 0.1f, 0), new Vector3(0, 0.1f, 0), Time.deltaTime);
-    }    
 
-    void FixedUpdate()
-    {
-        ZoomEarth();        
+        if (enemyship.transform.localPosition.y < invaderHeight)
+        {
+            enemyship.transform.localPosition = new Vector3(0, invaderHeight, 0);
+            storyButton4.interactable = true;
+        }
     }
 
+    /*
+    public void MovePlayership()
+    {
+        playership.transform.position += Vector3.Lerp(new Vector3(0, 0.3f, 0), new Vector3(0, 0.3f, 0), Time.deltaTime);
+
+        if(playership.transform.localPosition.y > playershipHeight)
+        {
+            playership.transform.localPosition = new Vector3(0, playershipHeight, 0);
+        }
+
+    }
+    */
+    
 }

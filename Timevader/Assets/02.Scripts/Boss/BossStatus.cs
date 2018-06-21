@@ -95,7 +95,7 @@ public class BossStatus : MonoBehaviour {
 
             if (BossHp == 0)
             {
-                GamePlayManager.Instance.NowGameState = GameState.GameOver;
+                GamePlayManager.Instance.NowGameState = GameState.Win;
                 Destroy(gameObject);
                 isdead = true;
             }
