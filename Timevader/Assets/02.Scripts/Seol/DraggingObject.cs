@@ -24,12 +24,31 @@ public class DraggingObject : MonoBehaviour {
     [SerializeField] //로그인 조건 만족시 사라짐
     GameObject[] otherObject;
 
+    public Canvas TouchCanvas;
+    GraphicRaycaster gr;
     PointerEventData ped;
 
     void Start()
     {
+        gr = TouchCanvas.GetComponent<GraphicRaycaster>();
         ped = new PointerEventData(null);
     }
+
+    private void Update()
+    {
+        ped.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>(); // 여기에 히트 된 개체 저장 
+        gr.Raycast(ped, results);
+        if (results.Count != 0)
+        {
+            GameObject obj = results[0].gameObject;
+            if (obj.CompareTag("physicalDamage")) // 히트 된 오브젝트의 태그와 맞으면 실행 
+            {
+                Debug.Log("hit !");
+            }
+        }
+    }
+
     /*
     public void ActionClickOrDarg()
     {
