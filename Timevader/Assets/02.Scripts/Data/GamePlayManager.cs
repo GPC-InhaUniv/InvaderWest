@@ -6,47 +6,46 @@ public enum GameState
 {
     Ready,
     Started,
-    GameOver
+    Win,
+    WinEvent,
+    Lose,
 }
 
 public class GamePlayManager : MonoBehaviour {
 
 
-    private static GamePlayManager instance;
+    static GamePlayManager instance;
     public static GamePlayManager Instance
     {
         get { return instance; }
         set { instance = value; }
     }
     [SerializeField]
-    private int playerShipNum;
+    int playerShipNum;
     public int PlayerShipNum
     {
         get { return playerShipNum; }
         set { playerShipNum = value; }
     }
-    private string playerName;
+    string playerName;
     public string PlayerName
     {
         get { return playerName; }
         set { playerName = value; }
     }
     [SerializeField]
-    private int StageData;
+    int StageData;
     public int stageData
     {
         get { return StageData; }
         set { StageData = value; }
     }
-    private GameState nowGameState;
-
+    GameState nowGameState;
     public GameState NowGameState
     {
         get { return nowGameState; }
         set { nowGameState = value; }
     }
-
-
 
     private void Awake()
     {

@@ -14,9 +14,9 @@ public class ControlTimeEffect : MonoBehaviour {
 
     void Start()
     {
-        EffectPool = GameObject.Find("EffectPooling").GetComponent<TimeEffect>();
+        EffectPool = GameObject.Find("TimeEffectPooling").GetComponent<TimeEffect>();
 
-        TargetObject = GameObject.Find("MoveToBoss");
+        TargetObject = GameObject.FindGameObjectWithTag("Boss");
 
         bossVector3 = TargetObject.transform;
 

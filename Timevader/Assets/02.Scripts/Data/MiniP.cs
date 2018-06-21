@@ -6,14 +6,13 @@ public class MiniP : MonoBehaviour
 {
     [SerializeField]
     GameState nowGameState;
-
-    public GameObject Player;
+    [SerializeField]
+    GameObject player;
 
 
     public GameObject Shot;
     public Transform ShotSpawn;
 
-    public GameObject RotationAxis;
 
     public float fireDelta = 0.35f;
 
@@ -26,21 +25,20 @@ public class MiniP : MonoBehaviour
     void Start()
     {
         StartCoroutine("checkGameState");
+        player = GameObject.FindWithTag("Player");
 
     }
-
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (nowGameState == GameState.Started)
         {
             //고정//
-            RotationAxis.transform.Rotate(new Vector3(0f, Player.transform.position.y, 0f), rotateSpeed);
+            gameObject.transform.Rotate(new Vector3(0f, player.transform.position.y, 0f), rotateSpeed);
 
             Shoot(ShotSpawn);
         }
-
     }
+
     IEnumerator checkGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
@@ -56,7 +54,7 @@ public class MiniP : MonoBehaviour
         {
             nextFire = myTime + fireDelta;
             GameObject shot = PoolController.instance.GetFromPool(PoolType.BoltPool);
-            //Instantiate(Shot, new Vector3(AnySpawn.position.x, AnySpawn.position.y, 0.0f), Quaternion.identity);
+            
 
             nextFire = nextFire - myTime;
             myTime = 0.0f;

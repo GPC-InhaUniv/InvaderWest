@@ -26,6 +26,8 @@ public enum InvaderType
 public class Enemy : MonoBehaviour
 {
     public GameObject[] Items;
+    [SerializeField]
+    public AudioSource destroyAudio;
 
     [SerializeField] [Range(0, 100)]
     int ItemDropProbability; // 20%
@@ -59,6 +61,8 @@ public class Enemy : MonoBehaviour
 
     protected void Explode()
     {
+        //Explode될때 소리 추가//
+        destroyAudio.Play();
         Debug.Log("EXPLODE");
         if (Random.Range(1, 100) <= WreckProbability)
             Wrecked();

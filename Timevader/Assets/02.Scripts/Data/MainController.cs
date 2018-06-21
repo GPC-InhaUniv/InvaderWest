@@ -11,8 +11,7 @@ public class MainController : MonoBehaviour {
     Text RestTimeText;
     [SerializeField]
     Text WelcomeText;
-
-
+    
     [SerializeField]
     GameObject[] SpaceShips;
 
@@ -27,11 +26,9 @@ public class MainController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        
         //수정중//
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
         UserNickname = GamePlayManager.Instance.PlayerName;
-
 
         stageData = int.Parse(AccountInfo.Instance.StageData);
         Debug.Log(stageData);
@@ -51,11 +48,6 @@ public class MainController : MonoBehaviour {
         WelcomeText.text = UserNickname + "님 환영합니다.";
     }
 
-    void FixedUpdate()
-    {
-       
-    }
-
     void HideSpaceShips()
     {
         for(int i = 0; i < SpaceShips.Length; i++)
@@ -68,20 +60,10 @@ public class MainController : MonoBehaviour {
     {
         switch (playerSelectSpaceShipNumber)
         {
-            case 1:
-                SpaceShips[0].SetActive(true);
-
-                break;
-            case 2:
-                SpaceShips[1].SetActive(true);
-                break;
-            case 3:
-                SpaceShips[2].SetActive(true);
-
-                break;
-            default:
-                break;
+            case 1: SpaceShips[0].SetActive(true); break;
+            case 2: SpaceShips[1].SetActive(true); break;
+            case 3: SpaceShips[2].SetActive(true); break;
+            default: break;
         }
     }
-
 }

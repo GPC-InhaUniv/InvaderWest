@@ -7,11 +7,25 @@ using UnityEngine.SceneManagement;
 
 public class InGameController : MonoBehaviour
 {
-    public GameObject GameWinResultPanel;
-    public GameObject GameLoseResultPanel;
+    //플레이어 부분//
+    [SerializeField]
+    GameObject normalShip;
+    [SerializeField]
+    GameObject raptorShip;
+    [SerializeField]
+    GameObject blackHawkShip;
 
-    public Text RestTimeScoreText;
-    public Image[] LifeImage;
+    //UI 부분//
+    [SerializeField]
+    GameObject gameWinResultPanel;
+    [SerializeField]
+    GameObject gameLoseResultPanel;
+    [SerializeField]
+    Text restTimeScoreText;
+    [SerializeField]
+    Image[] lifeImage;
+    [SerializeField]
+    Slider bosshpBar;
 
     [SerializeField]
     int playerRestTime;
@@ -19,24 +33,28 @@ public class InGameController : MonoBehaviour
     int playerLife;
     [SerializeField]
     int stageData;
-
-
-
-
-    //판주//
-    [SerializeField]
-    Slider bosshpBar;
     [SerializeField]
     float bossLife;
     [SerializeField]
     float maxBossLife;
-    //판주//
+
+    void Awake()
+    {
+        Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
+        Vector3 startRotation = new Vector3(-90f, 0.0f, 0.0f);
+        if (GamePlayManager.Instance.PlayerShipNum == 1)
+            Instantiate(normalShip, startPosition, Quaternion.Euler(startRotation));
+        else if (GamePlayManager.Instance.PlayerShipNum == 2)
+            Instantiate(blackHawkShip, startPosition, Quaternion.Euler(startRotation));
+        else if (GamePlayManager.Instance.PlayerShipNum == 3)
+            Instantiate(raptorShip, startPosition, Quaternion.Euler(startRotation));
+    }
     void Start()
     {
-        bosshpBar.value = 1.0f;
+        StartCoroutine(IncreaseHpBar());
+
         stageData = int.Parse(AccountInfo.Instance.StageData);
     }
-
     //보스 라이프 업데이트//
     public void UpdateBossLife(float bossLife, float maxBossLife)
     {
@@ -50,30 +68,18 @@ public class InGameController : MonoBehaviour
         {
             bosshpBar.value = bossLife / maxBossLife;
             AccountInfo.ChangeRestTimeData(playerRestTime);
-
-            //int nextStageNum = 1;
-
-            //if (stageData <= 2)
-            //{
-            //    AccountInfo.ChangeStageData(stageData + nextStageNum);
-            //    GamePlayManager.Instance.stageData = stageData + nextStageNum;
-            //    Debug.Log(stageData + nextStageNum);
-
-            //}
-            //else
-            //{
-            //    AccountInfo.ChangeStageData(nextStageNum);
-            //    GamePlayManager.Instance.stageData = nextStageNum;
-
-            //    Debug.Log(nextStageNum);
-
-            //}
-            //GameWinResultPanel.gameObject.SetActive(true);
-
-
             StartCoroutine("WinResult");
+        }               
+    }
+    IEnumerator IncreaseHpBar()
+    {
+        float hpValue = 0.03f;
+        if(bosshpBar.value < 1.0f)
+        {
+            bosshpBar.value += hpValue;
         }
-                
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(IncreaseHpBar());
     }
     IEnumerator WinResult()
     {
@@ -85,7 +91,6 @@ public class InGameController : MonoBehaviour
             AccountInfo.ChangeStageData(stageData + nextStageNum);
             GamePlayManager.Instance.stageData = stageData + nextStageNum;
             Debug.Log(stageData + nextStageNum);
-
         }
         else
         {
@@ -93,11 +98,9 @@ public class InGameController : MonoBehaviour
             GamePlayManager.Instance.stageData = nextStageNum;
 
             Debug.Log(nextStageNum);
-
         }
         yield return new WaitForSeconds(1.0f);
-        GameWinResultPanel.gameObject.SetActive(true);
-
+        gameWinResultPanel.gameObject.SetActive(true);
     }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
@@ -113,7 +116,7 @@ public class InGameController : MonoBehaviour
         else
         {
             DisPlayPlayerLifeImage(playerLife);
-            GameLoseResultPanel.gameObject.SetActive(true);
+            gameLoseResultPanel.gameObject.SetActive(true);
             Debug.Log("UpdatePlayerLife");
         }
     }
@@ -132,26 +135,25 @@ public class InGameController : MonoBehaviour
         }
         else
         {
-            GameLoseResultPanel.gameObject.SetActive(true);
+            gameLoseResultPanel.gameObject.SetActive(true);
             Debug.Log("UpdatePlayerRestTime");
         }
     }
     //남은시간 보여주기//
     void DisplayPlayerRestTime()
     {
-        RestTimeScoreText.text = playerRestTime.ToString();
+        restTimeScoreText.text = playerRestTime.ToString();
         //Debug.Log(playerRestTime);
     }
 
     //남은 라이프 보여주기//
     void DisPlayPlayerLifeImage(int life)
     {
-        //Debug.Log("go");
-        for (int i = 0; life < LifeImage.Length; i++)
+        for (int i = 0; life < lifeImage.Length; i++)
         {
-            if (LifeImage[i].gameObject.activeSelf == true)
+            if (lifeImage[i].gameObject.activeSelf == true)
             {
-                LifeImage[i].gameObject.SetActive(false);
+                lifeImage[i].gameObject.SetActive(false);
                 return;
             }
         }
@@ -159,17 +161,11 @@ public class InGameController : MonoBehaviour
     public void OnGoToNextStage()
     {
         if (stageData == 1)
-        {
             SceneManager.LoadScene("Stage2");
-        }
         else if (stageData == 2)
-        {
             SceneManager.LoadScene("Test_Stage3");
-        }
         else
-        {
             SceneManager.LoadScene("Main");
-        }
     }
     public void OnBackToMain()
     {
