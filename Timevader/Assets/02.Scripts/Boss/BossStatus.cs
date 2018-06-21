@@ -57,9 +57,21 @@ public class BossStatus : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(nowGameState == GameState.Ready)
+        {
+            AppearBoss();
+        }
+
         if (nowGameState == GameState.Started)
         {
             //leftRightMover.LeftRightMove(); LeftRightMover로 이동
+        }
+    }
+    void AppearBoss() //보스가 서서히 등장
+    {
+        if(transform.position.y > 4.0f)
+        {
+            transform.Translate(new Vector3(0, -0.05f, 0));
         }
     }
 
