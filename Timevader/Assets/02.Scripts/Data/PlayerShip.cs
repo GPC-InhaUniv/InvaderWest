@@ -41,7 +41,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     GameState nowGameState;
     [SerializeField]
-    AudioClip shotAudio;
+    AudioSource shotAudioSource;
 
 
     public float fireDelta = 0.2f;
@@ -75,7 +75,6 @@ public class PlayerShip : MonoBehaviour
     {
         hasDoubleMissile = true;
         Shoot(addedSpawn);
-        
     }
     //player합치기//
 
@@ -102,6 +101,9 @@ public class PlayerShip : MonoBehaviour
             shot = null; // 초기화
             nextFire = nextFire - myTime;
             myTime = 0.0f;
+            //샷 오디오 추가//
+            shotAudioSource.Play();
+
         }
     }
 
@@ -191,9 +193,11 @@ public class PlayerShip : MonoBehaviour
             {
                 Shoot(shotSpawn);
                 Shoot(addedSpawn);
+
             }
             else
                 Shoot(shotSpawn);
+            
             ///설님꺼
             if (lastBombItem == (int)DataBoolean.TRUE)
             {
