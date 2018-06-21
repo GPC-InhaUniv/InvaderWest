@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class ControlTimeEffect : MonoBehaviour {
 
-    TimeEffect EffectPool;
+    TimeEffect effectPool;
 
     Transform bossVector3;
 
-    GameObject TargetObject;
+    GameObject targetObject;
 
     float moveSpeed, rotateSpeed;
 
     void Start()
     {
-        EffectPool = GameObject.Find("TimeEffectPooling").GetComponent<TimeEffect>();
+        effectPool = GameObject.Find("TimeEffectPooling").GetComponent<TimeEffect>();
 
-        TargetObject = GameObject.FindGameObjectWithTag("Boss");
+        targetObject = GameObject.FindGameObjectWithTag("Boss");
 
-        bossVector3 = TargetObject.transform;
+        bossVector3 = targetObject.transform;
 
         moveSpeed = Random.Range(1f, 5f);
         rotateSpeed = Random.Range(0.01f, 0.2f);
@@ -47,7 +47,7 @@ public class ControlTimeEffect : MonoBehaviour {
         Debug.Log("이펙트 충돌");
         if (other.gameObject.tag == "Boss")
         {
-            EffectPool.HideEffect(gameObject);
+            effectPool.HideEffect(gameObject);
         }
     }
 

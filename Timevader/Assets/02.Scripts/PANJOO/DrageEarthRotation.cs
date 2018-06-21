@@ -12,7 +12,7 @@ public class DrageEarthRotation : MonoBehaviour {
 
     //지구를 돌리는
     [SerializeField]
-    GameObject Earth, Cloud;
+    GameObject earth, cloud;
 
     [SerializeField] //로그인 조건 만족시 사라짐
     GameObject[] otherObject;
@@ -23,15 +23,15 @@ public class DrageEarthRotation : MonoBehaviour {
     [Range(-0.5f,5f)]
     float rotateSpeed;
 
-    float ConditionRotation;
+    float conditionRotation;
 
     [SerializeField]
-    Camera MainCamera;
+    Camera mainCamera;
 
     UIFader uIFader;
 
     [SerializeField]
-    CanvasGroup FadePanel;
+    CanvasGroup fadePanel;
 
 
     void FixedUpdate()
@@ -42,7 +42,7 @@ public class DrageEarthRotation : MonoBehaviour {
 
     void Start()
     {
-        ConditionRotation = 0.90f;
+        conditionRotation = 0.90f;
         uIFader = GetComponent<UIFader>();
     }
 
@@ -78,24 +78,24 @@ public class DrageEarthRotation : MonoBehaviour {
             Vector3 rotatePower = new Vector3(0, 0, dragValue);
 
             //Debug.Log("roat" + dragValue);
-            Cloud.transform.Rotate(rotatePower / 2 * rotateSpeed);
-            Earth.transform.Rotate(rotatePower / 2 * rotateSpeed);
+            cloud.transform.Rotate(rotatePower / 2 * rotateSpeed);
+            earth.transform.Rotate(rotatePower / 2 * rotateSpeed);
             prevPoint = Input.mousePosition;
         }
     }
 
     void NextScene()
     {
-        Debug.Log(Earth.transform.rotation.z);
-        if(Earth.transform.rotation.z < -ConditionRotation || Earth.transform.rotation.z > ConditionRotation)
+        Debug.Log(earth.transform.rotation.z);
+        if(earth.transform.rotation.z < -conditionRotation || earth.transform.rotation.z > conditionRotation)
         {
             Debug.Log("다음 씬으로");
             StartCoroutine(EffectCoroutine());
 
-            if (MainCamera.fieldOfView < 170.0f)
+            if (mainCamera.fieldOfView < 170.0f)
             {
                 HideObject(); //씬이 넘어가기전 오브젝트 숨김
-                uIFader.CanvasFadeIn(FadePanel); 
+                uIFader.CanvasFadeIn(fadePanel); 
 
                 StartCoroutine(WaitTimeForNextScene());
             }
@@ -108,22 +108,22 @@ public class DrageEarthRotation : MonoBehaviour {
         {
             otherObject[i].SetActive(false);
         }
-        Earth.SetActive(false);
-        Cloud.SetActive(false);
+        earth.SetActive(false);
+        cloud.SetActive(false);
     }
 
     void NextEffect()
     {
-        MainCamera.fieldOfView += increaseValue; //1씩 증가하다가
+        mainCamera.fieldOfView += increaseValue; //1씩 증가하다가
 
-        if (MainCamera.fieldOfView > middleValue) //middleVlaue 보다 커지면 바로 +77 목표값 179
+        if (mainCamera.fieldOfView > middleValue) //middleVlaue 보다 커지면 바로 +77 목표값 179
             increaseValue = 77.0f;
     }
 
     IEnumerator EffectCoroutine()
     {
         Debug.Log("씬 넘어가는 효과 코루틴");
-        if (MainCamera.fieldOfView < 177.0f)
+        if (mainCamera.fieldOfView < 177.0f)
         {
             NextEffect();
         }

@@ -7,32 +7,32 @@ using UnityEngine.SceneManagement;
 public class ShipChoiceController : MonoBehaviour {
 
     [SerializeField]
-    GameObject[] LifeImages;
+    GameObject[] lifeImages;
     [SerializeField]
     GameObject[] playerShips;
     [SerializeField]
-    GameObject WarningPopUpPanel;
+    GameObject warningPopUpPanel;
 
     [Header("SpaceShipStatus")]
     [SerializeField]
-    Text NoticeText, SpaceShipSelectNumText, SpaceShipNameText, SpaceShipSpeedText;
+    Text noticeText, spaceShipSelectNumText, spaceShipNameText, spaceShipSpeedText;
 
     [Header("Image")]
     [SerializeField]
-    GameObject LockImage, FuelImage;
+    GameObject lockImage, fuelImage;
 
     [Header("Start and Buy")]
     [SerializeField]
-    GameObject StartButton, BuyButton;
+    GameObject startButton, buyButton;
     [SerializeField]
-    Text StartText, BuyText;
+    Text startText, buyText;
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
     [SerializeField]
-    Text FuelScoreText;
+    Text fuelScoreText;
     [SerializeField]
-    Text RestTimeText;
+    Text restTimeText;
 
     List<ShipStatus> status = new List<ShipStatus>(); //구조체
 
@@ -62,8 +62,8 @@ public class ShipChoiceController : MonoBehaviour {
 
     void ChangeInventory()   //수정한사람 황윤우 
     {
-        FuelScoreText.text = myFuel.ToString();
-        RestTimeText.text = restTime.ToString();
+        fuelScoreText.text = myFuel.ToString();
+        restTimeText.text = restTime.ToString();
     }
 
     int GetPlayerShipAmount()
@@ -90,24 +90,24 @@ public class ShipChoiceController : MonoBehaviour {
 
     void ChangeStatusText(int choiceNum)
     {
-        SpaceShipSelectNumText.text = "(" + playerSelectSpaceShipNumber + " / " + playerShipAmount + ")";
-        SpaceShipNameText.text = status[playerSelectSpaceShipNumber].SpaceShipName;
-        SpaceShipSpeedText.text = status[playerSelectSpaceShipNumber].Speed.ToString();
+        spaceShipSelectNumText.text = "(" + playerSelectSpaceShipNumber + " / " + playerShipAmount + ")";
+        spaceShipNameText.text = status[playerSelectSpaceShipNumber].SpaceShipName;
+        spaceShipSpeedText.text = status[playerSelectSpaceShipNumber].Speed.ToString();
     }
 
     void OnLifeImage(int choiceNum)
     {
         for(int i = 0; i < status[choiceNum].Life; i++)
         {
-            LifeImages[i].SetActive(true);
+            lifeImages[i].SetActive(true);
         }
     }
 
     void OffLifeImage()
     {
-        for (int i = 0; i < LifeImages.Length; i++)
+        for (int i = 0; i < lifeImages.Length; i++)
         {
-            LifeImages[i].SetActive(false);
+            lifeImages[i].SetActive(false);
         }
     }
 
@@ -121,9 +121,9 @@ public class ShipChoiceController : MonoBehaviour {
 
     void CheckSpaceShipLock(int choiceNum)
     {
-        BuyButton.SetActive(false);
-        StartButton.SetActive(false);
-        FuelImage.SetActive(false);
+        buyButton.SetActive(false);
+        startButton.SetActive(false);
+        fuelImage.SetActive(false);
 
         switch (choiceNum)
         {
@@ -151,16 +151,16 @@ public class ShipChoiceController : MonoBehaviour {
 
     void DisplayLock(int choiceNum)
     {
-        FuelImage.SetActive(true);
-        BuyButton.SetActive(true);
-        LockImage.SetActive(true);
-        NoticeText.text = status[choiceNum].SpaceShipPrice.ToString(); //구조체로 수정함
+        fuelImage.SetActive(true);
+        buyButton.SetActive(true);
+        lockImage.SetActive(true);
+        noticeText.text = status[choiceNum].SpaceShipPrice.ToString(); //구조체로 수정함
     }
     void DisplayStart()
     {
-        StartButton.SetActive(true);
-        LockImage.SetActive(false);
-        NoticeText.text = "출격 가능합니다.";
+        startButton.SetActive(true);
+        lockImage.SetActive(false);
+        noticeText.text = "출격 가능합니다.";
     }
 
     public void ShipSelectButtonClick(int click) //
@@ -200,7 +200,7 @@ public class ShipChoiceController : MonoBehaviour {
         if (blackHawk == 1 && raptor == 1)
             return;
         if (!CheckEnoughFuel(playerSelectSpaceShipNumber))
-            WarningPopUpPanel.SetActive(true);
+            warningPopUpPanel.SetActive(true);
         else
         {
             myFuel = myFuel - status[playerSelectSpaceShipNumber].SpaceShipPrice;
