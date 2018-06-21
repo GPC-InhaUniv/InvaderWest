@@ -46,10 +46,6 @@ public class GamePlayManager : MonoBehaviour {
         set { nowGameState = value; }
     }
 
-    [SerializeField]
-    AudioClip backGroundAudioClip;
-
-
 
     private void Awake()
     {

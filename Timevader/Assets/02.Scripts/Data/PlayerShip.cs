@@ -11,10 +11,13 @@ public class Boundary1
 public class PlayerShip : MonoBehaviour
 {
     delegate void NotifyObserver(int playerLife);
-
     NotifyObserver notifyLifeToObserver;
     NotifyObserver notifyRestTimeObserver;
+
+    public GameObject AddMissileItem;
+
     public InGameController inGameController;
+    public Boundary Boundary;
 
     [SerializeField]
     int playerLife;
@@ -24,35 +27,35 @@ public class PlayerShip : MonoBehaviour
     int playerfirerapid;
     [SerializeField]
     int addMissileItem;
-
-    public GameObject AddMissileItem;
-
     [SerializeField]
     int assistantItem;
     bool assistant;
     [SerializeField]
     int lastBombItem;
     [SerializeField]
-    GameState nowGameState;
-
-
+    float nextFire = 0.2f;
     [SerializeField]
     float speed;
-    public Boundary Boundary;
+    [SerializeField]
+    Transform shotSpawn, addedSpawn;
+    [SerializeField]
+    GameState nowGameState;
+    [SerializeField]
+    AudioClip shotAudio;
+
 
     public float fireDelta = 0.2f;
-    [SerializeField]
-    float nextFire = 0.2f;
+
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement;
-
-
-    //public GameObject Shot;
-    [SerializeField]
-    Transform shotSpawn, addedSpawn;
-    //player합치기//
     bool hasDoubleMissile = false;
+
+    void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
     public void GetItem(ItemList itemKind)
     {
         switch (itemKind)
@@ -72,6 +75,7 @@ public class PlayerShip : MonoBehaviour
     {
         hasDoubleMissile = true;
         Shoot(addedSpawn);
+        
     }
     //player합치기//
 
@@ -200,7 +204,7 @@ public class PlayerShip : MonoBehaviour
         if (playerLife <= 0)
         {
             playerLife = 0;
-            nowGameState = GameState.GameOver;
+            GamePlayManager.Instance.NowGameState = GameState.GameOver;
         }
         if(nowGameState == GameState.GameOver)
         {
@@ -213,13 +217,12 @@ public class PlayerShip : MonoBehaviour
     {
         rigid.constraints = RigidbodyConstraints.FreezeAll;
         yield return new WaitForSeconds(0.2f);
-        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, new Vector3(0.0f, -4.0f, 0.0f), 0.1f);
+
+        Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPosition, 0.1f);
         //rigid.constraints = RigidbodyConstraints.None;
     }
-    void FixedUpdate()
-    {
-        MovePlayer();
-    }
+
 
     /* 지용 */
     void MovePlayer()
