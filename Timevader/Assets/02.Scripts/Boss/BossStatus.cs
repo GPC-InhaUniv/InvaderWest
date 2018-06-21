@@ -15,7 +15,8 @@ public class BossStatus : MonoBehaviour {
     //윤우//
 
     public float BossHp;
-    public float MaxHp;
+
+    public float MaxHp; //정해야함
 
     [SerializeField]
     int decreaseHp, ScoreValue;
@@ -26,23 +27,23 @@ public class BossStatus : MonoBehaviour {
     [SerializeField]
     GameObject explosion;
 
-    [SerializeField]
-    float moveSpeed = 3.5f;
-
     int moveVlaue = 1;
 
     float leftLimitX, rightLimitX;
+
+    LeftRightMover leftRightMover;
 
     void Start()
     {
         StartCoroutine("checkGameState");
 
-        leftLimitX = -2.5f;
-        rightLimitX = 2.5f;
 
-        BossHp = 100;
-        MaxHp = 100;
-        decreaseHp = 15;
+        leftRightMover = GetComponent<LeftRightMover>();
+
+        
+        BossHp = MaxHp;
+
+   
         ScoreValue = 10;
 
         isdead = false;
@@ -58,7 +59,7 @@ public class BossStatus : MonoBehaviour {
     {
         if (nowGameState == GameState.Started)
         {
-            BossMove();
+            //leftRightMover.LeftRightMove(); LeftRightMover로 이동
         }
     }
 
@@ -73,7 +74,7 @@ public class BossStatus : MonoBehaviour {
         {
             //Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
 
-            BossHp -= 10;
+            BossHp -= 1;
             //DestroyObject(other.gameObject);
 
             //게임컨트롤러에게 알리기 보스가 맞았다고//
@@ -87,19 +88,6 @@ public class BossStatus : MonoBehaviour {
                 isdead = true;
             }
         }
-    }
-
-    void BossMove()
-    {
-        if (transform.localPosition.x < leftLimitX)
-        {
-            moveVlaue = -1;
-        }
-        else if (transform.localPosition.x > rightLimitX)
-        {
-            moveVlaue = 1;
-        }
-        transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime); //지용님 수정사항 반영
     }
 
     IEnumerator checkGameState()
