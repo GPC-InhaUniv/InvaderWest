@@ -20,9 +20,6 @@ public class InGameController : MonoBehaviour
     [SerializeField]
     int stageData;
 
-
-
-
     //판주//
     [SerializeField]
     Slider bosshpBar;
@@ -85,7 +82,6 @@ public class InGameController : MonoBehaviour
             AccountInfo.ChangeStageData(stageData + nextStageNum);
             GamePlayManager.Instance.stageData = stageData + nextStageNum;
             Debug.Log(stageData + nextStageNum);
-
         }
         else
         {
@@ -93,11 +89,9 @@ public class InGameController : MonoBehaviour
             GamePlayManager.Instance.stageData = nextStageNum;
 
             Debug.Log(nextStageNum);
-
         }
         yield return new WaitForSeconds(1.0f);
         GameWinResultPanel.gameObject.SetActive(true);
-
     }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)

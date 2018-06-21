@@ -9,20 +9,20 @@ public class LogInManager : MonoBehaviour
 {
     //로그인창 , 등록창 전환//
     [SerializeField]
-    private List<GameObject> menus = new List<GameObject>();
+    List<GameObject> menus = new List<GameObject>();
 
     [SerializeField]
-    private InputField loginUsername;
+    InputField loginUsername;
     [SerializeField]
-    private InputField loginUserPassword;
+    InputField loginUserPassword;
     [SerializeField]
-    private InputField RegisterUsername;
+    InputField RegisterUsername;
     [SerializeField]
-    private InputField RegisterEmail;
+    InputField RegisterEmail;
     [SerializeField]
-    private InputField RegisterPassword;
+    InputField RegisterPassword;
     [SerializeField]
-    private InputField RegisterConfirmPassword;
+    InputField RegisterConfirmPassword;
 
     public GameObject ErrorPanel;
     //로그인//
@@ -48,15 +48,12 @@ public class LogInManager : MonoBehaviour
             {
                 AccountInfo.Register(RegisterUsername.text, RegisterEmail.text, RegisterPassword.text);
                 ManagerFuncion.ChangeMenu(menus.ToArray(), 0);
-
             }
             else
                 Debug.LogError("Password do not match");
         }
         else
-        {
             ShowErrorMessange();
-        }
     }
     public void ChangeMenu(int change)
     {
@@ -82,6 +79,4 @@ public class LogInManager : MonoBehaviour
     {
         ErrorPanel.gameObject.SetActive(false);
     }
-
-
 }

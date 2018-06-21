@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public enum DataBoolean
 {
-    FALSE =0,
-    TRUE =1,
+    FALSE = 0,
+    TRUE = 1,
 }
 
 public class StoreFacade : MonoBehaviour
@@ -16,17 +16,14 @@ public class StoreFacade : MonoBehaviour
     float THIRDITEMRANGE = 0.625f;
     float FOURTHITEMRANGE = 0.875f;
 
-
     //재화관련//
     public Text MyTimeText;
     public Text MyFuelText;
-
 
     //인벤토리관련//
     public Image MyInventroy1;
     public Image MyInventroy2;
     public Image MyInventroy3;
-
 
     public Text MyInventoryExplainText;
     //스크롤 관련//
@@ -82,10 +79,9 @@ public class StoreFacade : MonoBehaviour
                 BuyExPlainText.text = "이미 보유중 입니다.";
                 BuyButton.interactable = false;
             }
-
         }
         else if (ItemScrollRect.horizontalNormalizedPosition >= FIRSTITEMRANGE
-                 &&ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
+                 && ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
         {
             ItemExplain.text = "Item2 is AssistantItem";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
@@ -148,9 +144,7 @@ public class StoreFacade : MonoBehaviour
             }
         }
         //Debug.Log(ItemScrollRect.horizontalNormalizedPosition);
-
     }
-
 
     public void OnBoughtItem()
     {
@@ -162,9 +156,7 @@ public class StoreFacade : MonoBehaviour
                 ChangeValue();
             }
             else
-            {
                 Debug.Log("이미 보유중입니다.");
-            }
         }
         else if (ItemScrollRect.horizontalNormalizedPosition >= FIRSTITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
@@ -175,9 +167,7 @@ public class StoreFacade : MonoBehaviour
                 ChangeValue();
             }
             else
-            {
                 Debug.Log("이미 보유중입니다.");
-            }
         }
         else if (ItemScrollRect.horizontalNormalizedPosition >= SECONDITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < THIRDITEMRANGE)
@@ -188,9 +178,7 @@ public class StoreFacade : MonoBehaviour
                 ChangeValue();
             }
             else
-            {
                 Debug.Log("이미 보유중입니다.");
-            }
         }
         else if (ItemScrollRect.horizontalNormalizedPosition >= THIRDITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
@@ -200,9 +188,7 @@ public class StoreFacade : MonoBehaviour
                 ChangeValue();
             }
             else
-            {
                 Debug.Log("이미 보유중입니다.");
-            }
         }
         else
         {
@@ -211,12 +197,10 @@ public class StoreFacade : MonoBehaviour
                 ChangeValue();
             }
             else
-            {
                 Debug.Log("이미 보유중입니다.");
-            }
         }
     }
-    private void CheckInventory()
+    void CheckInventory()
     {
 
         MyFuelText.text = myFuel.ToString();
@@ -238,36 +222,32 @@ public class StoreFacade : MonoBehaviour
             MyInventroy3.gameObject.SetActive(true);
     }
 
-     void BuyAddMissileItem(int price, int itemCount)
+    void BuyAddMissileItem(int price, int itemCount)
     {
-        myFuel = myFuel - price;
+        myFuel -= price;
         addMissileItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeAddMissileItemData(1);
         CheckInventory();
     }
-     void BuyAssistantItem(int price, int itemCount)
+    void BuyAssistantItem(int price, int itemCount)
     {
-        myFuel = myFuel - price;
+        myFuel -= price;
         assistantItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeAssistantItemData(1);
         CheckInventory();
-
-
     }
-     void BuyLastBombItem(int price, int itemCount)
+    void BuyLastBombItem(int price, int itemCount)
     {
-        myFuel = myFuel - price;
+        myFuel -= price;
         lastBombItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
 
         AccountInfo.ChangeLastBombItemData(1);
         CheckInventory();
-
-
     }
 
     public void OnShowConfirmPanal()
@@ -277,7 +257,5 @@ public class StoreFacade : MonoBehaviour
     public void OnBackToMenu()
     {
         ConfirmationPanal.gameObject.SetActive(false);
-
     }
-
 }

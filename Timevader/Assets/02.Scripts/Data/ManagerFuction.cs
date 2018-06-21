@@ -20,6 +20,5 @@ public static class ManagerFuncion
     {
         Debug.Log("Error");
         Debug.LogError(error);
-
     }
 }

@@ -5,11 +5,9 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 
-
-
 public class AccountInfo : MonoBehaviour
 {
-    private static AccountInfo instance;
+    static AccountInfo instance;
     public static AccountInfo Instance
     {
         get { return instance; }
@@ -17,7 +15,7 @@ public class AccountInfo : MonoBehaviour
     }
 
     [SerializeField]
-    private GetPlayerCombinedInfoResultPayload info;
+    GetPlayerCombinedInfoResultPayload info;
     public GetPlayerCombinedInfoResultPayload Info
     {
         get { return info; }
@@ -26,7 +24,7 @@ public class AccountInfo : MonoBehaviour
     
     public string Fuel, Time, AddMissileItem, AssistantItem, LastBombItem, Raptor, BlackHawk, BestScore, RestTime, StageData;
 
-    private void Awake()
+    void Awake()
     {
         if (instance != this)
             instance = this;
@@ -53,7 +51,6 @@ public class AccountInfo : MonoBehaviour
     static void OnRegister(RegisterPlayFabUserResult result)
     {
         Debug.Log("Registered with : " + result.PlayFabId);
-
     }
     //서버에 로그인//
     public static void Login(string username, string password)
@@ -65,8 +62,6 @@ public class AccountInfo : MonoBehaviour
             Password = password,
 
         };
-
-
         PlayFabClientAPI.LoginWithPlayFab(request, OnLogin, ManagerFuncion.OnAPIError);
     }
     static void OnLogin(LoginResult result)
@@ -103,7 +98,6 @@ public class AccountInfo : MonoBehaviour
         Instance.Info = result.InfoResultPayload;
 
         SetUserDataInStart();
-
     }
     //서버에 데이타 셋팅//
     public static void SetUserData()
@@ -147,7 +141,6 @@ public class AccountInfo : MonoBehaviour
         SetUserDataInGame();
         Debug.Log("Successfully updated user data");
     }
-
 
     //재화 데이타 변경 함수// 
     public static void ChangeFuelData(int fuel)
@@ -274,7 +267,6 @@ public class AccountInfo : MonoBehaviour
         };
 
         PlayFabClientAPI.GetUserData(request, OnSetUserDataInStart, ManagerFuncion.OnAPIError);
-
     }
     public static void OnSetUserDataInStart(GetUserDataResult result)
     {
@@ -304,7 +296,6 @@ public class AccountInfo : MonoBehaviour
         };
 
         PlayFabClientAPI.GetUserData(request, OnSetUserDataInShop, ManagerFuncion.OnAPIError);
-
     }
     public static void OnSetUserDataInShop(GetUserDataResult result)
     {
@@ -354,7 +345,6 @@ public class AccountInfo : MonoBehaviour
         instance.RestTime = result.Data["RestTime"].Value;
         instance.BestScore = result.Data["BestScore"].Value;
         instance.StageData = result.Data["StageData"].Value;
-
     }
     public static void SetShopList(GetUserDataResult result)
     {
