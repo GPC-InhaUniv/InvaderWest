@@ -51,6 +51,7 @@ public class InGameController : MonoBehaviour
     }
     void Start()
     {
+
         StartCoroutine(IncreaseHpBar());
 
         stageData = int.Parse(AccountInfo.Instance.StageData);
@@ -71,6 +72,7 @@ public class InGameController : MonoBehaviour
             StartCoroutine("WinResult");
         }               
     }
+
     IEnumerator IncreaseHpBar()
     {
         float hpValue = 0.03f;
@@ -78,9 +80,11 @@ public class InGameController : MonoBehaviour
         {
             bosshpBar.value += hpValue;
         }
+
         yield return new WaitForSeconds(0.05f);
         StartCoroutine(IncreaseHpBar());
     }
+
     IEnumerator WinResult()
     {
         //다음 스테이지값 저장//
@@ -175,6 +179,7 @@ public class InGameController : MonoBehaviour
     {
         SceneManager.LoadScene("Shop");
     }
+
     public void OnPaused()
     {
         Time.timeScale = 0;
