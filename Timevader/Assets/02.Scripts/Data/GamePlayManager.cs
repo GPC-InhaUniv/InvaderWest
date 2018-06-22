@@ -40,6 +40,7 @@ public class GamePlayManager : MonoBehaviour {
         get { return StageData; }
         set { StageData = value; }
     }
+    [SerializeField]
     GameState nowGameState;
     public GameState NowGameState
     {
@@ -61,5 +62,9 @@ public class GamePlayManager : MonoBehaviour {
     {
         Debug.Log(playerShipNum);
         Debug.Log(PlayerShipNum);
+    }
+    public void changeGameState(GameState gamestate)
+    {
+        NowGameState = gamestate;
     }
 }

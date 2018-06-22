@@ -74,12 +74,12 @@ public class PlayerShip : MonoBehaviour
         //Test 플레이어//
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
-            playerLife = 3;
+            playerLife = 100;
             playerRestTime = 5000;
         }
         else if (GamePlayManager.Instance.PlayerShipNum == 2)
         {
-            playerLife = 4;
+            playerLife = 200;
             playerRestTime = 3800;
         }
         //Test//
@@ -97,7 +97,9 @@ public class PlayerShip : MonoBehaviour
         //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
         notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
         if (notifyLifeToObserver != null)
+        {
             notifyLifeToObserver(playerLife);
+        }
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
 
 
@@ -148,15 +150,13 @@ public class PlayerShip : MonoBehaviour
                 Debug.Log("Pool에 남은 미사일이 부족합니다.");
                 return;
             }
-            shot.transform.position = transform.position;
-            shot.transform.rotation = Quaternion.identity;
-            shot.SetActive(true);
+            shot.transform.position = shotSpawn.transform.position;
+            //shot.SetActive(true);
             shot = null; // 초기화
             nextFire = nextFire - myTime;
             myTime = 0.0f;
             //샷 오디오 추가//
             shotAudioSource.Play();
-
         }
     }
     //게임시작//
@@ -174,6 +174,7 @@ public class PlayerShip : MonoBehaviour
             {
                 assistant = false;
                 Debug.Log(assistant);
+
             }
             else
             {
@@ -182,8 +183,11 @@ public class PlayerShip : MonoBehaviour
                 {
                     AddMissileItem.gameObject.SetActive(false);
                 }
-                if (notifyLifeToObserver != null)
+
+                if (notifyLifeToObserver != null && playerLife >= 0) 
+                {
                     notifyLifeToObserver(playerLife);
+                }
             }
         }
     }
@@ -200,18 +204,19 @@ public class PlayerShip : MonoBehaviour
             }
             else
                 Shoot(shotSpawn);
-            
+
             ///설님꺼
             if (lastBombItem == (int)DataBoolean.TRUE)
             {
                 UseLastBombItem();
                 Debug.Log("UseLastBombItem");
             }
-        }
-        if (playerLife <= 0)
-        {
-            playerLife = 0;
-            GamePlayManager.Instance.NowGameState = GameState.Lose;
+
+            if (playerLife <= 0)
+            {
+                playerLife = 0;
+                GamePlayManager.Instance.NowGameState = GameState.Lose;
+            }
         }
         if(nowGameState == GameState.Win)
         {

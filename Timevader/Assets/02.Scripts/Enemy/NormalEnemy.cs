@@ -14,7 +14,6 @@ public class NormalEnemy : Enemy {
         hp = maxHp;
         //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
-        destroyAudio = enemy.destroyAudio;
         //factory = enemy.factory;
     }
 
@@ -102,6 +101,9 @@ public class NormalEnemy : Enemy {
     override protected void GetDemage(int damage)
     {
         hp -= damage;
+        GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+        explosion.transform.position = transform.position;
+        //explosion.SetActive(true);
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
     }

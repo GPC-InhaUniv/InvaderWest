@@ -17,7 +17,6 @@ public class ControlTimeEffect : MonoBehaviour {
         effectPool = GameObject.Find("TimeEffectPooling").GetComponent<TimeEffect>();
 
         targetObject = GameObject.FindGameObjectWithTag("Boss");
-
         bossVector3 = targetObject.transform;
 
         moveSpeed = Random.Range(1f, 5f);
@@ -50,5 +49,4 @@ public class ControlTimeEffect : MonoBehaviour {
             effectPool.HideEffect(gameObject);
         }
     }
-
 }

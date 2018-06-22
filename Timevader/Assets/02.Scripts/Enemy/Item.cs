@@ -17,10 +17,15 @@ public class Item : MonoBehaviour {
     [SerializeField]
     float RotateValue = 1.0f;
 
-    void Awake()
+    //void Awake()
+    //{
+    //    player = GameObject.FindWithTag("Player").GetComponent<Player>();
+    //}
+    void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
+
 
     void FixedUpdate()
     {

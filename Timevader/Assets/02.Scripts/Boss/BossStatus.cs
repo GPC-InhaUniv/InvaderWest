@@ -84,10 +84,10 @@ public class BossStatus : MonoBehaviour {
         }
         else if (other.tag == "Bolt")
         {
-            //Instantiate(explosion, transform.position, transform.rotation); //오브젝트 풀로 수정 예정
-
+            GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+            explosion.transform.position = transform.position;
+            //explosion.SetActive(true);
             BossHp -= 1;
-            //DestroyObject(other.gameObject);
 
             //게임컨트롤러에게 알리기 보스가 맞았다고//
             if (notifyLifeToObserver != null)
@@ -95,6 +95,10 @@ public class BossStatus : MonoBehaviour {
 
             if (BossHp == 0)
             {
+                explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+                //explosion.GetComponent<Particle>()
+                explosion.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f); // 이펙트 크기를 4배로
+                //explosion.SetActive(true);
                 GamePlayManager.Instance.NowGameState = GameState.Win;
                 Destroy(gameObject);
                 isdead = true;

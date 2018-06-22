@@ -11,16 +11,17 @@ public enum PoolType
     WreckedPool,
     ItemPool,
     ExplosionPool,
+    DrainPool,
 }
 
 public class PoolController : MonoBehaviour {
-    Queue<GameObject> normalPool, attackingPool, boltPool, enemyBoltPool, wreckedPool, itemPool, explosionPool;
-	
-    [SerializeField]
-    int normalPoolSize, attackingPoolSize, boltPoolSize, enemyBoltPoolSize, wreckedPoolSize, itemPoolSize, explosionPoolSize;
+    Queue<GameObject> normalPool, attackingPool, boltPool, enemyBoltPool, wreckedPool, itemPool, explosionPool, drainPool;
 
     [SerializeField]
-    GameObject normalPrefab, attackingPrefab, boltPrefab, enemyBoltPrefab, wreckedPrefab, itemPrefab, explosionPrefab;
+    int normalPoolSize, attackingPoolSize, boltPoolSize, enemyBoltPoolSize, wreckedPoolSize, itemPoolSize, explosionPoolSize, drainPoolSize;
+
+    [SerializeField]
+    GameObject normalPrefab, attackingPrefab, boltPrefab, enemyBoltPrefab, wreckedPrefab, itemPrefab, explosionPrefab, drainPrefab;
 
     public static PoolController instance = null;
 
@@ -44,6 +45,7 @@ public class PoolController : MonoBehaviour {
         CreatePool(ref wreckedPool, wreckedPoolSize, wreckedPrefab);
         CreatePool(ref itemPool, itemPoolSize, itemPrefab);
         CreatePool(ref explosionPool, explosionPoolSize, explosionPrefab);
+        CreatePool(ref drainPool, drainPoolSize, drainPrefab);
     }
 
     void CreatePool(ref Queue<GameObject> pool, int size, GameObject prefab)
@@ -61,7 +63,11 @@ public class PoolController : MonoBehaviour {
     {
         Queue<GameObject> pool = FindPool(type);
         if (pool.Count != 0)
-            return pool.Dequeue();
+        {
+            GameObject obj = pool.Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
         Debug.Log("Pool에 남은 오브젝트가 부족합니다.");
         return null;
     }
@@ -70,6 +76,7 @@ public class PoolController : MonoBehaviour {
     {
         Queue<GameObject> pool = FindPool(type);
         pool.Enqueue(obj);
+        obj.SetActive(false);
     }
 
     // type을 통해 해당 Pool을 반환하는 함수
@@ -91,6 +98,8 @@ public class PoolController : MonoBehaviour {
                 return itemPool;
             case PoolType.ExplosionPool:
                 return explosionPool;
+            case PoolType.DrainPool:
+                return drainPool;
             default: return null;
         }
     }
