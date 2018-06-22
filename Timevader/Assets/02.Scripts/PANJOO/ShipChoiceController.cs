@@ -15,17 +15,29 @@ public class ShipChoiceController : MonoBehaviour {
 
     [Header("SpaceShipStatus")]
     [SerializeField]
-    Text noticeText, spaceShipSelectNumText, spaceShipNameText, spaceShipSpeedText;
+    Text noticeText;
+    [SerializeField]
+    Text spaceShipSelectNumText;
+    [SerializeField]
+    Text spaceShipNameText;
+    [SerializeField]
+    Text spaceShipSpeedText;
 
-    [Header("Image")]
+    [Header("ImageObj")]
     [SerializeField]
-    GameObject lockImage, fuelImage;
+    GameObject lockImage;
+    [SerializeField]
+    GameObject fuelImage;
 
-    [Header("Start and Buy")]
+    [Header("Start and Buy Btn")]
     [SerializeField]
-    GameObject startButton, buyButton;
+    GameObject startButton;
     [SerializeField]
-    Text startText, buyText;
+    GameObject buyButton;
+    [SerializeField]
+    Text startText;
+    [SerializeField]
+    Text buyText;
 
     //수정한사람 황윤우 //
     [Header("Time and Fuel")]
