@@ -22,7 +22,7 @@ public class StageLoad : MonoBehaviour {
         {
             //SceneManager.LoadScene("Stage" + StageNumber);
             //test//
-            SceneManager.LoadScene("Stage1");
+            SceneManager.LoadScene("Test_Stage3");
         }
         Debug.Log("접근할 수 없는 스테이지");
     }
