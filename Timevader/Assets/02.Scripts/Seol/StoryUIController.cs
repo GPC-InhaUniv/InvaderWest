@@ -32,7 +32,7 @@ public class StoryUIController : MonoBehaviour {
     Text confirmDifficultyText;
 
     [SerializeField]
-    float earthSize = 2.2f;
+    float earthSize = 2.5f;
 
     int year = 0;
     int pageNum = 0;
@@ -56,8 +56,7 @@ public class StoryUIController : MonoBehaviour {
         if(earthObj.activeInHierarchy == true)
         {
             ZoomEarth();
-        }
-    
+        }    
     }
 
     void SkipStory()
@@ -84,7 +83,6 @@ public class StoryUIController : MonoBehaviour {
         checkYear = year;
     }
 
-
     public void OnSelectOK()
     {        
         Debug.Log(year + "타임 저장값입니다.");
@@ -101,13 +99,14 @@ public class StoryUIController : MonoBehaviour {
                 AccountInfo.ChangeLevelOfDifficulty(3);
                 break;
         }
-        StartCoroutine(WaitSecond());
-        SceneManager.LoadScene("Main");
+        StartCoroutine(WaitNextScene());
+
     }
 
-    IEnumerator WaitSecond()
+    IEnumerator WaitNextScene()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Intro");
     }
 
     void SelectCancel()

@@ -67,7 +67,6 @@ public class DraggingObject : MonoBehaviour
             if (arrowObj.CompareTag("Arrow")) // 히트 된 오브젝트의 태그와 맞으면 실행 
             {
                 ClickorDrag();
-                Debug.Log("hit !");
             }
 
             if (arrow.transform.position.y < -40)
@@ -95,7 +94,6 @@ public class DraggingObject : MonoBehaviour
             if (playershipObj.CompareTag("Playership"))
             {
                 ClickorDrag();
-                Debug.Log("ship !");
             }
 
             if (playerShip.transform.position.y > 35)
@@ -125,11 +123,9 @@ public class DraggingObject : MonoBehaviour
 
             if (playerShip.activeInHierarchy)
             {
-                Debug.Log("우주선 올리기");
                 playerShip.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
             }
 
-            Debug.Log("Drag");
         }
         else
             return;
@@ -153,6 +149,7 @@ public class DraggingObject : MonoBehaviour
             }
         }
     }
+
 }
     /*
     public void TouchSlide()
