@@ -44,10 +44,12 @@ public class DraggingObject : MonoBehaviour
     }
 
     void Update()
-    {      
+    {
+        HitArrow();
+
         if (arrow.activeInHierarchy)
         {
-            HitArrow();
+            
         }
     }
     
