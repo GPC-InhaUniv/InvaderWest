@@ -7,7 +7,7 @@ public class ButtonContoller : MonoBehaviour {
 
 	public void ChangeSceneByShopPCChoice()
     {
-        SceneManager.LoadScene("SpaceShipSelect");
+        SceneManager.LoadScene("SelectSpaceShip");
     }
     public void ChangeSceneByShop()
     {
