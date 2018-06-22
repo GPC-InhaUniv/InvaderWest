@@ -34,7 +34,6 @@ public class AttackingEnemy : Enemy{
             GameObject shot = PoolController.instance.GetFromPool(PoolType.EnemyBoltPool);
             if (shot != null)
             {
-                shot.transform.rotation = Quaternion.identity;
                 //shot.SetActive(true);
                 shot.transform.position = transform.position;
             }
@@ -123,7 +122,6 @@ public class AttackingEnemy : Enemy{
         hp -= damage;
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
         explosion.transform.position = transform.position;
-        explosion.transform.rotation = Quaternion.identity;
         //explosion.SetActive(true);
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();

@@ -64,9 +64,12 @@ public class Enemy : MonoBehaviour
         //Explode될때 소리 추가//
         destroyAudio.Play();
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
-        explosion.transform.position = transform.position;
-        explosion.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); // 이펙트 크기를 2배로
-        Debug.Log("EXPLODE");
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); // 이펙트 크기를 2배로
+        }
+
         if (Random.Range(1, 100) <= WreckProbability)
             Wrecked();
 

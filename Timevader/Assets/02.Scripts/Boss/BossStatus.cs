@@ -37,13 +37,9 @@ public class BossStatus : MonoBehaviour {
     {
         StartCoroutine("checkGameState");
 
-
         leftRightMover = GetComponent<LeftRightMover>();
 
-        
         BossHp = MaxHp;
-
-   
         ScoreValue = 10;
 
         isdead = false;
@@ -67,11 +63,13 @@ public class BossStatus : MonoBehaviour {
             //leftRightMover.LeftRightMove(); LeftRightMover로 이동
         }
     }
+
     void AppearBoss() //보스가 서서히 등장
     {
         if(transform.position.y > 4.0f)
         {
             transform.Translate(new Vector3(0, -0.05f, 0));
+
         }
     }
 
@@ -85,7 +83,7 @@ public class BossStatus : MonoBehaviour {
         else if (other.tag == "Bolt")
         {
             GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
-            explosion.transform.position = transform.position;
+            if(explosion != null) explosion.transform.position = transform.position;
             //explosion.SetActive(true);
             BossHp -= 1;
 
