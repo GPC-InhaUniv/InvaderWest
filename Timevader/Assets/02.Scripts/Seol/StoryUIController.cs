@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StoryUIController : MonoBehaviour {
 
     [SerializeField]
-    Button earthButton;
+    GameObject earthObj;
     [SerializeField]
     GameObject confirmPanel;
 
@@ -42,9 +42,33 @@ public class StoryUIController : MonoBehaviour {
     [SerializeField]
     float enemySpeed = 0.15f;
 
+    int checkYear;
+    int restTime;
+
+    void Start()
+    {
+        restTime = int.Parse(AccountInfo.Instance.RestTime);
+        SkipStory();
+    }
+
     void FixedUpdate()
     {
-        ZoomEarth();
+        if(earthObj.activeInHierarchy == true)
+        {
+            ZoomEarth();
+        }
+    
+    }
+
+    void SkipStory()
+    {
+        if (restTime == 0)
+            return;
+
+        if(restTime > 0)
+        {            
+            SceneManager.LoadScene("Main");
+        }   
     }
 
     public void NextPage()
@@ -54,34 +78,36 @@ public class StoryUIController : MonoBehaviour {
         storyButtons[pageNum].SetActive(true);
     }
 
-    public void EasyButtonClicked()
+    public void OnDifficultyButtonClicked(int year)
     {        
-        year = 50000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
-        AccountInfo.ChangeLevelOfDifficulty(1);
+        checkYear = year;
     }
 
-    public void NormalButtonClicked()
-    {
-        year = 25000;
-        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
-        AccountInfo.ChangeLevelOfDifficulty(2);
-    }
-
-    public void HardButtonClicked()
-    {
-        year = 13000;
-        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
-        AccountInfo.ChangeLevelOfDifficulty(3);
-    }
 
     public void OnSelectOK()
     {        
         Debug.Log(year + "타임 저장값입니다.");
+        AccountInfo.ChangeRestTimeData(checkYear);
+        switch (checkYear)
+        {
+            case 5000:
+                AccountInfo.ChangeLevelOfDifficulty(1);
+                break;
+            case 2500:
+                AccountInfo.ChangeLevelOfDifficulty(2);
+                break;
+            case 1000:
+                AccountInfo.ChangeLevelOfDifficulty(3);
+                break;
+        }
+        StartCoroutine(WaitSecond());
         SceneManager.LoadScene("Main");
+    }
+
+    IEnumerator WaitSecond()
+    {
+        yield return new WaitForSeconds(2.0f);
     }
 
     void SelectCancel()
@@ -91,25 +117,22 @@ public class StoryUIController : MonoBehaviour {
 
     void ZoomEarth()
     {
-        earthButton.transform.localScale += Vector3.Lerp(new Vector3(0.02f, 0.02f, 0.02f), new Vector3(0.02f, 0.02f, 0.02f), Time.deltaTime);
-
-        if (earthButton.transform.localScale.x > earthSize)
+        if (earthObj.transform.localScale.x < earthSize)
         {
-            earthButton.transform.localScale = new Vector3(earthSize, earthSize, earthSize);
+            earthObj.transform.localScale += Vector3.Lerp(new Vector3(0.02f, 0.02f, 0.02f), new Vector3(0.02f, 0.02f, 0.02f), Time.deltaTime);
             storyButton1.interactable = true;
-            earthButton.interactable = false;
         }
     }   
 
     public void MoveInvader()
     {
-        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
 
-        if (enemyship.transform.localPosition.y < invaderHeight)
+        if (enemyship.transform.localPosition.y > invaderHeight)
         {
-            enemyship.transform.localPosition = new Vector3(0, invaderHeight, 0);
+            enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
             storyButton4.interactable = true;
         }
     }
+    
     
 }

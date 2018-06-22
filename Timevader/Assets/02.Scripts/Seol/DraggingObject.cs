@@ -37,49 +37,57 @@ public class DraggingObject : MonoBehaviour
 
     StoryUIController storyUIController;
 
+    List<RaycastResult> arrowResults;
+    List<RaycastResult> playershipResults;    
+
     void Start()
     {
+        arrowResults = new List<RaycastResult>();
+        playershipResults = new List<RaycastResult>();
         arrowGraphicRaycaster = ArrowCanvas.GetComponent<GraphicRaycaster>();
         playershipGraphicRaycaster = PlayerShipCanvas.GetComponent<GraphicRaycaster>();
         arrowPointerEventData = new PointerEventData(null);
         playershipPointerEventData = new PointerEventData(null);
         storyUIController = GameObject.Find("StorySceneController").GetComponent<StoryUIController>();
+
+        StartCoroutine(HitArrow());
+        StartCoroutine(HitPlayership());
     }
-
-    void Update()
-    {
-        HitArrow();
-        HitPlayership();
-    }   
-
-    void HitArrow()
+    
+    IEnumerator HitArrow()
     {
         arrowPointerEventData.position = Input.mousePosition;
-        List<RaycastResult> arrowResults = new List<RaycastResult>(); // 여기에 히트 된 개체 저장 
+
         arrowGraphicRaycaster.Raycast(arrowPointerEventData, arrowResults);
+
         if (arrowResults.Count != 0)
         {
             GameObject arrowObj = arrowResults[0].gameObject;
+
             if (arrowObj.CompareTag("Arrow")) // 히트 된 오브젝트의 태그와 맞으면 실행 
             {
                 ClickorDrag();
                 Debug.Log("hit !");
             }
-        }
 
-        if (arrow.transform.position.y < -40)
-        {
-            arrow.SetActive(false);
-            enemyShip.SetActive(true);
-            storyUIController.MoveInvader();
-        }
+            if (arrow.transform.position.y < -40)
+            {
+                arrow.SetActive(false);
+                enemyShip.SetActive(true);
+                storyUIController.MoveInvader();
+            }
+        }        
+
+        yield return null;
+        StartCoroutine(HitArrow());
     }
 
-    public void HitPlayership()
+    IEnumerator HitPlayership()
     {
         playershipPointerEventData.position = Input.mousePosition;
-        List<RaycastResult> playershipResults = new List<RaycastResult>();
+
         playershipGraphicRaycaster.Raycast(playershipPointerEventData, playershipResults);
+
         if (playershipResults.Count != 0)
         {
             GameObject playershipObj = playershipResults[0].gameObject;
@@ -89,12 +97,15 @@ public class DraggingObject : MonoBehaviour
                 ClickorDrag();
                 Debug.Log("ship !");
             }
+
+            if (playerShip.transform.position.y > 35)
+            {
+                StoryButton6.interactable = true;
+            }
         }
 
-        if (playerShip.transform.position.y > 40)
-        {
-            StoryButton6.interactable = true;
-        }
+        yield return null;
+        StartCoroutine(HitPlayership());
     }
 
     void ClickorDrag()
@@ -111,8 +122,10 @@ public class DraggingObject : MonoBehaviour
 
             arrow.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
 
+
             if (playerShip.activeInHierarchy)
             {
+                Debug.Log("우주선 올리기");
                 playerShip.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
             }
 
