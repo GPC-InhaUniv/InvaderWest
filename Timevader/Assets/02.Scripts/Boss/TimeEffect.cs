@@ -32,22 +32,20 @@ public class TimeEffect : MonoBehaviour {
 
     public void ActiveEffect()
     {
-        effect = EffectPool.GetPooledObject(); //de
+        effect = PoolController.instance.GetFromPool(PoolType.DrainPool);
 
         spawnPositionVector = spawnPosition.transform.position;
-
         if (effect != null)
         {
             effect.transform.position = spawnPositionVector;
-            effect.SetActive(true);
         }
-
     }
 
     public void HideEffect(GameObject obj)
     {
-        Debug.Log("숨기기");
-        EffectPool.ReturnToPool(obj); //en
+        //Debug.Log("숨기기");
+        PoolController.instance.ReturnToPool(PoolType.DrainPool, obj);
+        //EffectPool.ReturnToPool(obj); //en
     }
     IEnumerator checkGameState()
     {

@@ -63,6 +63,9 @@ public class Enemy : MonoBehaviour
     {
         //Explode될때 소리 추가//
         destroyAudio.Play();
+        GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+        explosion.transform.position = transform.position;
+        explosion.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); // 이펙트 크기를 2배로
         Debug.Log("EXPLODE");
         if (Random.Range(1, 100) <= WreckProbability)
             Wrecked();
@@ -78,7 +81,6 @@ public class Enemy : MonoBehaviour
         GameObject item = PoolController.instance.GetFromPool(PoolType.ItemPool);
         item.transform.position = transform.position;
         item.transform.rotation = Quaternion.identity;
-        item.SetActive(true);
         //Instantiate(Items[0], transform.position, Quaternion.identity);
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
@@ -89,14 +91,13 @@ public class Enemy : MonoBehaviour
         Debug.Log("WRECKED");
         GameObject wreckedShip = PoolController.instance.GetFromPool(PoolType.WreckedPool);
         wreckedShip.transform.position = transform.position;
-        wreckedShip.transform.rotation = Quaternion.identity;
-        wreckedShip.SetActive(true);
         //Instantiate(WreckedShip, transform.position, Quaternion.identity);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt")
+        //if(other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt")
+        if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bolt"))
         {
             GetDemage(2); // other.power
         }
@@ -104,7 +105,8 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "BackGround") ReturnToPool();
+        //if (other.gameObject.tag == "BackGround") ReturnToPool();
+        if(other.gameObject.CompareTag("BackGround")) ReturnToPool();
     }
 
     void ReturnToPool()
