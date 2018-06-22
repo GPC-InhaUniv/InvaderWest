@@ -59,7 +59,7 @@ public class PlayerShip : MonoBehaviour
 
         StartCoroutine("checkGameState");
 
-        Invoke("GameStart", 0.5f);
+        Invoke("GameStart", 2.0f);
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -74,12 +74,12 @@ public class PlayerShip : MonoBehaviour
         //Test 플레이어//
         if (GamePlayManager.Instance.PlayerShipNum == 1)
         {
-            playerLife = 3;
+            playerLife = 100;
             playerRestTime = 5000;
         }
         else if (GamePlayManager.Instance.PlayerShipNum == 2)
         {
-            playerLife = 4;
+            playerLife = 200;
             playerRestTime = 3800;
         }
         //Test//
@@ -150,7 +150,7 @@ public class PlayerShip : MonoBehaviour
                 Debug.Log("Pool에 남은 미사일이 부족합니다.");
                 return;
             }
-            shot.transform.position = transform.position;
+            shot.transform.position = shotSpawn.transform.position;
             //shot.SetActive(true);
             shot = null; // 초기화
             nextFire = nextFire - myTime;
