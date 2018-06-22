@@ -53,6 +53,7 @@ public class GamePlayManager : MonoBehaviour {
             instance = this;
 
         NowGameState = GameState.Ready;
+        PlayerShipNum = 1;
         DontDestroyOnLoad(gameObject);
        
     }

@@ -22,7 +22,7 @@ public class AccountInfo : MonoBehaviour
         set { info = value; }
     }
     
-    public string Fuel, Time, AddMissileItem, AssistantItem, LastBombItem, Raptor, BlackHawk, BestScore, RestTime, StageData;
+    public string Fuel, LevelOfDifficulty, AddMissileItem, AssistantItem, LastBombItem, Raptor, BlackHawk, BestScore, RestTime, StageData;
 
     void Awake()
     {
@@ -108,7 +108,7 @@ public class AccountInfo : MonoBehaviour
             {
                 //재화//
                 {"Fuel" , "5000" },
-                {"Time" , "0" },
+                {"LevelOfDifficulty" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileItem" , "0" },
                 {"AssistantItem" , "0" },
@@ -154,13 +154,13 @@ public class AccountInfo : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
-    public static void ChangeTimeData(int time)
+    public static void ChangeLevelOfDifficulty(int levelofdifficulty)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"Time", ""+time+""},
+                {"LevelOfDifficulty", ""+levelofdifficulty+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
@@ -341,7 +341,7 @@ public class AccountInfo : MonoBehaviour
 
     public static void SetInfoList(GetUserDataResult result)
     {
-        instance.Time = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
+        instance.LevelOfDifficulty = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
         instance.RestTime = result.Data["RestTime"].Value;
         instance.BestScore = result.Data["BestScore"].Value;
         instance.StageData = result.Data["StageData"].Value;

@@ -55,18 +55,24 @@ public class StoryUIController : MonoBehaviour {
     {        
         year = 50000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(1);
     }
 
     public void NormalButtonClicked()
     {
         year = 25000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(2);
     }
 
     public void HardButtonClicked()
     {
         year = 13000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(3);
     }
 
     void SelectOK()
@@ -102,18 +108,5 @@ public class StoryUIController : MonoBehaviour {
             storyButton4.interactable = true;
         }
     }
-
-    /*
-    public void MovePlayership()
-    {
-        playership.transform.position += Vector3.Lerp(new Vector3(0, 0.3f, 0), new Vector3(0, 0.3f, 0), Time.deltaTime);
-
-        if(playership.transform.localPosition.y > playershipHeight)
-        {
-            playership.transform.localPosition = new Vector3(0, playershipHeight, 0);
-        }
-
-    }
-    */
     
 }

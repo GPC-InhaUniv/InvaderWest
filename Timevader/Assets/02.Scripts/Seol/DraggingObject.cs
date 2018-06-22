@@ -47,14 +47,12 @@ public class DraggingObject : MonoBehaviour
     {
         HitArrow();
 
-        if (arrow.transform.position.y < -40)
+        if (arrow.activeInHierarchy)
         {
-            arrow.SetActive(false);
-            enemyShip.SetActive(true);
-            storyUIController.MoveInvader();
+            
         }
-        
     }
+    
 
     void HitArrow()
     {
@@ -69,6 +67,13 @@ public class DraggingObject : MonoBehaviour
                 ClickorDrag();
                 Debug.Log("hit !");
             }
+        }
+
+        if (arrow.transform.position.y < -40)
+        {
+            arrow.SetActive(false);
+            enemyShip.SetActive(true);
+            storyUIController.MoveInvader();
         }
     }
 
@@ -101,9 +106,13 @@ public class DraggingObject : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             float dragValue = Input.mousePosition.y - prevPoint.y;
-            
-            arrow.transform.Translate(new Vector3(0,dragValue * moveSpeed,0));
-            playerShip.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
+
+            arrow.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
+
+            if (playerShip.activeInHierarchy)
+            {
+                playerShip.transform.Translate(new Vector3(0, dragValue * moveSpeed, 0));
+            }
 
             Debug.Log("Drag");
         }
