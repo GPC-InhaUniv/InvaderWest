@@ -55,18 +55,27 @@ public class StoryUIController : MonoBehaviour {
     {        
         year = 50000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(1);
     }
 
     public void NormalButtonClicked()
     {
         year = 25000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(2);
+
     }
 
     public void HardButtonClicked()
     {
         year = 13000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
+        AccountInfo.ChangeLevelOfDifficulty(3);
+
+
     }
 
     void SelectOK()
