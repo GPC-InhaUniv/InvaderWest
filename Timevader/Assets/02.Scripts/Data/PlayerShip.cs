@@ -149,8 +149,7 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             shot.transform.position = transform.position;
-            shot.transform.rotation = Quaternion.identity;
-            shot.SetActive(true);
+            //shot.SetActive(true);
             shot = null; // 초기화
             nextFire = nextFire - myTime;
             myTime = 0.0f;
