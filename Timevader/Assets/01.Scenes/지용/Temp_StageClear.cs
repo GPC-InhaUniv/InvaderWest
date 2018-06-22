@@ -7,7 +7,7 @@ public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
     private GameObject camRotater, clearInfoPanel, player, boss;
 
-    const float ZOONVALUE = 30.0f, INITVALUE = 60.0f;
+    const float ZOONVALUE = 40.0f, INITVALUE = 60.0f;
     float t = 0f;
 
     //enum GameStage2
@@ -20,6 +20,7 @@ public class Temp_StageClear : MonoBehaviour {
     GameState nowGameState;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
     float moveSpeed = 0f;
+    bool bossZoom = false;
 
     void Start()
     {
@@ -29,9 +30,9 @@ public class Temp_StageClear : MonoBehaviour {
 
     void Update()
     {
-        if (nowGameState == GameState.Ready)
+        if (nowGameState == GameState.Ready && !bossZoom)
         {
-            camPos = boss.transform.position;
+            camPos = new Vector3(boss.transform.position.x, boss.transform.position.y - 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
         else if (nowGameState == GameState.Win)
@@ -48,7 +49,7 @@ public class Temp_StageClear : MonoBehaviour {
 
     public void ZoomCamera() // 카메라 줌
     {
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos, Time.deltaTime * 2.5f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos, Time.deltaTime * 1.0f); // 기존 2.5
         Camera.main.fieldOfView = Mathf.Lerp(INITVALUE, ZOONVALUE, t);
         t += 0.9f * Time.deltaTime;
 
@@ -59,6 +60,7 @@ public class Temp_StageClear : MonoBehaviour {
 
             //GameState.Started;
             t = 0f;
+            bossZoom = true;
         }
     }
 
