@@ -281,12 +281,10 @@ public class AccountInfo : MonoBehaviour
             SetInfoList(result);
             SetShopList(result);
             Debug.Log("ShopData set up complete");
-            if (int.Parse(instance.LevelOfDifficulty) == 0)
+            if (int.Parse(instance.LevelOfDifficulty) != 0) 
                 SceneManager.LoadScene("Intro");
             else
-                SceneManager.LoadScene("Intro");
-            
-            //SceneManager.LoadScene("Intro");
+                SceneManager.LoadScene("Story");
         }
     }
 
