@@ -50,8 +50,7 @@ public class DraggingObject : MonoBehaviour
     {
         HitArrow();
         HitPlayership();
-    }
-    
+    }   
 
     void HitArrow()
     {
@@ -92,7 +91,7 @@ public class DraggingObject : MonoBehaviour
             }
         }
 
-        if (playerShip.transform.position.y > 50)
+        if (playerShip.transform.position.y > 40)
         {
             StoryButton6.interactable = true;
         }

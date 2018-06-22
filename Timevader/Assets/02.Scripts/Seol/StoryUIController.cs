@@ -39,6 +39,9 @@ public class StoryUIController : MonoBehaviour {
 
     int invaderHeight = 535;
 
+    [SerializeField]
+    float enemySpeed = 0.15f;
+
     void FixedUpdate()
     {
         ZoomEarth();
@@ -55,6 +58,7 @@ public class StoryUIController : MonoBehaviour {
     {        
         year = 50000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
         AccountInfo.ChangeLevelOfDifficulty(1);
     }
 
@@ -62,19 +66,20 @@ public class StoryUIController : MonoBehaviour {
     {
         year = 25000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
         AccountInfo.ChangeLevelOfDifficulty(2);
     }
 
     public void HardButtonClicked()
     {
         year = 13000;
-        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";        
+        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
+        AccountInfo.ChangeRestTimeData(year);
         AccountInfo.ChangeLevelOfDifficulty(3);
     }
 
     public void OnSelectOK()
-    {
-        AccountInfo.ChangeRestTimeData(year);
+    {        
         Debug.Log(year + "타임 저장값입니다.");
         SceneManager.LoadScene("Main");
     }
@@ -98,7 +103,7 @@ public class StoryUIController : MonoBehaviour {
 
     public void MoveInvader()
     {
-        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, 0.1f, 0), new Vector3(0, 0.1f, 0), Time.deltaTime);
+        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
 
         if (enemyship.transform.localPosition.y < invaderHeight)
         {
