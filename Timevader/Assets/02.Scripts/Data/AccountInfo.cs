@@ -154,18 +154,17 @@ public class AccountInfo : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
     }
-    public static void ChangeLevelOfDifficulty(int levelofdifficulty)
+    public static void ChangeStageData(int stageData)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
         {
             Data = new Dictionary<string, string>()
             {
-                {"LevelOfDifficulty", ""+levelofdifficulty+""},
+                {"StageData", ""+stageData+""},
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInShop, ManagerFuncion.OnAPIError);
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
     }
-
     //소모성 아이템 데이타 변경 함수//
     public static void ChangeAddMissileItemData(int addMissileItem)
     {
@@ -235,6 +234,17 @@ public class AccountInfo : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
     }
+    public static void ChangeLevelOfDifficulty(int levelofdifficulty)
+    {
+        UpdateUserDataRequest request = new UpdateUserDataRequest()
+        {
+            Data = new Dictionary<string, string>()
+            {
+                {"LevelOfDifficulty", ""+levelofdifficulty+""},
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
+    }
     public static void ChangeRestTimeData(int restTime)
     {
         UpdateUserDataRequest request = new UpdateUserDataRequest()
@@ -242,17 +252,6 @@ public class AccountInfo : MonoBehaviour
             Data = new Dictionary<string, string>()
             {
                 {"RestTime", ""+restTime+""},
-            }
-        };
-        PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
-    }
-    public static void ChangeStageData(int stageData)
-    {
-        UpdateUserDataRequest request = new UpdateUserDataRequest()
-        {
-            Data = new Dictionary<string, string>()
-            {
-                {"StageData", ""+stageData+""},
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnUpdateUserDataInGame, ManagerFuncion.OnAPIError);
@@ -282,7 +281,11 @@ public class AccountInfo : MonoBehaviour
             SetInfoList(result);
             SetShopList(result);
             Debug.Log("ShopData set up complete");
-            SceneManager.LoadScene("Intro");
+            if (int.Parse(instance.LevelOfDifficulty) == 0)
+                SceneManager.LoadScene("Intro");
+            else
+                SceneManager.LoadScene("Intro");
+            
             //SceneManager.LoadScene("Intro");
         }
     }
@@ -341,7 +344,7 @@ public class AccountInfo : MonoBehaviour
 
     public static void SetInfoList(GetUserDataResult result)
     {
-        instance.LevelOfDifficulty = result.Data["Time"].Value; // 사용x, 저장공간 1개남음//
+        instance.LevelOfDifficulty = result.Data["LevelOfDifficulty"].Value; 
         instance.RestTime = result.Data["RestTime"].Value;
         instance.BestScore = result.Data["BestScore"].Value;
         instance.StageData = result.Data["StageData"].Value;
