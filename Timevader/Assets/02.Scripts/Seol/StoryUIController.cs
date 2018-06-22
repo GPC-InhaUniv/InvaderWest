@@ -55,7 +55,6 @@ public class StoryUIController : MonoBehaviour {
     {        
         year = 50000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
         AccountInfo.ChangeLevelOfDifficulty(1);
     }
 
@@ -63,21 +62,20 @@ public class StoryUIController : MonoBehaviour {
     {
         year = 25000;
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
         AccountInfo.ChangeLevelOfDifficulty(2);
     }
 
     public void HardButtonClicked()
     {
         year = 13000;
-        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
-        AccountInfo.ChangeRestTimeData(year);
+        confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";        
         AccountInfo.ChangeLevelOfDifficulty(3);
     }
 
-    void SelectOK()
+    public void OnSelectOK()
     {
         AccountInfo.ChangeRestTimeData(year);
+        Debug.Log(year + "타임 저장값입니다.");
         SceneManager.LoadScene("Main");
     }
 
