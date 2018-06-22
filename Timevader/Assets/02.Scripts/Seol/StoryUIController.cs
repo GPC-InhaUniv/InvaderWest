@@ -39,6 +39,9 @@ public class StoryUIController : MonoBehaviour {
 
     int invaderHeight = 535;
 
+    [SerializeField]
+    float enemySpeed = 0.15f;
+
     void FixedUpdate()
     {
         ZoomEarth();
@@ -75,9 +78,9 @@ public class StoryUIController : MonoBehaviour {
         AccountInfo.ChangeLevelOfDifficulty(3);
     }
 
-    void SelectOK()
-    {
-        AccountInfo.ChangeRestTimeData(year);
+    public void OnSelectOK()
+    {        
+        Debug.Log(year + "타임 저장값입니다.");
         SceneManager.LoadScene("Main");
     }
 
@@ -100,7 +103,7 @@ public class StoryUIController : MonoBehaviour {
 
     public void MoveInvader()
     {
-        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, 0.1f, 0), new Vector3(0, 0.1f, 0), Time.deltaTime);
+        enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
 
         if (enemyship.transform.localPosition.y < invaderHeight)
         {

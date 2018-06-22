@@ -19,6 +19,9 @@ public class DraggingObject : MonoBehaviour
     float moveSpeed = 0.1f;
 
     [SerializeField]
+    Button StoryButton6;
+
+    [SerializeField]
     GameObject enemyShip;
     [SerializeField]
     GameObject playerShip;
@@ -46,13 +49,8 @@ public class DraggingObject : MonoBehaviour
     void Update()
     {
         HitArrow();
-
-        if (arrow.activeInHierarchy)
-        {
-            
-        }
-    }
-    
+        HitPlayership();
+    }   
 
     void HitArrow()
     {
@@ -93,6 +91,10 @@ public class DraggingObject : MonoBehaviour
             }
         }
 
+        if (playerShip.transform.position.y > 40)
+        {
+            StoryButton6.interactable = true;
+        }
     }
 
     void ClickorDrag()
