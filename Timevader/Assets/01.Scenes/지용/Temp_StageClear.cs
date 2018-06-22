@@ -5,39 +5,41 @@ using UnityEngine.SceneManagement;
 
 public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
-    private GameObject camRotater, clearInfoPanel, player, boss;
+    GameObject camRotater, clearInfoPanel, player, boss;
+
+    [SerializeField]
+    float ZoomSpeed = 1.5f;
 
     const float ZOONVALUE = 40.0f, INITVALUE = 60.0f;
     float t = 0f;
+    bool bossZoomComplete = false; // 임시로 사용
 
-    //enum GameStage2
-    //{
-    //    BOSSAPPEAR = 1 << 0,
-    //    GAMECLEAR = 1 << 1,
-    //    CAMERAZOOM = 1 << 2,
-    //}
-    //GameStage2 gameState;
     GameState nowGameState;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
     float moveSpeed = 0f;
-    bool bossZoom = false;
-
+    
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         boss = GameObject.FindGameObjectWithTag("Boss");
+        //camPos = new Vector3(boss.transform.position.x, boss.transform.position.y, Camera.main.transform.position.z);
+        //Debug.Log(camPos);
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (nowGameState == GameState.Ready && !bossZoom)
+        if (nowGameState == GameState.Ready && !bossZoomComplete)
         {
             camPos = new Vector3(boss.transform.position.x, boss.transform.position.y - 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
+        else if(nowGameState == GameState.Ready && bossZoomComplete)
+        {
+            ZoomOutCamera();
+        }
         else if (nowGameState == GameState.Win)
         {
-            camPos = player.transform.position;
+            camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
         else if (nowGameState == GameState.WinEvent) MoveCamera();
@@ -49,9 +51,12 @@ public class Temp_StageClear : MonoBehaviour {
 
     public void ZoomCamera() // 카메라 줌
     {
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos, Time.deltaTime * 1.0f); // 기존 2.5
+        //Camera.main.transform.position = Vector3.Lerp(camPos, new Vector3(0.0f, 4.0f, -10.0f), Time.deltaTime * 3.0f); // 기존 2.5
+        //Camera.main.transform.position = Vector3.Lerp(camPos, new Vector3(0.0f, 4.0f, -10.0f), Time.deltaTime * 2.5f); // 기존 2.5
+        //Camera.main.transform.position = new Vector3(boss.transform.position.x, boss.transform.position.y - 2, Camera.main.transform.position.z);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPos, Time.deltaTime * 2.5f); // 기존 2.5
         Camera.main.fieldOfView = Mathf.Lerp(INITVALUE, ZOONVALUE, t);
-        t += 0.9f * Time.deltaTime;
+        t += ZoomSpeed * Time.deltaTime;
 
         if (Camera.main.fieldOfView <= ZOONVALUE) // 줌인 완료
         {
@@ -60,7 +65,20 @@ public class Temp_StageClear : MonoBehaviour {
 
             //GameState.Started;
             t = 0f;
-            bossZoom = true;
+            bossZoomComplete = true;
+        }
+    }
+
+    public void ZoomOutCamera()
+    {
+        Camera.main.fieldOfView = Mathf.Lerp(ZOONVALUE, INITVALUE, t);
+        t += ZoomSpeed * Time.deltaTime;
+
+        if (Camera.main.fieldOfView >= INITVALUE) // 줌인 완료
+        {
+            // 초기 카메라 위치로 리셋
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(0.0f, 0.0f, -10.0f), Time.deltaTime * 3.0f); // 기존 2.5
+            //t = 0f;
         }
     }
 
@@ -69,7 +87,7 @@ public class Temp_StageClear : MonoBehaviour {
         camRotater.transform.Rotate(0, Mathf.Lerp(0f, -90f, Time.deltaTime * 1.2f), 0);
         Camera.main.fieldOfView = Mathf.Lerp(ZOONVALUE, INITVALUE, t);
         Camera.main.transform.Translate(Vector3.down * moveSpeed++ * Time.deltaTime * 0.4f);
-        t += 1.5f * Time.deltaTime;
+        t += ZoomSpeed * Time.deltaTime;
 
         if (Camera.main.transform.position.y <= -12.0f) // 이동 연출 완료
         {
@@ -78,12 +96,12 @@ public class Temp_StageClear : MonoBehaviour {
         }
     }
 
-    public void GameClear()
-    {
-        //gameState |= GameStage2.GAMECLEAR;
-        camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, Camera.main.transform.position.z);
-    }
-    public void LoadStage(){ SceneManager.LoadScene("StageSelect"); }
+    //public void GameClear()
+    //{
+    //    //gameState |= GameStage2.GAMECLEAR;
+    //    camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, Camera.main.transform.position.z);
+    //}
+    //public void LoadStage(){ SceneManager.LoadScene("StageSelect"); }
 
     IEnumerator checkGameState()
     {
