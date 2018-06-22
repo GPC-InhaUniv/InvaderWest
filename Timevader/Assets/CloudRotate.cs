@@ -12,6 +12,7 @@ public class CloudRotate : MonoBehaviour {
     }
     IEnumerator RotateCloud()
     {
+
         transform.Rotate((new Vector3(1,0) * rotateValue * Time.deltaTime));
         yield return null;
         StartCoroutine(RotateCloud());

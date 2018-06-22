@@ -34,6 +34,7 @@ public class MainController : MonoBehaviour {
         Debug.Log(stageData);
 
         myFuel = AccountInfo.Instance.Fuel;
+
         restTime = int.Parse(AccountInfo.Instance.RestTime);
 
         DisplayText();
