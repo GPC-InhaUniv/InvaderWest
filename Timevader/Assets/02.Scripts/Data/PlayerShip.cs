@@ -59,7 +59,7 @@ public class PlayerShip : MonoBehaviour
 
         StartCoroutine("checkGameState");
 
-        Invoke("GameStart", 2.0f);
+        Invoke("GameStart", 0.5f);
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -97,7 +97,9 @@ public class PlayerShip : MonoBehaviour
         //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
         notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
         if (notifyLifeToObserver != null)
+        {
             notifyLifeToObserver(playerLife);
+        }
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
 
 
@@ -156,7 +158,6 @@ public class PlayerShip : MonoBehaviour
             myTime = 0.0f;
             //샷 오디오 추가//
             shotAudioSource.Play();
-
         }
     }
     //게임시작//
@@ -174,6 +175,7 @@ public class PlayerShip : MonoBehaviour
             {
                 assistant = false;
                 Debug.Log(assistant);
+
             }
             else
             {
@@ -182,8 +184,11 @@ public class PlayerShip : MonoBehaviour
                 {
                     AddMissileItem.gameObject.SetActive(false);
                 }
-                if (notifyLifeToObserver != null)
+
+                if (notifyLifeToObserver != null && playerLife >= 0) 
+                {
                     notifyLifeToObserver(playerLife);
+                }
             }
         }
     }
@@ -200,18 +205,19 @@ public class PlayerShip : MonoBehaviour
             }
             else
                 Shoot(shotSpawn);
-            
+
             ///설님꺼
             if (lastBombItem == (int)DataBoolean.TRUE)
             {
                 UseLastBombItem();
                 Debug.Log("UseLastBombItem");
             }
-        }
-        if (playerLife <= 0)
-        {
-            playerLife = 0;
-            GamePlayManager.Instance.NowGameState = GameState.Lose;
+
+            if (playerLife <= 0)
+            {
+                playerLife = 0;
+                GamePlayManager.Instance.NowGameState = GameState.Lose;
+            }
         }
         if(nowGameState == GameState.Win)
         {

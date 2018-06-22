@@ -14,7 +14,6 @@ public class InGameController : MonoBehaviour
     GameObject raptorShip;
     [SerializeField]
     GameObject blackHawkShip;
-
     //UI 부분//
     [SerializeField]
     GameObject gameWinResultPanel;
@@ -82,7 +81,8 @@ public class InGameController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.05f);
-        StartCoroutine(IncreaseHpBar());
+        if (bosshpBar.value != 1)
+            StartCoroutine(IncreaseHpBar());
     }
 
     IEnumerator WinResult()
@@ -115,10 +115,11 @@ public class InGameController : MonoBehaviour
         if (this.playerLife > 0)
         {
             Debug.Log("Observer Success  " + playerLife);
-            DisPlayPlayerLifeImage(playerLife);
+            DisPlayPlayerLifeImage(this.playerLife);
         }
         else
         {
+            playerLife = 0;
             DisPlayPlayerLifeImage(playerLife);
             gameLoseResultPanel.gameObject.SetActive(true);
             Debug.Log("UpdatePlayerLife");
@@ -153,17 +154,23 @@ public class InGameController : MonoBehaviour
     //남은 라이프 보여주기//
     void DisPlayPlayerLifeImage(int life)
     {
-        for (int i = 0; life < lifeImage.Length; i++)
-        {
-            if (lifeImage[i].gameObject.activeSelf == true)
-            {
-                lifeImage[i].gameObject.SetActive(false);
-                return;
-            }
-        }
+        //for (int i = 0; life < lifeImage.Length; i++)
+        //{
+        //    if (lifeImage[i].gameObject.activeSelf == true)
+        //    {
+        //        lifeImage[i].gameObject.SetActive(false);
+        //        return;
+        //    }
+        //}
+        int maxLifeImage = lifeImage.Length;
+        Debug.Log(lifeImage.Length);
+        if (life < lifeImage.Length)
+            lifeImage[life].gameObject.SetActive(false);
+
     }
     public void OnGoToNextStage()
     {
+        GamePlayManager.Instance.NowGameState = GameState.Ready;
         if (stageData == 1)
             SceneManager.LoadScene("Stage2");
         else if (stageData == 2)
@@ -173,10 +180,12 @@ public class InGameController : MonoBehaviour
     }
     public void OnBackToMain()
     {
+        GamePlayManager.Instance.NowGameState = GameState.Ready;
         SceneManager.LoadScene("Main");
     }
     public void OnGoToShop()
     {
+        GamePlayManager.Instance.NowGameState = GameState.Ready;
         SceneManager.LoadScene("Shop");
     }
 

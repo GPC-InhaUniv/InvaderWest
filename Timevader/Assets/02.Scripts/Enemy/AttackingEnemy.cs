@@ -16,6 +16,7 @@ public class AttackingEnemy : Enemy{
         hp = maxHp;
         //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
+        destroyAudio = enemy.destroyAudio;
         //factory = enemy.factory;
     }
 
