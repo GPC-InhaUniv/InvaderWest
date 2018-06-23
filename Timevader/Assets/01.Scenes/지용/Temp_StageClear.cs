@@ -14,6 +14,7 @@ public class Temp_StageClear : MonoBehaviour {
     float t = 0f;
     bool bossZoomComplete = false; // 임시로 사용
 
+    [SerializeField]
     GameState nowGameState;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
     float moveSpeed = 0f;
@@ -22,6 +23,7 @@ public class Temp_StageClear : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player");
         boss = GameObject.FindGameObjectWithTag("Boss");
+        StartCoroutine(checkGameState());
         //camPos = new Vector3(boss.transform.position.x, boss.transform.position.y, Camera.main.transform.position.z);
         //Debug.Log(camPos);
     }
@@ -30,11 +32,13 @@ public class Temp_StageClear : MonoBehaviour {
     {
         if (nowGameState == GameState.Ready)
         {
+            Debug.Log("줌인");
             camPos = new Vector3(boss.transform.position.x, boss.transform.position.y - 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
         else if(nowGameState == GameState.CameraEffect)
         {
+            Debug.Log("줌아웃");
             ZoomOutCamera();
         }
         else if (nowGameState == GameState.Win)
@@ -65,7 +69,6 @@ public class Temp_StageClear : MonoBehaviour {
 
             //GameState.Started;
             GamePlayManager.Instance.NowGameState = GameState.CameraEffect;
-            Debug.Log(bossZoomComplete);
         }
     }
 
@@ -81,8 +84,6 @@ public class Temp_StageClear : MonoBehaviour {
             //t = 0f;
         }
         GamePlayManager.Instance.NowGameState = GameState.Started;
-
-
     }
 
     public void MoveCamera() // Clear 시 카메라 회전 및 이동(플레이어가 이동하는 듯한 연출)
