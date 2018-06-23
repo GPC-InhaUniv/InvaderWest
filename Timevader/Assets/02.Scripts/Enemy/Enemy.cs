@@ -25,6 +25,7 @@ public enum InvaderType
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
+
     public GameObject[] Items;
     [SerializeField]
     public AudioSource destroyAudio;

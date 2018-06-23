@@ -109,7 +109,6 @@ public class PlayerShip : MonoBehaviour
         }
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
 
-
         //시간 빼앗기 시작//
         StartCoroutine("LoseTime");
     }
@@ -138,7 +137,6 @@ public class PlayerShip : MonoBehaviour
         hasDoubleMissile = true;
         Shoot(addedSpawn);
     }
-    //player합치기//
 
     void IncreasingShotSpeed()
     {
@@ -166,16 +164,6 @@ public class PlayerShip : MonoBehaviour
             shotAudioSource.Play();
         }
     }
-    //게임시작//
-    //void StartGame()
-    //{
-    //    GamePlayManager.Instance.NowGameState = GameState.Started;
-    //}
-    //void ShowCameraEffect()
-    //{
-    //    GamePlayManager.Instance.NowGameState = GameState.CameraEffect;
-    //    Invoke("StartGame", 1.5f);
-    //}
 
     void OnTriggerEnter(Collider other)
     {

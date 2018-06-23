@@ -21,7 +21,6 @@ public class Spawner : MonoBehaviour {
     void Start()
     {
         factory = FindObjectOfType<EnemyFactory>();
-        StartSpawn();
     }
 
     void StartSpawn()
