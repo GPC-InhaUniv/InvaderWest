@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour {
         factory = FindObjectOfType<EnemyFactory>();
     }
 
-    void StartSpawn()
+    public void StartSpawn()
     {
         switch (stageLevel)
         {
