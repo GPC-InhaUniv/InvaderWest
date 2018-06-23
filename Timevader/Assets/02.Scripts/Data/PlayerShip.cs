@@ -65,7 +65,8 @@ public class PlayerShip : MonoBehaviour
 
         StartCoroutine("checkGameState");
 
-        Invoke("GameStart", 2.0f);
+        Invoke("ShowCameraEffect", 2.0f);
+
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -166,10 +167,15 @@ public class PlayerShip : MonoBehaviour
         }
     }
     //게임시작//
-    void GameStart()
-    {
-        GamePlayManager.Instance.NowGameState = GameState.Started;
-    }
+    //void StartGame()
+    //{
+    //    GamePlayManager.Instance.NowGameState = GameState.Started;
+    //}
+    //void ShowCameraEffect()
+    //{
+    //    GamePlayManager.Instance.NowGameState = GameState.CameraEffect;
+    //    Invoke("StartGame", 1.5f);
+    //}
 
     void OnTriggerEnter(Collider other)
     {
