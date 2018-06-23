@@ -4,7 +4,9 @@ using UnityEngine;
 
 public enum GameState
 {
+    
     Ready,
+    CameraEffect,
     Started,
     Win,
     WinEvent,
