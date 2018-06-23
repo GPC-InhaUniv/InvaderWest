@@ -25,6 +25,7 @@ public enum InvaderType
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
+
     public GameObject[] Items;
     [SerializeField]
     public AudioSource destroyAudio;
@@ -101,7 +102,6 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //if(other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt")
         if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bolt"))
         {
             GetDemage(2); // other.power
@@ -110,7 +110,6 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        //if (other.gameObject.tag == "BackGround") ReturnToPool();
         if(other.gameObject.CompareTag("BackGround")) ReturnToPool();
     }
 

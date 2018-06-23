@@ -18,10 +18,18 @@ public class Mover : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(isPlayer)
-            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Boss") ReturnToPool();
+        if (isPlayer)
+        {
+            if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss")) ReturnToPool();
+        }
         else
-            if (other.gameObject.tag == "Player" || other.gameObject.tag == "Bolt") ReturnToPool();
+        {
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bolt"))
+            {
+                Debug.Log("hit");
+                ReturnToPool();
+            }
+        }
     }
 
     void OnTriggerExit(Collider other)
