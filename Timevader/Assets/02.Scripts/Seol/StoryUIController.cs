@@ -57,7 +57,7 @@ public class StoryUIController : MonoBehaviour {
         if(earthObj.activeInHierarchy == true)
         {
             ZoomEarth();
-        }    
+        }
     }
 
     void SkipStory()
