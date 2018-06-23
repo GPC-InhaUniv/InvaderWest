@@ -14,6 +14,12 @@ public class PlayerShip : MonoBehaviour
     NotifyObserver notifyLifeToObserver;
     NotifyObserver notifyRestTimeObserver;
 
+    public delegate void NotifyEnemy();
+    public static event NotifyEnemy OnUseItem;
+    //사용방법  
+
+    
+
     public GameObject AddMissileItem;
 
     public Boundary Boundary;
@@ -206,10 +212,12 @@ public class PlayerShip : MonoBehaviour
                 Shoot(shotSpawn);
 
             ///설님꺼
-            if (lastBombItem == (int)DataBoolean.TRUE)
+            //if (lastBombItem == (int)DataBoolean.TRUE && Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) 
             {
                 UseLastBombItem();
                 Debug.Log("UseLastBombItem");
+                
             }
 
             if (playerLife <= 0)
@@ -314,7 +322,8 @@ public class PlayerShip : MonoBehaviour
     }
     void UseLastBombItem()
     {
-        AccountInfo.ChangeLastBombItemData(0);
+        OnUseItem();
+        AccountInfo.ChangeLastBombItemData((int)DataBoolean.FALSE);
     }
     IEnumerator checkGameState()
     {
