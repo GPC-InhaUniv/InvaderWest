@@ -18,6 +18,8 @@ public class AttackingEnemy : Enemy{
         Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
         //factory = enemy.factory;
+        ItemDropProbability = enemy.ItemDropProbability; // 20%
+        WreckProbability = enemy.WreckProbability; // 50%
     }
 
     void FixedUpdate()

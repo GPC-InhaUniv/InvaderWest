@@ -30,11 +30,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     public AudioSource destroyAudio;
 
-    [SerializeField] [Range(0, 100)]
-    int ItemDropProbability; // 20%
+    [Range(0, 100)]
+    public int ItemDropProbability; // 20%
 
-    [SerializeField] [Range(0, 100)]
-    int WreckProbability; // 50%
+    [Range(0, 100)]
+    public int WreckProbability; // 50%
 
     [SerializeField]
     protected float moveSpeed, moveHeight, circleSpeed;

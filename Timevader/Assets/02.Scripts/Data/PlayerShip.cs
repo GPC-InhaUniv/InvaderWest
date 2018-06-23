@@ -65,7 +65,7 @@ public class PlayerShip : MonoBehaviour
 
         StartCoroutine("checkGameState");
 
-        Invoke("ShowCameraEffect", 2.0f);
+        //Invoke("ShowCameraEffect", 2.0f);
 
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
