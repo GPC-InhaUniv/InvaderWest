@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Temp_StageClear : MonoBehaviour {
     [SerializeField]
+    public delegate void NotifyObserver();
+    NotifyObserver notifyGameStart;
+    Spawner spawner;
+    
+    [SerializeField]
     GameObject camRotater, clearInfoPanel, player, boss;
 
     [SerializeField]
@@ -12,8 +17,9 @@ public class Temp_StageClear : MonoBehaviour {
 
     const float ZOONVALUE = 40.0f, INITVALUE = 60.0f;
     float t = 0f;
-    bool bossZoomComplete = false; // 임시로 사용
+    bool startSpawnCheck= false; // 임시로 사용
 
+    [SerializeField]
     GameState nowGameState;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
     float moveSpeed = 0f;
@@ -22,19 +28,25 @@ public class Temp_StageClear : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player");
         boss = GameObject.FindGameObjectWithTag("Boss");
+        spawner = GameObject.Find("EnemyFactory").GetComponent<Spawner>() ;
+        notifyGameStart = new NotifyObserver(spawner.StartSpawn);
+
+        StartCoroutine(checkGameState());
         //camPos = new Vector3(boss.transform.position.x, boss.transform.position.y, Camera.main.transform.position.z);
         //Debug.Log(camPos);
     }
 
     void FixedUpdate()
     {
-        if (nowGameState == GameState.Ready && !bossZoomComplete)
+        if (nowGameState == GameState.Ready)
         {
+            Debug.Log("줌인");
             camPos = new Vector3(boss.transform.position.x, boss.transform.position.y - 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
-        else if(nowGameState == GameState.Ready && bossZoomComplete)
+        else if(nowGameState == GameState.CameraEffect)
         {
+            Debug.Log("줌아웃");
             ZoomOutCamera();
         }
         else if (nowGameState == GameState.Win)
@@ -42,7 +54,7 @@ public class Temp_StageClear : MonoBehaviour {
             camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1, Camera.main.transform.position.z);
             ZoomCamera();
         }
-        else if (nowGameState == GameState.WinEvent) MoveCamera();
+        else if (nowGameState == GameState.WinCameraEffect) MoveCamera();
 
         //if ((gameState & GameStage2.BOSSAPPEAR) == GameStage2.GAMECLEAR);
         //else if ((gameState & GameStage2.GAMECLEAR) == GameStage2.GAMECLEAR) SetCamera();
@@ -64,8 +76,7 @@ public class Temp_StageClear : MonoBehaviour {
             //gameState = gameState & ~GameStage2.GAMECLEAR;
 
             //GameState.Started;
-            t = 0f;
-            bossZoomComplete = true;
+            GamePlayManager.Instance.NowGameState = (nowGameState == GameState.Ready) ? GameState.CameraEffect : GameState.WinCameraEffect;
         }
     }
 
@@ -78,8 +89,17 @@ public class Temp_StageClear : MonoBehaviour {
         {
             // 초기 카메라 위치로 리셋
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(0.0f, 0.0f, -10.0f), Time.deltaTime * 3.0f); // 기존 2.5
-            //t = 0f;
+            GamePlayManager.Instance.NowGameState = GameState.Started;
+            if (notifyGameStart != null && startSpawnCheck == false)
+            {
+                notifyGameStart();
+                startSpawnCheck = true;
+                Debug.Log(startSpawnCheck);
+            }
+
+            Debug.Log("123123");
         }
+
     }
 
     public void MoveCamera() // Clear 시 카메라 회전 및 이동(플레이어가 이동하는 듯한 연출)
@@ -94,6 +114,7 @@ public class Temp_StageClear : MonoBehaviour {
             //clearInfoPanel.SetActive(true);
             //gameState = gameState & ~GameStage2.CAMERAZOOM;
         }
+
     }
 
     //public void GameClear()

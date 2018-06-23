@@ -65,7 +65,8 @@ public class PlayerShip : MonoBehaviour
 
         StartCoroutine("checkGameState");
 
-        Invoke("GameStart", 2.0f);
+        //Invoke("ShowCameraEffect", 2.0f);
+
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -107,7 +108,11 @@ public class PlayerShip : MonoBehaviour
             notifyLifeToObserver(playerLife);
         }
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 73222f5e6630c422a86de21742c0b131cdce1771
         //시간 빼앗기 시작//
         StartCoroutine("LoseTime");
     }
@@ -136,7 +141,6 @@ public class PlayerShip : MonoBehaviour
         hasDoubleMissile = true;
         Shoot(addedSpawn);
     }
-    //player합치기//
 
     void IncreasingShotSpeed()
     {
@@ -163,11 +167,6 @@ public class PlayerShip : MonoBehaviour
             //샷 오디오 추가//
             shotAudioSource.Play();
         }
-    }
-    //게임시작//
-    void GameStart()
-    {
-        GamePlayManager.Instance.NowGameState = GameState.Started;
     }
 
     void OnTriggerEnter(Collider other)
