@@ -37,6 +37,7 @@ public class StoryUIController : MonoBehaviour {
     int year = 0;
     int pageNum = 0;
 
+    [SerializeField]
     int invaderHeight = 535;
 
     [SerializeField]
@@ -125,7 +126,6 @@ public class StoryUIController : MonoBehaviour {
 
     public void MoveInvader()
     {
-
         if (enemyship.transform.localPosition.y > invaderHeight)
         {
             enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
