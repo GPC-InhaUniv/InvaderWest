@@ -68,8 +68,7 @@ public class BossStatus : MonoBehaviour {
     {
         if(transform.position.y > 4.0f)
         {
-            transform.Translate(new Vector3(0, -0.05f, 0));
-
+            transform.Translate(new Vector3(0, -0.07f, 0));
         }
     }
 
