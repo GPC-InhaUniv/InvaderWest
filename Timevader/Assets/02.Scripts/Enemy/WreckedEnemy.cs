@@ -8,6 +8,7 @@ public class WreckedEnemy : Enemy{
     void Start()
     {
         hp = maxHp;
+        destroyAudio = enemy.destroyAudio;
         //WreckedShip = enemy.WreckedShip;
     }
 

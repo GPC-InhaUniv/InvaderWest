@@ -50,6 +50,8 @@ public class Enemy : MonoBehaviour
         radius = 5.0f; // Circle
         circleSpeed = 4.0f;
         enemy = GameObject.FindWithTag("Factory").GetComponent<Enemy>();
+        //Enemy전체 Explode
+        PlayerShip.OnUseItem += Explode; 
     }
 
     virtual protected void Move() { }
