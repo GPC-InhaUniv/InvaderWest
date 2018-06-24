@@ -93,13 +93,13 @@ public class InGameController : MonoBehaviour
         if (stageData <= 2)
         {
             AccountInfo.ChangeStageData(stageData + nextStageNum);
-            GamePlayManager.Instance.stageData = stageData + nextStageNum;
+            GamePlayManager.Instance.StageData = stageData + nextStageNum;
             Debug.Log(stageData + nextStageNum);
         }
         else
         {
             AccountInfo.ChangeStageData(nextStageNum);
-            GamePlayManager.Instance.stageData = nextStageNum;
+            GamePlayManager.Instance.StageData = nextStageNum;
 
             Debug.Log(nextStageNum);
         }
@@ -129,10 +129,7 @@ public class InGameController : MonoBehaviour
     //플레이어 남은 시간 업데이트//
     public void UpdatePlayerRestTime(int playerRestTime)
     {
-        //Debug.Log(playerRestTime);
-
         this.playerRestTime = playerRestTime;
-
         if (playerRestTime > 0)
         {
             this.playerRestTime = playerRestTime;
@@ -148,25 +145,15 @@ public class InGameController : MonoBehaviour
     void DisplayPlayerRestTime()
     {
         restTimeScoreText.text = playerRestTime.ToString();
-        //Debug.Log(playerRestTime);
     }
 
     //남은 라이프 보여주기//
     void DisPlayPlayerLifeImage(int life)
     {
-        //for (int i = 0; life < lifeImage.Length; i++)
-        //{
-        //    if (lifeImage[i].gameObject.activeSelf == true)
-        //    {
-        //        lifeImage[i].gameObject.SetActive(false);
-        //        return;
-        //    }
-        //}
         int maxLifeImage = lifeImage.Length;
         Debug.Log(lifeImage.Length);
         if (life < lifeImage.Length)
             lifeImage[life].gameObject.SetActive(false);
-
     }
     public void OnGoToNextStage()
     {

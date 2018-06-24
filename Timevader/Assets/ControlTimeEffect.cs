@@ -10,6 +10,8 @@ public class ControlTimeEffect : MonoBehaviour {
 
     GameObject targetObject;
 
+    GameState nowGameState;
+
     float moveSpeed, rotateSpeed;
 
     void Start()
@@ -25,7 +27,9 @@ public class ControlTimeEffect : MonoBehaviour {
 
     void FixedUpdate()
     {
-        MoveEffect();
+        nowGameState = GamePlayManager.Instance.NowGameState;
+        if (nowGameState == GameState.Started)
+            MoveEffect();
     }
 
     public void MoveEffect()

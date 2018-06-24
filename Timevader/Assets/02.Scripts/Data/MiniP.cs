@@ -53,7 +53,7 @@ public class MiniP : MonoBehaviour
         if (myTime > nextFire)
         {
             nextFire = myTime + fireDelta;
-            //GameObject shot = PoolController.instance.GetFromPool(PoolType.BoltPool);
+            GameObject shot = PoolController.instance.GetFromPool(PoolType.BoltPool);
             
 
             nextFire = nextFire - myTime;

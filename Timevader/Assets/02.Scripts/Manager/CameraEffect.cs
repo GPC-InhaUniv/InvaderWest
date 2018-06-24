@@ -36,7 +36,7 @@ public class CameraEffect : MonoBehaviour
         spawner = GameObject.Find("EnemyFactory").GetComponent<Spawner>();
         notifyGameStart = new NotifyObserver(spawner.StartSpawn);
 
-        StartCoroutine(checkGameState());
+        StartCoroutine(CheckGameState());
     }
 
     void FixedUpdate()
@@ -137,11 +137,11 @@ public class CameraEffect : MonoBehaviour
         }
     }
 
-    IEnumerator checkGameState()
+    IEnumerator CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
         Debug.Log(nowGameState);
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine("checkGameState");
+        StartCoroutine(CheckGameState());
     }
 }
