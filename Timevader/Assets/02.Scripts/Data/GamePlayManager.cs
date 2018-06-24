@@ -8,8 +8,8 @@ public enum GameState
     Ready,
     CameraEffect,
     Started,
-    WinCameraEffect,
     Win,
+    WinCameraEffect,
     Lose,
 }
 
