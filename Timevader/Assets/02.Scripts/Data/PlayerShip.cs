@@ -209,7 +209,6 @@ public class PlayerShip : MonoBehaviour
     {
         rigid.constraints = RigidbodyConstraints.FreezeAll;
         //게임종료시 모든 비행선 폭파//
-        OnUseItem();
         yield return new WaitForSeconds(0.2f);
 
         Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
