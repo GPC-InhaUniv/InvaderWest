@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NormalEnemy : Enemy {
     int maxHp = 1, hp;
@@ -12,10 +10,8 @@ public class NormalEnemy : Enemy {
     void Start()
     {
         hp = maxHp;
-        //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
-        //factory = enemy.factory;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
     }
 
@@ -105,7 +101,6 @@ public class NormalEnemy : Enemy {
         hp -= damage;
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
         explosion.transform.position = transform.position;
-        //explosion.SetActive(true);
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
     }

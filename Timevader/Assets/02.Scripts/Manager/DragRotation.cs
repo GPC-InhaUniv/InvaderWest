@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class DragRotation : MonoBehaviour {
 
@@ -24,8 +21,8 @@ public class DragRotation : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit) && hit.collider.tag == "TouchAble")
             {
-                //Debug.Log(hit.collider.tag);
                 //// 지구 회전
+                //Debug.Log(hit.collider.tag);
                 //Debug.Log("Raycast Hit");
                 TouchSlide();
             }
@@ -42,7 +39,7 @@ public class DragRotation : MonoBehaviour {
             float dragValue = Input.mousePosition.y - prevPoint.y;
             Vector3 rotatePower = new Vector3(0, 0, dragValue );
 
-            //Debug.Log("roat" + dragValue);
+            //Debug.Log("rota" + dragValue);
             Earth.transform.Rotate(rotatePower / 2 * RotateSpeed);
             Cloud.transform.Rotate(rotatePower / 2 * RotateSpeed / 2); // 느리게 회전
             for (int i = 0; i < Invaders.Length; i++)

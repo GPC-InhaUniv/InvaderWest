@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StageLoad : MonoBehaviour {
@@ -24,11 +22,4 @@ public class StageLoad : MonoBehaviour {
         }
         Debug.Log("접근할 수 없는 스테이지");
     }
-
-    
-
-    //public void SetStageNumber(int? num)
-    //{
-    //    StageNumber = num;
-    //}
 }

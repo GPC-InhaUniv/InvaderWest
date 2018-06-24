@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum Direction
 {
@@ -81,7 +79,6 @@ public class Enemy : MonoBehaviour
         GameObject item = PoolController.instance.GetFromPool(PoolType.ItemPool);
         item.transform.position = transform.position;
         item.transform.rotation = Quaternion.identity;
-        //Instantiate(Items[0], transform.position, Quaternion.identity);
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
@@ -103,7 +100,6 @@ public class Enemy : MonoBehaviour
     {
         // 오브젝트가 화면 밖으로 빠져나가면 false로 변경
         Init();
-        this.gameObject.SetActive(false);
     }
 
     virtual public void SetDirection(Direction dir) { }

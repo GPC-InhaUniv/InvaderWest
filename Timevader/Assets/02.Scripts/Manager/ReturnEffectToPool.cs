@@ -4,7 +4,7 @@ using UnityEngine;
 public class ReturnEffectToPool : MonoBehaviour {
 
     [SerializeField]
-    float DELAYTIME = 0.1f;
+    float DELAYTIME = 0.3f;
     [SerializeField]
     bool isHit;
 

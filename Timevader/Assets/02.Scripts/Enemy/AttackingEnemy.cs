@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     int attackRate = 11;
-    //float attackPower = 1.0f;
     int maxHp = 3, hp;
     float seta = 0;
     float t = 0;
@@ -14,10 +12,8 @@ public class AttackingEnemy : Enemy{
     void Start()
     {
         hp = maxHp;
-        //WreckedShip = enemy.WreckedShip;
         Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
-        //factory = enemy.factory;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
     }
 
@@ -35,7 +31,6 @@ public class AttackingEnemy : Enemy{
             GameObject shot = PoolController.instance.GetFromPool(PoolType.EnemyBoltPool);
             if (shot != null)
             {
-                //shot.SetActive(true);
                 shot.transform.position = transform.position;
             }
             yield return null;
@@ -87,7 +82,6 @@ public class AttackingEnemy : Enemy{
     override protected void MoveZigzag(bool sign)
     {
         if (seta > MAXSETA) seta %= MAXSETA;
-        //seta += setaRate;
         seta += Time.deltaTime * moveSpeed;
         if (sign) transform.Translate(new Vector3(Vector3.right.x * moveSpeed, Mathf.Sin(seta) * moveHeight, 0) * Time.deltaTime);
         else transform.Translate(new Vector3(Vector3.left.x * moveSpeed, Mathf.Sin(seta) * moveHeight, 0) * Time.deltaTime);
@@ -123,7 +117,6 @@ public class AttackingEnemy : Enemy{
         hp -= damage;
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
         explosion.transform.position = transform.position;
-        //explosion.SetActive(true);
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Explode();
     }
