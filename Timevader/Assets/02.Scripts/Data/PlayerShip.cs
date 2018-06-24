@@ -108,14 +108,10 @@ public class PlayerShip : MonoBehaviour
             notifyLifeToObserver(playerLife);
         }
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 73222f5e6630c422a86de21742c0b131cdce1771
         //시간 빼앗기 시작//
         StartCoroutine("LoseTime");
     }
+
     void FixedUpdate()
     {
         MovePlayer();
