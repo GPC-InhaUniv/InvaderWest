@@ -6,17 +6,14 @@ using UnityEngine.UI;
 
 public class DraggingObject : MonoBehaviour
 {
-    float middleValue = 100.0f;
-    float increaseValue = 1.0f;
-
-    [SerializeField]
-    GameObject arrow;
+    // 드래그하는 스크립트  
 
     Vector3 prevPoint;
 
-    float conditionMoving;
-
     float moveSpeed = 0.1f;
+
+    [SerializeField]
+    GameObject arrow;
 
     [SerializeField]
     Button StoryButton6;
@@ -38,7 +35,7 @@ public class DraggingObject : MonoBehaviour
     StoryUIController storyUIController;
 
     List<RaycastResult> arrowResults;
-    List<RaycastResult> playershipResults;    
+    List<RaycastResult> playershipResults;
 
     void Start()
     {
@@ -53,7 +50,8 @@ public class DraggingObject : MonoBehaviour
         StartCoroutine(HitArrow());
         StartCoroutine(HitPlayership());
     }
-    
+
+    // 화살표와의 충돌 검출
     IEnumerator HitArrow()
     {
         arrowPointerEventData.position = Input.mousePosition;
@@ -64,7 +62,7 @@ public class DraggingObject : MonoBehaviour
         {
             GameObject arrowObj = arrowResults[0].gameObject;
 
-            if (arrowObj.CompareTag("Arrow")) // 히트 된 오브젝트의 태그와 맞으면 실행 
+            if (arrowObj.CompareTag("Arrow")) // 히트된 오브젝트의 태그와 맞으면 실행 
             {
                 ClickorDrag();
             }
@@ -75,12 +73,13 @@ public class DraggingObject : MonoBehaviour
                 enemyShip.SetActive(true);
                 storyUIController.MoveInvader();
             }
-        }        
+        }
 
         yield return null;
         StartCoroutine(HitArrow());
     }
 
+    // 플레이어와의 충돌 검출
     IEnumerator HitPlayership()
     {
         playershipPointerEventData.position = Input.mousePosition;
@@ -106,6 +105,7 @@ public class DraggingObject : MonoBehaviour
         StartCoroutine(HitPlayership());
     }
 
+    // 드래그
     void ClickorDrag()
     {
         /*    PC 조작   */
@@ -130,7 +130,8 @@ public class DraggingObject : MonoBehaviour
         else
             return;
     }
-
+}
+    /*
     void ActionClickOrDarg()
     {
         if (Input.GetMouseButtonDown(0))
@@ -149,9 +150,9 @@ public class DraggingObject : MonoBehaviour
             }
         }
     }
+    */
 
-}
-    /*
+    /* 모바일 터치슬라이드
     public void TouchSlide()
     {
 

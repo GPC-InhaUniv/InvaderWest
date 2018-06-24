@@ -46,12 +46,13 @@ public class StoryUIController : MonoBehaviour {
     int checkYear;
     int restTime;
 
+    // 시작시 스토리 자동 스킵 여부 확인
     void Start()
     {
         restTime = int.Parse(AccountInfo.Instance.RestTime);
         SkipStory();
     }
-
+    
     void FixedUpdate()
     {
         if(earthObj.activeInHierarchy == true)
@@ -60,6 +61,7 @@ public class StoryUIController : MonoBehaviour {
         }
     }
 
+    // 스토리 스킵
     void SkipStory()
     {
         if (restTime == 0)
@@ -71,6 +73,7 @@ public class StoryUIController : MonoBehaviour {
         }   
     }
 
+    // 스토리 대화창 넘기기
     public void NextPage()
     {
         storyButtons[pageNum].SetActive(false);
@@ -78,12 +81,14 @@ public class StoryUIController : MonoBehaviour {
         storyButtons[pageNum].SetActive(true);
     }
 
+    // 난이도 버튼 클릭시
     public void OnDifficultyButtonClicked(int year)
     {        
         confirmDifficultyText.text = year.ToString() + "를 선택하셨습니다.";
         checkYear = year;
     }
 
+    // 난이도 선택 확인
     public void OnSelectOK()
     {        
         Debug.Log(year + "타임 저장값입니다.");
@@ -104,17 +109,20 @@ public class StoryUIController : MonoBehaviour {
 
     }
 
+    // 다음 씬으로 넘어감
     IEnumerator WaitNextScene()
     {
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Intro");
     }
 
-    void SelectCancel()
+    // 취소 버튼 클릭
+    public void OnSelectCancel()
     {
         confirmPanel.SetActive(false);
     }
 
+    // 지구가 커지게 함
     void ZoomEarth()
     {
         if (earthObj.transform.localScale.x < earthSize)
@@ -124,6 +132,7 @@ public class StoryUIController : MonoBehaviour {
         }
     }   
 
+    // 적 우주선 등장
     public void MoveInvader()
     {
         if (enemyship.transform.localPosition.y > invaderHeight)
