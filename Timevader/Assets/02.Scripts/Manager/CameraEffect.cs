@@ -23,10 +23,8 @@ public class CameraEffect : MonoBehaviour
     Vector3 defalutCamPos = new Vector3(0.0f, 0.0f, -10.0f);
 
     const float ZOONVALUE = 40.0f, INITVALUE = 60.0f;
-    float moveSpeed = 0f;
+    float moveSpeed = 0f, t = 0;
 
-    [SerializeField]
-    float t = 0f;
     bool startSpawnCheck = false; // 임시로 사용
 
     void Start()
