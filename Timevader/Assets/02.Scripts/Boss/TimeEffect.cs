@@ -19,7 +19,7 @@ public class TimeEffect : MonoBehaviour {
     void Start()
     {
         StartCoroutine("checkGameState");
-        spawnPositionVector = spawnPosition.transform.position; // 스폰위치에 생성
+        spawnPositionVector = spawnPosition.transform.position;
     }
 
     void Update()
@@ -43,9 +43,7 @@ public class TimeEffect : MonoBehaviour {
 
     public void HideEffect(GameObject obj)
     {
-        //Debug.Log("숨기기");
         PoolController.instance.ReturnToPool(PoolType.DrainPool, obj);
-        //EffectPool.ReturnToPool(obj); //en
     }
     IEnumerator checkGameState()
     {

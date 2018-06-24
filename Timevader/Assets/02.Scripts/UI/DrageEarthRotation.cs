@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DrageEarthRotation : MonoBehaviour {
@@ -20,9 +17,11 @@ public class DrageEarthRotation : MonoBehaviour {
     Vector3 prevPoint;
 
     [SerializeField]
+
     [Range(-0.5f,5f)]
     float rotateSpeed;
 
+    [SerializeField]
     float conditionRotation;
 
     [SerializeField]
@@ -41,7 +40,6 @@ public class DrageEarthRotation : MonoBehaviour {
 
     void Start()
     {
-        conditionRotation = 0.90f;
         uIFader = GetComponent<UIFader>();
     }
 
@@ -85,7 +83,6 @@ public class DrageEarthRotation : MonoBehaviour {
 
     void NextScene()
     {
-        Debug.Log(earth.transform.rotation.z);
         if(earth.transform.rotation.z < -conditionRotation || earth.transform.rotation.z > conditionRotation)
         {
             Debug.Log("다음 씬으로");
@@ -93,7 +90,7 @@ public class DrageEarthRotation : MonoBehaviour {
 
             if (mainCamera.fieldOfView < 170.0f)
             {
-                HideObject(); //씬이 넘어가기전 오브젝트 숨김
+                HideObject();
                 uIFader.CanvasFadeIn(fadePanel); 
 
                 StartCoroutine(WaitTimeForNextScene());
@@ -101,7 +98,7 @@ public class DrageEarthRotation : MonoBehaviour {
         }
     }
 
-    void HideObject() //오브젝트 숨김
+    void HideObject()
     {
         for (int i = 0; i < otherObject.Length-1; i++)
         {

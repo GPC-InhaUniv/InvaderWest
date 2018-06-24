@@ -86,7 +86,7 @@ public class ShipChoiceController : MonoBehaviour {
     void SetGamePlayManagerData() 
     {
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
-        blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); //개선할 것
+        blackHawk = int.Parse(AccountInfo.Instance.BlackHawk); 
         raptor = int.Parse(AccountInfo.Instance.Raptor);
         myFuel = int.Parse(AccountInfo.Instance.Fuel);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
@@ -177,7 +177,7 @@ public class ShipChoiceController : MonoBehaviour {
 
     public void ShipSelectButtonClick(int click) //
     {
-        // click = -1 이면 왼쪽 버튼이 눌린 것, click = +1 이면 오른쪽 버튼이 눌린 것으로 판단한다.
+        // click = -1 왼쪽 버튼, click = +1 오른쪽 버튼 판단
         int next = playerSelectSpaceShipNumber + click;
 
         if (next < 1) //  선택값이 1보다는 커야함

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LeftRightMover : MonoBehaviour {
@@ -37,7 +36,7 @@ public class LeftRightMover : MonoBehaviour {
         {
             moveVlaue = 1;
         }
-        transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime); //지용님 수정사항 반영
+        transform.Translate(Vector3.left * moveVlaue * moveSpeed * Time.deltaTime);
     }
 
     IEnumerator checkGameState()

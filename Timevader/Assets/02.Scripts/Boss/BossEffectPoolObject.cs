@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BossEffectPoolObject : MonoBehaviour {
@@ -29,7 +28,7 @@ public class BossEffectPoolObject : MonoBehaviour {
         {
             GameObject Effectobj = Instantiate(PoolObjEffect);
 
-            Effectobj.transform.parent = SpawnObj.transform; //BossObj 밑으로 생성
+            Effectobj.transform.parent = SpawnObj.transform;
 
             Effectobj.SetActive(false);
 

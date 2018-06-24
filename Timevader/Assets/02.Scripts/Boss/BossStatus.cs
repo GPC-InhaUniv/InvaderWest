@@ -1,22 +1,19 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BossStatus : MonoBehaviour {
-    //윤우//
     delegate void NotifyObserver(float bossLife, float maxBossLife);
 
     NotifyObserver notifyLifeToObserver;
+    
     public InGameController InGameController;
-
-    [SerializeField]
-    GameState nowGameState;
-    //윤우//
 
     public float BossHp;
 
-    public float MaxHp; //정해야함
+    public float MaxHp;
+
+    [SerializeField]
+    GameState nowGameState;
 
     [SerializeField]
     int decreaseHp, ScoreValue;
@@ -56,11 +53,6 @@ public class BossStatus : MonoBehaviour {
         if(nowGameState == GameState.Ready)
         {
             AppearBoss();
-        }
-
-        if (nowGameState == GameState.Started)
-        {
-            //leftRightMover.LeftRightMove(); LeftRightMover로 이동
         }
     }
 

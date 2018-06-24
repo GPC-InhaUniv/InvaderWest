@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TextEffect : MonoBehaviour {
     [SerializeField]
-    private GameObject TipText;
+    GameObject TipText;
     [SerializeField]
-    private float waitSecond = 0.5f;
+    float waitSecond = 0.5f;
     [SerializeField]
-    private int CountMaxValue = 5;
+    int countMaxValue = 5;
 
 
     void Start () {
@@ -19,7 +19,7 @@ public class TextEffect : MonoBehaviour {
     IEnumerator ShowReady()
     {
         int count = 0;
-        while (count < CountMaxValue)
+        while (count < countMaxValue)
         {
             TipText.SetActive(true);
             yield return new WaitForSeconds(waitSecond);

@@ -7,46 +7,47 @@ public class LogoController : MonoBehaviour {
     UIFader uIFader;
 
     [SerializeField]
-    private CanvasGroup[] UIElement;
+    CanvasGroup[] uIElement;
 
     [SerializeField]
-    private float waitSecond = 2.0f;
+    float waitSecond = 2.0f;
     [SerializeField]
-    private float fadeSecond = 1.5f;
+    float fadeSecond = 1.5f;
 
     [SerializeField]
-    private GameObject roginSet;
+    GameObject roginSet;
 
     float timeStartedLerping;
     float timeSinceStarted;
     float percenttageComplete;
 
 
-    void Start () {
+    void Start ()
+    {
         uIFader = GetComponent<UIFader>();
         StartCoroutine(Showlogo());
-
     }
 
     IEnumerator Showlogo()
     {
-        uIFader.CanvasFadeOut(UIElement[0]);
+        uIFader.CanvasFadeOut(uIElement[0]);
         yield return new WaitForSeconds(fadeSecond);
 
-        uIFader.CanvasFadeIn(UIElement[1]);
+        uIFader.CanvasFadeIn(uIElement[1]);
         yield return new WaitForSeconds(waitSecond);
-        uIFader.CanvasFadeOut(UIElement[1]);
+        uIFader.CanvasFadeOut(uIElement[1]);
         yield return new WaitForSeconds(waitSecond);
-        uIFader.CanvasFadeIn(UIElement[2]);
+
+        uIFader.CanvasFadeIn(uIElement[2]);
         yield return new WaitForSeconds(waitSecond);
-        uIFader.CanvasFadeOut(UIElement[2]);
+        uIFader.CanvasFadeOut(uIElement[2]);
 
         yield return new WaitForSeconds(fadeSecond);
-        uIFader.CanvasFadeIn(UIElement[0]);
+        uIFader.CanvasFadeIn(uIElement[0]);
         yield return new WaitForSeconds(fadeSecond);
-        uIFader.CanvasFadeOut(UIElement[0]);
+        uIFader.CanvasFadeOut(uIElement[0]);
 
-        uIFader.CanvasFadeIn(UIElement[3]);
+        uIFader.CanvasFadeIn(uIElement[3]);
         roginSet.SetActive(true);
     }
 
