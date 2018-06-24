@@ -4,17 +4,17 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour {
     [SerializeField]
-    Text FuelScoreText;
+    Text fuelScoreText;
     [SerializeField]
-    Text RestTimeText;
+    Text restTimeText;
     [SerializeField]
-    Text WelcomeText;
+    Text welcomeText;
     
     [SerializeField]
-    GameObject[] SpaceShips;
+    GameObject[] spaceShips;
 
     int playerSelectSpaceShipNumber;
-    string UserNickname;
+    string userNickname;
 
     [SerializeField]
     string myFuel;
@@ -26,7 +26,7 @@ public class MainController : MonoBehaviour {
     {
         //수정중//
         playerSelectSpaceShipNumber = GamePlayManager.Instance.PlayerShipNum;
-        UserNickname = GamePlayManager.Instance.PlayerName;
+        userNickname = GamePlayManager.Instance.PlayerName;
 
         stageData = int.Parse(AccountInfo.Instance.StageData);
         Debug.Log(stageData);
@@ -42,16 +42,16 @@ public class MainController : MonoBehaviour {
 
     void DisplayText()
     {
-        FuelScoreText.text = myFuel;
-        RestTimeText.text = restTime.ToString();
-        WelcomeText.text = UserNickname + "님 환영합니다.";
+        fuelScoreText.text = myFuel;
+        restTimeText.text = restTime.ToString();
+        welcomeText.text = userNickname + "님 환영합니다.";
     }
 
     void HideSpaceShips()
     {
-        for(int i = 0; i < SpaceShips.Length; i++)
+        for(int i = 0; i < spaceShips.Length; i++)
         {
-            SpaceShips[i].SetActive(false);
+            spaceShips[i].SetActive(false);
         }
     }
 
@@ -59,9 +59,9 @@ public class MainController : MonoBehaviour {
     {
         switch (playerSelectSpaceShipNumber)
         {
-            case 1: SpaceShips[0].SetActive(true); break;
-            case 2: SpaceShips[1].SetActive(true); break;
-            case 3: SpaceShips[2].SetActive(true); break;
+            case 1: spaceShips[0].SetActive(true); break;
+            case 2: spaceShips[1].SetActive(true); break;
+            case 3: spaceShips[2].SetActive(true); break;
             default: break;
         }
     }
