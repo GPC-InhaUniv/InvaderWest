@@ -33,9 +33,6 @@ public class Enemy : MonoBehaviour
     [Range(0, 100)]
     public int ItemDropProbability; // 20%
 
-    [Range(0, 100)]
-    public int WreckProbability; // 50%
-
     [SerializeField]
     protected float moveSpeed, moveHeight, circleSpeed;
     protected float radius;
@@ -73,9 +70,6 @@ public class Enemy : MonoBehaviour
             explosion.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); // 이펙트 크기를 2배로
         }
 
-        if (Random.Range(1, 100) <= WreckProbability)
-            Wrecked();
-
         if (Random.Range(1, 100) <= ItemDropProbability)
             DropItem(ItemList.AddMissileItem);
         ReturnToPool();
@@ -91,14 +85,6 @@ public class Enemy : MonoBehaviour
     }
     /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
      * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
-
-    void Wrecked() 
-    {
-        Debug.Log("WRECKED");
-        GameObject wreckedShip = PoolController.instance.GetFromPool(PoolType.WreckedPool);
-        wreckedShip.transform.position = transform.position;
-        //Instantiate(WreckedShip, transform.position, Quaternion.identity);
-    }
 
     void OnTriggerEnter(Collider other)
     {

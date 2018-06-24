@@ -8,20 +8,20 @@ public enum PoolType
     AttackingPool,
     BoltPool,
     EnemyBoltPool,
-    WreckedPool,
     ItemPool,
+    HitEffectPool,
     ExplosionPool,
     DrainPool,
 }
 
 public class PoolController : MonoBehaviour {
-    Queue<GameObject> normalPool, attackingPool, boltPool, enemyBoltPool, wreckedPool, itemPool, explosionPool, drainPool;
+    Queue<GameObject> normalPool, attackingPool, boltPool, enemyBoltPool, itemPool, hitEffectPool, explosionPool, drainPool;
 
     [SerializeField]
-    int normalPoolSize, attackingPoolSize, boltPoolSize, enemyBoltPoolSize, wreckedPoolSize, itemPoolSize, explosionPoolSize, drainPoolSize;
+    int normalPoolSize, attackingPoolSize, boltPoolSize, enemyBoltPoolSize, itemPoolSize, hitEffectPoolSize, explosionPoolSize, drainPoolSize;
 
     [SerializeField]
-    GameObject normalPrefab, attackingPrefab, boltPrefab, enemyBoltPrefab, wreckedPrefab, itemPrefab, explosionPrefab, drainPrefab;
+    GameObject normalPrefab, attackingPrefab, boltPrefab, enemyBoltPrefab, itemPrefab, hitEffectPrefab, explosionPrefab, drainPrefab;
 
     public static PoolController instance = null;
 
@@ -42,8 +42,8 @@ public class PoolController : MonoBehaviour {
         CreatePool(ref attackingPool, attackingPoolSize, attackingPrefab);
         CreatePool(ref boltPool, boltPoolSize, boltPrefab);
         CreatePool(ref enemyBoltPool, enemyBoltPoolSize, enemyBoltPrefab);
-        CreatePool(ref wreckedPool, wreckedPoolSize, wreckedPrefab);
         CreatePool(ref itemPool, itemPoolSize, itemPrefab);
+        CreatePool(ref hitEffectPool, hitEffectPoolSize, hitEffectPrefab);
         CreatePool(ref explosionPool, explosionPoolSize, explosionPrefab);
         CreatePool(ref drainPool, drainPoolSize, drainPrefab);
     }
@@ -92,10 +92,10 @@ public class PoolController : MonoBehaviour {
                 return boltPool;
             case PoolType.EnemyBoltPool:
                 return enemyBoltPool;
-            case PoolType.WreckedPool:
-                return wreckedPool;
             case PoolType.ItemPool:
                 return itemPool;
+            case PoolType.HitEffectPool:
+                return hitEffectPool;
             case PoolType.ExplosionPool:
                 return explosionPool;
             case PoolType.DrainPool:

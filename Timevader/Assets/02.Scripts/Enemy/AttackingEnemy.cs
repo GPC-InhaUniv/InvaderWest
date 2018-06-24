@@ -19,7 +19,6 @@ public class AttackingEnemy : Enemy{
         destroyAudio = enemy.destroyAudio;
         //factory = enemy.factory;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
-        WreckProbability = enemy.WreckProbability; // 50%
     }
 
     void FixedUpdate()
@@ -122,7 +121,7 @@ public class AttackingEnemy : Enemy{
     override protected void GetDemage(int damage)
     {
         hp -= damage;
-        GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+        GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
         explosion.transform.position = transform.position;
         //explosion.SetActive(true);
         //Debug.Log(gameObject.name + "Damage " + damage);

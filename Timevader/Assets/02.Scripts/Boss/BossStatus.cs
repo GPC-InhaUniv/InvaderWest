@@ -73,7 +73,7 @@ public class BossStatus : MonoBehaviour {
         }
         else if (other.tag == "Bolt")
         {
-            GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+            GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
             if(explosion != null) explosion.transform.position = transform.position;
             //explosion.SetActive(true);
             BossHp -= 1;
