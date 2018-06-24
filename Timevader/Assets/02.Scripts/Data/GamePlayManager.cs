@@ -36,11 +36,11 @@ public class GamePlayManager : MonoBehaviour {
         set { playerName = value; }
     }
     [SerializeField]
-    int StageData;
-    public int stageData
+    int stageData;
+    public int StageData
     {
-        get { return StageData; }
-        set { StageData = value; }
+        get { return stageData; }
+        set { stageData = value; }
     }
     [SerializeField]
     GameState nowGameState;
