@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossStatus : MonoBehaviour {
     delegate void NotifyObserver(float bossLife, float maxBossLife);
@@ -15,33 +14,20 @@ public class BossStatus : MonoBehaviour {
     float bossMoveDownSpeed;
     [SerializeField]
     GameState nowGameState;
-    [SerializeField]
-    int decreaseHp, ScoreValue;
-    [SerializeField]
-    bool isdead;
+
     [SerializeField]
     GameObject explosion;
 
-    int moveVlaue = 1;
-
     float leftLimitX, rightLimitX;
 
-    LeftRightMover leftRightMover;
 
     void Start()
     {
-
-        leftRightMover = GetComponent<LeftRightMover>();
-
         BossHp = MaxHp;
-        ScoreValue = 10;
-
-        isdead = false;
 
         //게임컨트롤러에게 알리기 보스가 맞았다고//
         notifyLifeToObserver = new NotifyObserver(InGameController.UpdateBossLife);
         GamePlayManager.OnChangeGamestate += CheckGameState;
-
     }
 
     void FixedUpdate()
@@ -86,7 +72,6 @@ public class BossStatus : MonoBehaviour {
                 //explosion.SetActive(true);
                 GamePlayManager.Instance.ChangeGameState();
                 Destroy(gameObject);
-                isdead = true;
             }
         }
     }

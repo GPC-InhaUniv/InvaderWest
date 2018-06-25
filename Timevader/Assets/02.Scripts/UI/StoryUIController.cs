@@ -44,14 +44,8 @@ public class StoryUIController : MonoBehaviour {
     float enemySpeed = 0.15f;
 
     int checkYear;
-    int restTime;
 
     // 시작시 스토리 자동 스킵 여부 확인
-    void Start()
-    {
-        //restTime = int.Parse(AccountInfo.Instance.RestTime);
-        //SkipStory();
-    }
     
     void FixedUpdate()
     {
@@ -59,18 +53,6 @@ public class StoryUIController : MonoBehaviour {
         {
             ZoomEarth();
         }
-    }
-
-    // 스토리 스킵
-    void SkipStory()
-    {
-        if (restTime == 0)
-            return;
-
-        if(restTime > 0)
-        {            
-            SceneManager.LoadScene("Main");
-        }   
     }
 
     // 스토리 대화창 넘기기

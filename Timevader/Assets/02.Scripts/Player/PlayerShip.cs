@@ -204,7 +204,7 @@ public class PlayerShip : MonoBehaviour
         playershipAnimation.SetTrigger("Hit");
         yield return new WaitForSeconds(2.0f);
         playershipAnimation.SetBool("Done", true);
-        playershipAnimation.SetTrigger("Normal");
+        //playershipAnimation.SetTrigger("Normal");
 
         yield return new WaitForSeconds(0.5f);
         playershipAnimation.SetBool("Done", false);
@@ -214,7 +214,7 @@ public class PlayerShip : MonoBehaviour
         playershipAnimation.SetTrigger("Barrier");
         yield return new WaitForSeconds(3.0f);
         playershipAnimation.SetBool("Done", true);
-        playershipAnimation.SetTrigger("Normal");
+        //playershipAnimation.SetTrigger("Normal");
 
         yield return new WaitForSeconds(0.5f);
         playershipAnimation.SetBool("Done", false);
@@ -321,27 +321,6 @@ public class PlayerShip : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * speed);
             }
 
-            //if (Input.GetMouseButton(0))
-            //{
-            //    currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-            //    movement = currentPosition - prevPosition;
-            //    Debug.Log("movement : " + movement);
-            //    if (DistanceCompare(movement))
-            //    {
-            //        movement = movement.normalized;
-            //        transform.Translate(new Vector3(movement.x, 0.0f, movement.y) * Time.deltaTime * speed);
-            //    }
-            //    prevPosition = currentPosition;
-            //}
-
-            //if (Input.GetMouseButton(0))
-            //{
-            //    currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-            //    movement = currentPosition - prevPosition;
-            //    transform.position = Vector3.Lerp(transform.position, transform.position + movement, Time.deltaTime * speed);
-            //    prevPosition = currentPosition;
-            //}
-
             transform.position = new Vector3
             (
                 Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
@@ -350,14 +329,6 @@ public class PlayerShip : MonoBehaviour
             );
         }
     }
-    //[SerializeField]
-    //float gap = 1.0f;
-    //bool DistanceCompare(Vector3 movement)
-    //{
-    //    float distance = movement.x * movement.x + movement.y * movement.y;
-    //    if (distance >= gap) return true;
-    //    else return false;
-    //}
 
     IEnumerator LoseTime()
     {

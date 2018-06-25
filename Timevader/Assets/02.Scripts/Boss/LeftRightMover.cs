@@ -8,7 +8,7 @@ public class LeftRightMover : MonoBehaviour {
     float moveSpeed;
 
     [SerializeField]
-    float leftLimitX, rightLimitX;
+    float leftLimitX = 0, rightLimitX = 0;
 
     [SerializeField]
     GameState nowGameState;
