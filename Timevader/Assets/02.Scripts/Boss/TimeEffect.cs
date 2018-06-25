@@ -20,7 +20,7 @@ public class TimeEffect : MonoBehaviour {
     {
         spawnPositionVector = spawnPosition.transform.position;
 
-        CameraEffect.OnChangeGamestate += CheckGameState;
+        GamePlayManager.OnChangeGamestate += CheckGameState;
     }
 
     void Update()

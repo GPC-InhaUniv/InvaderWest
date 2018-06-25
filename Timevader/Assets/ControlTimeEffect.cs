@@ -24,7 +24,7 @@ public class ControlTimeEffect : MonoBehaviour {
         moveSpeed = Random.Range(1f, 5f);
         rotateSpeed = Random.Range(0.01f, 0.2f);
         nowGameState = GamePlayManager.Instance.NowGameState;
-        CameraEffect.OnChangeGamestate += CheckGameState;
+        GamePlayManager.OnChangeGamestate += CheckGameState;
     }
 
     void FixedUpdate()

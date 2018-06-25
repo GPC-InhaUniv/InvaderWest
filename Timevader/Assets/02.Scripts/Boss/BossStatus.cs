@@ -38,7 +38,7 @@ public class BossStatus : MonoBehaviour {
 
         //게임컨트롤러에게 알리기 보스가 맞았다고//
         notifyLifeToObserver = new NotifyObserver(InGameController.UpdateBossLife);
-        CameraEffect.OnChangeGamestate += CheckGameState;
+        GamePlayManager.OnChangeGamestate += CheckGameState;
 
     }
 
@@ -82,7 +82,7 @@ public class BossStatus : MonoBehaviour {
                 //explosion.GetComponent<Particle>()
                 explosion.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f); // 이펙트 크기를 4배로
                 //explosion.SetActive(true);
-                GamePlayManager.Instance.NowGameState = GameState.Win;
+                GamePlayManager.Instance.ChangeGameState();
                 Destroy(gameObject);
                 isdead = true;
             }

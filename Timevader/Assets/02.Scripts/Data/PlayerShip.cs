@@ -61,11 +61,8 @@ public class PlayerShip : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-<<<<<<< HEAD
-=======
+
         animation = GetComponent<Animation>();
-        StartCoroutine(CheckGameState());
->>>>>>> d6f3748b0cb17578560a13a4334277fc7148318a
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -75,7 +72,7 @@ public class PlayerShip : MonoBehaviour
         playerRestTime = int.Parse(AccountInfo.Instance.RestTime);
 
         if (GamePlayManager.Instance.PlayerShipNum == 1)
-            playerLife = 3;
+            playerLife = 150;
         else if (GamePlayManager.Instance.PlayerShipNum == 2)
             playerLife = 3;
         else if (GamePlayManager.Instance.PlayerShipNum == 3)
@@ -97,8 +94,8 @@ public class PlayerShip : MonoBehaviour
             notifyLifeToObserver(playerLife);
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
 
-        CameraEffect.OnChangeGamestate += CheckGameState;
-        StartCoroutine("LoseTime");
+        GamePlayManager.OnChangeGamestate += CheckGameState;
+        StartCoroutine(LoseTime());
     }
 
     void FixedUpdate()
@@ -231,20 +228,21 @@ public class PlayerShip : MonoBehaviour
             if (playerLife <= 0)
             {
                 playerLife = 0;
-                GamePlayManager.Instance.NowGameState = GameState.Lose;
+                GamePlayManager.Instance.ChangeGameStateLose();
             }
         }
         if(nowGameState == GameState.Win)
         {
-            StartCoroutine("isGameOver");
+            StartCoroutine(IsGameOver());
         }
 
     }
     //게임오버 -> 플레이어 위치 원점으로//
-    IEnumerator isGameOver()
+    IEnumerator IsGameOver()
     {
         rigid.constraints = RigidbodyConstraints.FreezeAll;
         //게임종료시 모든 비행선 폭파//
+
         yield return new WaitForSeconds(0.2f);
 
         Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
@@ -310,7 +308,7 @@ public class PlayerShip : MonoBehaviour
                 notifyRestTimeObserver(playerRestTime);
         }
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine("LoseTime");
+        StartCoroutine(LoseTime());
 
     }
     

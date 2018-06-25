@@ -15,6 +15,8 @@ public enum GameState
 
 public class GamePlayManager : MonoBehaviour {
 
+    public delegate void NotifyGameState();
+    public static event NotifyGameState OnChangeGamestate;
 
     static GamePlayManager instance;
     public static GamePlayManager Instance
@@ -68,5 +70,11 @@ public class GamePlayManager : MonoBehaviour {
     public void ChangeGameState()
     {
         NowGameState += 1;
+        OnChangeGamestate();
+    }
+    public void ChangeGameStateLose()
+    {
+        NowGameState = GameState.Lose;
+        OnChangeGamestate();
     }
 }
