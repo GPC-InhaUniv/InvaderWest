@@ -6,8 +6,7 @@ public class NormalEnemy : Enemy {
     [SerializeField]
     int maxHp = 1;
     int hp;
-    float seta = 0;
-    float t = 0;
+    float seta = 0, t = 0;
     Direction moveDirection;
     public Direction MoveDirection { set { moveDirection = value; } }
 
