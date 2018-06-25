@@ -15,7 +15,6 @@ public enum Direction
 public enum InvaderType
 {
     Normal,
-    Wrecked,
     Attacking,
 }
 
@@ -23,9 +22,7 @@ public enum InvaderType
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-
     public GameObject[] Items;
-    [SerializeField]
     public AudioSource destroyAudio;
 
     [Range(0, 100)]
@@ -55,7 +52,7 @@ public class Enemy : MonoBehaviour
     virtual protected void MoveZigzag(bool sign) { }
     virtual protected void MoveCurve(bool sign) { }
     virtual protected void Init() { }
-    virtual protected void GetDemage(int damage) { }
+    virtual protected void GetDemage() { }
 
     protected void Explode()
     {
@@ -63,10 +60,7 @@ public class Enemy : MonoBehaviour
         destroyAudio.Play();
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
         if (explosion != null)
-        {
             explosion.transform.position = transform.position;
-            explosion.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); // 이펙트 크기를 2배로
-        }
 
         if (Random.Range(1, 100) <= ItemDropProbability)
             DropItem(ItemList.AddMissileItem);
@@ -87,7 +81,7 @@ public class Enemy : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bolt"))
         {
-            GetDemage(2); // other.power
+            GetDemage(); // other.power
         }
     }
 

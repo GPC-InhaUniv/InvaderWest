@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class Boundary1
+public class Boundary
 {
     public float xMin, xMax, yMin, yMax;
 }
@@ -43,22 +43,29 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     GameState nowGameState;
     [SerializeField]
-    AudioSource shotAudioSource;
+    AudioSource shotAudioSource, destroyAudio;
     [SerializeField]
     InGameController inGameController;
 
 
-
-    public float fireDelta = 0.2f;
+    [SerializeField]
+    float fireDelta = 0.2f;
 
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement, prevPosition, currentPosition;
     bool hasDoubleMissile = false;
 
+    Animation animation;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+<<<<<<< HEAD
+=======
+        animation = GetComponent<Animation>();
+        StartCoroutine(CheckGameState());
+>>>>>>> d6f3748b0cb17578560a13a4334277fc7148318a
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -153,19 +160,55 @@ public class PlayerShip : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                if (assistant == true)
-                    assistant = false;
-                else
-                {
-                    playerLife = playerLife - 1;
-                    if (AddMissileItem.activeSelf == true)
-                        AddMissileItem.gameObject.SetActive(false);
-                    if (notifyLifeToObserver != null && playerLife >= 0)
-                        notifyLifeToObserver(playerLife);
-                }
+                if (assistant == true) assistant = false;
+                else GetDemage();
             }
         }
     }
+
+    IEnumerator AttackedEffect()
+    {
+        animation.Play("ShipHitEffect");
+        yield return new WaitForSeconds(1.0f);
+        animation.Stop();
+        yield return new WaitForSeconds(1.0f);
+        animation.Play("ShipHitEffect");
+        yield return new WaitForSeconds(1.0f);
+        animation.Stop();
+    }
+
+    /* 지용 */
+    void GetDemage()
+    {
+        playerLife = playerLife - 1;
+
+        if (AddMissileItem.activeSelf == true)
+            AddMissileItem.gameObject.SetActive(false);
+
+        if (notifyLifeToObserver != null && playerLife >= 0)
+            notifyLifeToObserver(playerLife);
+
+        if (playerLife > 0)
+        {
+            //GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
+            //if (explosion != null) explosion.transform.position = transform.position;     
+            StartCoroutine(AttackedEffect());
+        }
+        else Explode();
+    }
+    /* 지용 */
+    void Explode()
+    {
+        //Explode될때 소리 추가//
+        GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+        if (explosion != null)
+        {
+            //destroyAudio.Play();
+            explosion.transform.position = transform.position;
+            Destroy(gameObject);
+        }
+    }
+
     void Update()
     {
         if (nowGameState == GameState.Started)
@@ -174,7 +217,6 @@ public class PlayerShip : MonoBehaviour
             {
                 Shoot(shotSpawn);
                 Shoot(addedSpawn);
-
             }
             else
                 Shoot(shotSpawn);
@@ -183,8 +225,7 @@ public class PlayerShip : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F)) 
             {
                 UseLastBombItem();
-                Debug.Log("UseLastBombItem");
-                
+                Debug.Log("UseLastBombItem");  
             }
 
             if (playerLife <= 0)
@@ -210,7 +251,6 @@ public class PlayerShip : MonoBehaviour
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPosition, 0.1f);
         //rigid.constraints = RigidbodyConstraints.None;
     }
-
 
     /* 지용 */
     void MovePlayer()

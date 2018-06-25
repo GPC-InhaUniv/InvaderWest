@@ -8,7 +8,7 @@ public enum ItemList
 }
 
 public class Item : MonoBehaviour {
-    protected Player player;
+    protected PlayerShip playerShip;
     public ItemList kind;
 
     float moveSpeed = 1.0f;
@@ -17,9 +17,8 @@ public class Item : MonoBehaviour {
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
     }
-
 
     void FixedUpdate()
     {
@@ -35,10 +34,16 @@ public class Item : MonoBehaviour {
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("BackGround"))
+            PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
+    }
+
     void UseItem()
     {
         Debug.Log("아이템 효과 적용");
-        player.GetItem(kind);
-        Destroy(gameObject);
+        playerShip.GetItem(kind);
+        PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
     }
 }

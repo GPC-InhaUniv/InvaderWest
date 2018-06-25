@@ -16,7 +16,18 @@ public class Spawner : MonoBehaviour {
 
     [SerializeField]
     float SPAWNDELAY = 0.3f, WAVEDELAY = 0.5f;
-    
+
+    public static Spawner instance = null;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         factory = FindObjectOfType<EnemyFactory>();
