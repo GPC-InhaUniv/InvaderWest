@@ -48,17 +48,20 @@ public class PlayerShip : MonoBehaviour
     InGameController inGameController;
 
 
-
-    public float fireDelta = 0.2f;
+    [SerializeField]
+    float fireDelta = 0.2f;
 
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement, prevPosition, currentPosition;
     bool hasDoubleMissile = false;
 
+    Animation animation;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        animation = GetComponent<Animation>();
         StartCoroutine(CheckGameState());
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
@@ -159,6 +162,18 @@ public class PlayerShip : MonoBehaviour
             }
         }
     }
+
+    IEnumerator AttackedEffect()
+    {
+        animation.Play("ShipHitEffect");
+        yield return new WaitForSeconds(1.0f);
+        animation.Stop();
+        yield return new WaitForSeconds(1.0f);
+        animation.Play("ShipHitEffect");
+        yield return new WaitForSeconds(1.0f);
+        animation.Stop();
+    }
+
     /* 지용 */
     void GetDemage()
     {
@@ -172,8 +187,9 @@ public class PlayerShip : MonoBehaviour
 
         if (playerLife > 0)
         {
-            GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
-            if (explosion != null) explosion.transform.position = transform.position;
+            //GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
+            //if (explosion != null) explosion.transform.position = transform.position;     
+            StartCoroutine(AttackedEffect());
         }
         else Explode();
     }
@@ -184,7 +200,7 @@ public class PlayerShip : MonoBehaviour
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
         if (explosion != null)
         {
-            destroyAudio.Play();
+            //destroyAudio.Play();
             explosion.transform.position = transform.position;
             Destroy(gameObject);
         }
@@ -232,7 +248,6 @@ public class PlayerShip : MonoBehaviour
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPosition, 0.1f);
         //rigid.constraints = RigidbodyConstraints.None;
     }
-
 
     /* 지용 */
     void MovePlayer()
