@@ -31,8 +31,7 @@ public class CameraEffect : MonoBehaviour
         boss = GameObject.FindGameObjectWithTag("Boss");
         spawner = GameObject.Find("EnemyFactory").GetComponent<Spawner>();
         notifyGameStart = new NotifyObserver(spawner.StartSpawn);
-
-        StartCoroutine(CheckGameState());
+        GamePlayManager.OnChangeGamestate += CheckGameState;
     }
 
     void FixedUpdate()
@@ -93,8 +92,7 @@ public class CameraEffect : MonoBehaviour
 
     void ChangeGameState()
     {
-        GamePlayManager.Instance.NowGameState += 1;
-        nowGameState = GamePlayManager.Instance.NowGameState;
+        GamePlayManager.Instance.ChangeGameState();
     }
 
     void ZoomCamera() // 카메라 줌
@@ -128,11 +126,8 @@ public class CameraEffect : MonoBehaviour
         }
     }
 
-    IEnumerator CheckGameState()
+    public void CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
-        Debug.Log(nowGameState);
-        yield return new WaitForSeconds(1.0f);
-        StartCoroutine(CheckGameState());
     }
 }

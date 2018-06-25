@@ -28,10 +28,8 @@ public class StoreFacade : MonoBehaviour
     public Text MyFuelText;
 
     //인벤토리관련//
-    public Image MyInventroy1;
-    public Image MyInventroy2;
-    public Image MyInventroy3;
-
+    [SerializeField]
+    List<Image> MyInventroy = new List<Image>();
     public Text MyInventoryExplainText;
     //스크롤 관련//
     public ScrollRect ItemScrollRect;
@@ -49,6 +47,8 @@ public class StoreFacade : MonoBehaviour
     int raptor;
     int blackHawk;
     int restTime;
+    Color32 white = new Color32(255, 255, 255, 255);
+
 
     private void Start()
     {
@@ -61,13 +61,10 @@ public class StoreFacade : MonoBehaviour
         blackHawk = int.Parse(AccountInfo.Instance.BlackHawk);
         restTime = int.Parse(AccountInfo.Instance.RestTime);
         MyInventoryExplainText.text = " ";
-
         CheckInventory();
-
         ChangeValue();
 
     }
-
     //ScrollRect 값 변경시 호출//
     public void ChangeValue()
     {
@@ -196,18 +193,14 @@ public class StoreFacade : MonoBehaviour
                  && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
         {
             if (raptor == (int)DataBoolean.FALSE && myFuel >= 50)
-            {
                 ChangeValue();
-            }
             else
                 Debug.Log("이미 보유중입니다.");
         }
         else
         {
             if (blackHawk == (int)DataBoolean.FALSE && myFuel >= 50)
-            {
                 ChangeValue();
-            }
             else
                 Debug.Log("이미 보유중입니다.");
         }
@@ -219,27 +212,25 @@ public class StoreFacade : MonoBehaviour
         MyTimeText.text = restTime.ToString();
 
         if (addMissileItem == (int)DataBoolean.FALSE)
-            MyInventroy1.gameObject.SetActive(false);
+            MyInventroy[0].gameObject.SetActive(false);
         else
-            MyInventroy1.gameObject.SetActive(true);
+            MyInventroy[0].gameObject.SetActive(true);
 
         if (assistantItem == (int)DataBoolean.FALSE)
-            MyInventroy2.gameObject.SetActive(false);
+            MyInventroy[1].gameObject.SetActive(false);
         else
-            MyInventroy2.gameObject.SetActive(true);
+            MyInventroy[1].gameObject.SetActive(true);
 
         if (lastBombItem == (int)DataBoolean.FALSE)
-            MyInventroy3.gameObject.SetActive(false);
+            MyInventroy[2].gameObject.SetActive(false);
         else
-            MyInventroy3.gameObject.SetActive(true);
+            MyInventroy[2].gameObject.SetActive(true);
     }
-
     void BuyAddMissileItem(int price, int itemCount)
     {
         myFuel -= price;
         addMissileItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
-
         AccountInfo.ChangeAddMissileItemData(1);
         CheckInventory();
     }
@@ -248,7 +239,6 @@ public class StoreFacade : MonoBehaviour
         myFuel -= price;
         assistantItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
-
         AccountInfo.ChangeAssistantItemData(1);
         CheckInventory();
     }
@@ -257,7 +247,6 @@ public class StoreFacade : MonoBehaviour
         myFuel -= price;
         lastBombItem = itemCount;
         AccountInfo.ChangeFuelData(myFuel);
-
         AccountInfo.ChangeLastBombItemData(1);
         CheckInventory();
     }
@@ -270,8 +259,28 @@ public class StoreFacade : MonoBehaviour
     {
         ConfirmationPanal.gameObject.SetActive(false);
     }
-    public void OnItemClicked()
+    public void OnItem1Clicked()
     {
-        //MyInventroy1.color = Color.rgb;
+        Color32 magenta = new Color32(255, 255, 0, 255);
+        MyInventroy[0].color = magenta;
+        MyInventroy[1].color = white;
+        MyInventroy[2].color = white;
+        MyInventoryExplainText.text = "보조  미사일  장착";
+    }
+    public void OnItem2Clicked()
+    {
+        Color32 skyblue = new Color32(100, 100, 255, 255);
+        MyInventroy[0].color = white;
+        MyInventroy[1].color = skyblue;
+        MyInventroy[2].color = white;
+        MyInventoryExplainText.text = "보조  함선  장착";
+    }
+    public void OnItem3Clicked()
+    {
+        Color32 yellow = new Color32(250, 150, 150, 255);
+        MyInventroy[0].color = white;
+        MyInventroy[1].color = white;
+        MyInventroy[2].color = yellow;
+        MyInventoryExplainText.text = "최후의  무기  장착";
     }
 }
