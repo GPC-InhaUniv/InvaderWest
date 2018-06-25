@@ -78,10 +78,14 @@ public class Enemy : MonoBehaviour
     void DropItem(ItemList num)
     {
         Debug.Log("ItemNUmber : " + (int)num);
-        GameObject item;
-        if(num == 0) item = PoolController.instance.GetFromPool(PoolType.Item1Pool);
-        else item = PoolController.instance.GetFromPool(PoolType.Item2Pool);
+        GameObject item = null;
+        if (num == ItemList.AddMissileItem) item = PoolController.instance.GetFromPool(PoolType.Item1Pool);
+        else if (num == ItemList.RunBarrier) item = PoolController.instance.GetFromPool(PoolType.Item2Pool);
 
+        if (item == null)
+        {
+            Debug.Log("아이템이 없습니다.");
+        }
         item.transform.position = transform.position;
         item.transform.rotation = Quaternion.identity;
     }

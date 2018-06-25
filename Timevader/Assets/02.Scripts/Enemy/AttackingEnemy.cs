@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class AttackingEnemy : Enemy{
     [SerializeField]
+    InvaderType type;
+    [SerializeField]
     int attackRate = 11;
     [SerializeField]
-    int maxHp = 1, hp;
+    int maxHp = 1;
+    int hp;
     float seta = 0;
     float t = 0;
     Direction moveDirection;
@@ -110,6 +113,7 @@ public class AttackingEnemy : Enemy{
         seta = 0;
         hp = maxHp;
         t = 0;
+
         PoolController.instance.ReturnToPool(PoolType.Enemy3Pool, this.gameObject);
     }
 
