@@ -20,7 +20,6 @@ public class Item : MonoBehaviour {
         playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
     }
 
-
     void FixedUpdate()
     {
         transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
@@ -35,10 +34,16 @@ public class Item : MonoBehaviour {
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("BackGround"))
+            PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
+    }
+
     void UseItem()
     {
         Debug.Log("아이템 효과 적용");
         playerShip.GetItem(kind);
-        Destroy(gameObject);
+        PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
     }
 }

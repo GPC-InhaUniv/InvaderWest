@@ -15,7 +15,6 @@ public enum Direction
 public enum InvaderType
 {
     Normal,
-    Wrecked,
     Attacking,
 }
 
