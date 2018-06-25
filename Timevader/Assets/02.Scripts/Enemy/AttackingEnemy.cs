@@ -2,8 +2,10 @@
 using UnityEngine;
 
 public class AttackingEnemy : Enemy{
+    [SerializeField]
     int attackRate = 11;
-    int maxHp = 3, hp;
+    [SerializeField]
+    int maxHp = 1, hp;
     float seta = 0;
     float t = 0;
     Direction moveDirection;
@@ -12,7 +14,6 @@ public class AttackingEnemy : Enemy{
     void Start()
     {
         hp = maxHp;
-        Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
     }
@@ -109,7 +110,7 @@ public class AttackingEnemy : Enemy{
         seta = 0;
         hp = maxHp;
         t = 0;
-        PoolController.instance.ReturnToPool(PoolType.AttackingPool, this.gameObject);
+        PoolController.instance.ReturnToPool(PoolType.Enemy3Pool, this.gameObject);
     }
 
     override protected void GetDemage()

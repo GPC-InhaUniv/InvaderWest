@@ -14,15 +14,15 @@ public enum Direction
 
 public enum InvaderType
 {
-    Normal,
-    Attacking,
+    Enemy1, // 기본
+    Enemy2, // 체력 많은 적
+    Enemy3, // 공격하는 적
 }
 
 /*  FlyWeghit Pattern
  *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
-    public GameObject[] Items;
     public AudioSource destroyAudio;
 
     [Range(0, 100)]
@@ -32,12 +32,20 @@ public class Enemy : MonoBehaviour
     protected float moveSpeed, moveHeight, circleSpeed;
     protected float radius;
     
-    protected Enemy enemy;
+    //protected Enemy enemy;
     protected const int MAXSETA = 360;
     protected string[] itemList = { ((ItemList)1).ToString(), ((ItemList)2).ToString() };
 
+    protected static Enemy enemy = null;
+
     void Awake()
     {
+        //if (enemy == null)
+        //    enemy = this;
+        //else if (enemy != this)
+        //    Destroy(gameObject);
+        //DontDestroyOnLoad(gameObject);
+
         moveSpeed = 5.0f;
         moveHeight = 6.0f; // Zigzag, Curve에서 사용하는 높이 변화량
         radius = 5.0f; // Circle
@@ -63,19 +71,20 @@ public class Enemy : MonoBehaviour
             explosion.transform.position = transform.position;
 
         if (Random.Range(1, 100) <= ItemDropProbability)
-            DropItem(ItemList.AddMissileItem);
+            DropItem((ItemList)Random.Range(0, 2));
         ReturnToPool();
     }
 
     void DropItem(ItemList num)
     {
-        Debug.Log((int)num);
-        GameObject item = PoolController.instance.GetFromPool(PoolType.ItemPool);
+        Debug.Log("ItemNUmber : " + (int)num);
+        GameObject item;
+        if(num == 0) item = PoolController.instance.GetFromPool(PoolType.Item1Pool);
+        else item = PoolController.instance.GetFromPool(PoolType.Item2Pool);
+
         item.transform.position = transform.position;
         item.transform.rotation = Quaternion.identity;
     }
-    /* 우주선이 파괴되면 30% 확률로 잔해가 되어 아래로 점점 떨어진다. 
-     * 플레이어에 닿으면 데미지를 준다. 미사일, 플레이어와 충돌 시 파괴 */
 
     void OnTriggerEnter(Collider other)
     {

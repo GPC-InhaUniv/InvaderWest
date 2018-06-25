@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
 public class NormalEnemy : Enemy {
+    [SerializeField]
+    int enemyType;
+    [SerializeField]
     int maxHp = 1, hp;
     float seta = 0;
     float t = 0;
@@ -10,7 +13,6 @@ public class NormalEnemy : Enemy {
     void Start()
     {
         hp = maxHp;
-        Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
     }
@@ -93,7 +95,7 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
         t = 0;
-        PoolController.instance.ReturnToPool(PoolType.NormalPool, this.gameObject);
+        PoolController.instance.ReturnToPool(PoolType.Enemy1Pool, this.gameObject);
     }
 
     override protected void GetDemage()

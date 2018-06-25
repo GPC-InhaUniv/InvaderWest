@@ -4,14 +4,13 @@ public enum ItemList
 {
     AddMissileItem = 0,
     RunBarrier,
-    IncreasingShotSpeedItem,
 }
 
 public class Item : MonoBehaviour {
     protected PlayerShip playerShip;
     public ItemList kind;
 
-    float moveSpeed = 1.0f;
+    float moveSpeed = 3.0f;
     [SerializeField]
     float RotateValue = 1.0f;
 
@@ -37,13 +36,21 @@ public class Item : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("BackGround"))
-            PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
+            ReturnToPool();
     }
 
     void UseItem()
     {
         Debug.Log("아이템 효과 적용");
         playerShip.GetItem(kind);
-        PoolController.instance.ReturnToPool(PoolType.ItemPool, this.gameObject);
+        ReturnToPool();
+    }
+
+    void ReturnToPool()
+    {
+        if(kind == ItemList.AddMissileItem)
+            PoolController.instance.ReturnToPool(PoolType.Item1Pool, this.gameObject);
+        else if(kind == ItemList.RunBarrier)
+            PoolController.instance.ReturnToPool(PoolType.Item1Pool, this.gameObject);
     }
 }

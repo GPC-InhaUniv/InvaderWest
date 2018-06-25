@@ -66,11 +66,11 @@ public class PlayerShip : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         playershipAnimation = GetComponent<Animation>();
         playerShipCollider = GetComponent<Collider>();
-        StartCoroutine(CheckGameState());
+        //StartCoroutine(CheckGameState());
         StartCoroutine(CheckItem());
 
 
-        animation = GetComponent<Animation>();
+        playershipAnimation = GetComponent<Animation>();
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
@@ -127,7 +127,6 @@ public class PlayerShip : MonoBehaviour
         {
             StartCoroutine("isGameOver");
         }
-
     }
 
     void FixedUpdate()
@@ -143,7 +142,7 @@ public class PlayerShip : MonoBehaviour
             case ItemList.AddMissileItem:
                 AddMissile();
                 break;
-            case ItemList.IncreasingShotSpeedItem:
+            case ItemList.RunBarrier:
                 RunBarrier();
                 break;
         }
@@ -244,13 +243,13 @@ public class PlayerShip : MonoBehaviour
         if(hasDoubleMissile == true)
         {
             Shoot();
-            if (hasDoubleMissile == true)
-            {
-                Shoot(shotSpawn);
-                Shoot(addedSpawn);
-            }
-            else
-                Shoot(shotSpawn);
+            //if (hasDoubleMissile == true)
+            //{
+            //    Shoot();
+            //    Shoot();
+            //}
+            //else
+            //    Shoot();
 
             //if (lastBombItem == (int)DataBoolean.TRUE && Input.GetKeyDown(KeyCode.F))
             if (Input.GetKeyDown(KeyCode.F)) 
@@ -269,7 +268,6 @@ public class PlayerShip : MonoBehaviour
         if (hasBarrier == true)
         {
             playerShipCollider.enabled = false;
-            StartCoroutine(IsGameOver());
         }
         yield return null;
         StartCoroutine(CheckItem());
