@@ -58,21 +58,23 @@ public class PlayerShip : MonoBehaviour
     
     bool hasDoubleMissile = false;
     bool hasBarrier = false;
-    Collider playerShipCollider;
-    Animation playershipAnimation;
+    BoxCollider playerShipCollider;
+    Animator playershipAnimation;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        playershipAnimation = GetComponent<Animation>();
-        playerShipCollider = GetComponent<Collider>();
-        //StartCoroutine(CheckGameState());
+
+        playershipAnimation = GetComponent<Animator>();
+
+        playerShipCollider = GetComponent<BoxCollider>();
+  
         StartCoroutine(CheckItem());
 
 
-        playershipAnimation = GetComponent<Animation>();
-
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
+
+   
 
         addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
         assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
@@ -104,6 +106,8 @@ public class PlayerShip : MonoBehaviour
 
         GamePlayManager.OnChangeGamestate += CheckGameState;
         StartCoroutine(LoseTime());
+
+
     }
     void Update()
     {
@@ -144,6 +148,7 @@ public class PlayerShip : MonoBehaviour
                 break;
             case ItemList.RunBarrier:
                 RunBarrier();
+                StartCoroutine(BarrierEffect());
                 break;
         }
     }
@@ -157,7 +162,7 @@ public class PlayerShip : MonoBehaviour
     void RunBarrier()
     {
         StopCoroutine("BarrierDuration");
-        StartCoroutine("BarrierDuration", 2.0f);
+        StartCoroutine("BarrierDuration", 3.0f);
     }
 
     void Shoot()
@@ -195,15 +200,26 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+    /*판주*/
     IEnumerator AttackedEffect()
     {
-        playershipAnimation.Play("ShipHitEffect");
-        yield return new WaitForSeconds(1.0f);
-        playershipAnimation.Stop();
-        yield return new WaitForSeconds(1.0f);
-        playershipAnimation.Play("ShipHitEffect");
-        yield return new WaitForSeconds(1.0f);
-        playershipAnimation.Stop();
+        playershipAnimation.SetTrigger("Hit");
+        yield return new WaitForSeconds(2.0f);
+        playershipAnimation.SetBool("Done", true);
+        playershipAnimation.SetTrigger("Normal");
+
+        yield return new WaitForSeconds(0.5f);
+        playershipAnimation.SetBool("Done", false);
+    }
+    IEnumerator BarrierEffect()
+    {
+        playershipAnimation.SetTrigger("Barrier");
+        yield return new WaitForSeconds(3.0f);
+        playershipAnimation.SetBool("Done", true);
+        playershipAnimation.SetTrigger("Normal");
+
+        yield return new WaitForSeconds(0.5f);
+        playershipAnimation.SetBool("Done", false);
     }
 
     /* 지용 */
@@ -243,15 +259,7 @@ public class PlayerShip : MonoBehaviour
         if(hasDoubleMissile == true)
         {
             Shoot();
-            //if (hasDoubleMissile == true)
-            //{
-            //    Shoot();
-            //    Shoot();
-            //}
-            //else
-            //    Shoot();
 
-            //if (lastBombItem == (int)DataBoolean.TRUE && Input.GetKeyDown(KeyCode.F))
             if (Input.GetKeyDown(KeyCode.F)) 
             {
                 UseLastBombItem();
@@ -267,8 +275,10 @@ public class PlayerShip : MonoBehaviour
 
         if (hasBarrier == true)
         {
-            playerShipCollider.enabled = false;
+            playerShipCollider.enabled = !hasBarrier;
         }
+        else
+            playerShipCollider.enabled = !hasBarrier;
         yield return null;
         StartCoroutine(CheckItem());
     }
