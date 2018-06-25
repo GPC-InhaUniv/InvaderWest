@@ -80,7 +80,7 @@ public class PlayerShip : MonoBehaviour
         playerRestTime = int.Parse(AccountInfo.Instance.RestTime);
 
         if (GamePlayManager.Instance.PlayerShipNum == 1)
-            playerLife = 150;
+            playerLife = 3;
         else if (GamePlayManager.Instance.PlayerShipNum == 2)
             playerLife = 3;
         else if (GamePlayManager.Instance.PlayerShipNum == 3)
