@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour {
     void Start()
     {
         factory = FindObjectOfType<EnemyFactory>();
+        stageLevel = int.Parse( AccountInfo.Instance.StageData);
     }
 
     public void StartSpawn()
