@@ -64,15 +64,12 @@ public class PlayerShip : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-
         playershipAnimation = GetComponent<Animator>();
-
         playerShipCollider = GetComponent<BoxCollider>();
-  
-        StartCoroutine(CheckItem());
-
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
+        destroyAudio = transform.gameObject.GetComponent<AudioSource>();
 
+        StartCoroutine(CheckItem());
         addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
         assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
         lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
@@ -84,23 +81,15 @@ public class PlayerShip : MonoBehaviour
             playerLife = 3;
         else if (GamePlayManager.Instance.PlayerShipNum == 3)
             playerLife = 4;
-        //Test//
-        if (addMissileItem == (int)DataBoolean.TRUE) 
-        {
+        if (addMissileItem == (int)DataBoolean.TRUE)
             UseAddMissileItem();
-        }
         if (assistantItem == (int)DataBoolean.TRUE)
-        {
             UseAssistantItem();
-        }
-   
 
         notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
-        if (notifyLifeToObserver != null) 
+        if (notifyLifeToObserver != null)
             notifyLifeToObserver(playerLife);
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
-
-        destroyAudio = transform.gameObject.GetComponent<AudioSource>();
 
         GamePlayManager.OnChangeGamestate += CheckGameState;
         StartCoroutine(LoseTime());
@@ -113,11 +102,8 @@ public class PlayerShip : MonoBehaviour
         {
             Shoot();
 
-            if (Input.GetKeyDown(KeyCode.F) && lastBombItem == (int)DataBoolean.TRUE) 
-            {
+            if (Input.GetKeyDown(KeyCode.F) && lastBombItem == (int)DataBoolean.TRUE)
                 UseLastBombItem();
-            }
-
             if (playerLife <= 0)
             {
                 playerLife = 0;
@@ -126,9 +112,7 @@ public class PlayerShip : MonoBehaviour
             }
         }
         if (nowGameState == GameState.Win)
-        {
             StartCoroutine(IsGameOver());
-        }
     }
 
     void FixedUpdate()
@@ -177,7 +161,6 @@ public class PlayerShip : MonoBehaviour
                 return;
             }
             shot.transform.position = shotSpawn.transform.position;
-            //shot.SetActive(true);
             shot = null; // 초기화
             nextFire = nextFire - myTime;
             myTime = 0.0f;
@@ -204,7 +187,6 @@ public class PlayerShip : MonoBehaviour
         playershipAnimation.SetTrigger("Hit");
         yield return new WaitForSeconds(2.0f);
         playershipAnimation.SetBool("Done", true);
-        //playershipAnimation.SetTrigger("Normal");
 
         yield return new WaitForSeconds(0.5f);
         playershipAnimation.SetBool("Done", false);
@@ -214,7 +196,6 @@ public class PlayerShip : MonoBehaviour
         playershipAnimation.SetTrigger("Barrier");
         yield return new WaitForSeconds(3.0f);
         playershipAnimation.SetBool("Done", true);
-        //playershipAnimation.SetTrigger("Normal");
 
         yield return new WaitForSeconds(0.5f);
         playershipAnimation.SetBool("Done", false);
@@ -232,12 +213,7 @@ public class PlayerShip : MonoBehaviour
             notifyLifeToObserver(playerLife);
 
         if (playerLife > 0)
-        {
-            //GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
-            //if (explosion != null) explosion.transform.position = transform.position;     
             StartCoroutine(AttackedEffect());
-        }
-        //else Explode();
     }
     /* 지용 */
     void Explode()
@@ -249,7 +225,6 @@ public class PlayerShip : MonoBehaviour
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
         if (explosion != null)
         {
-            //destroyAudio.Play();
             explosion.transform.position = transform.position;
             Destroy(gameObject);
         }
@@ -260,11 +235,10 @@ public class PlayerShip : MonoBehaviour
         if(hasDoubleMissile == true)
         {
             Shoot();
-
-            if (Input.GetKeyDown(KeyCode.F)) 
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 UseLastBombItem();
-                Debug.Log("UseLastBombItem");  
+                Debug.Log("UseLastBombItem");
             }
 
             if (playerLife <= 0)
@@ -275,9 +249,7 @@ public class PlayerShip : MonoBehaviour
         }
 
         if (hasBarrier == true)
-        {
             playerShipCollider.enabled = !hasBarrier;
-        }
         else
             playerShipCollider.enabled = !hasBarrier;
         yield return null;
@@ -302,12 +274,10 @@ public class PlayerShip : MonoBehaviour
     IEnumerator IsGameOver()
     {
         rigid.constraints = RigidbodyConstraints.FreezeAll;
-        //게임종료시 모든 비행선 폭파//
         yield return new WaitForSeconds(0.2f);
 
         Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPosition, 0.1f);
-        //rigid.constraints = RigidbodyConstraints.None;
     }
 
     /* 지용 */
@@ -320,7 +290,6 @@ public class PlayerShip : MonoBehaviour
                 currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
                 transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * speed);
             }
-
             transform.position = new Vector3
             (
                 Mathf.Clamp(transform.position.x, Boundary.xMin, Boundary.xMax),
@@ -367,54 +336,3 @@ public class PlayerShip : MonoBehaviour
         nowGameState = GamePlayManager.Instance.NowGameState;
     }
 }
-
-    ///observer Ex///
-    //public interface ISubjectable
-    //{
-    //    void RegisterObserver(IObserverable o);
-    //    void RemoveObserver(IObserverable o);
-    //    void NotifyPlayerLifeToObservers();
-    //    void NotifyPlayerRestTimeToObservers();
-    //}
-    //public interface IObserverable
-    //{
-    //    void UpdatePlayerLife(int playerLife);
-    //    void GetPlayerLife(int playerLife);
-    //    void UpdatePlayerRestTime(int playerRestTime);
-    //}
-    //public interface IDisplayable
-    //{
-    //    void DisPlayPlayerLife();
-    //    void DisplayPlayerRestTime();
-    //}
-    /////////////////////////////////////////////////
-    //public void NotifyStartDataToObservers()
-    //{
-    //    for (int i = 0; i < observerList.Count; i++)
-    //    {
-    //        observerList[i].GetPlayerLife(playerLife);
-    //    }
-    //}
-    //public void NotifyPlayerLifeToObservers()
-    //{
-    //    for (int i = 0; i < observerList.Count; i++)
-    //    {
-    //        observerList[i].UpdatePlayerLife(playerLife);
-    //    }
-    //}
-    //public void NotifyPlayerRestTimeToObservers()
-    //{
-    //    for (int i = 0; i < observerList.Count; i++)
-    //    {
-    //        observerList[i].UpdatePlayerRestTime(playerRestTime);
-    //    }
-    //}
-    //public void RegisterObserver(IObserverable o)
-    //{
-    //    observerList.Add(o);           
-    //}
-    //public void RemoveObserver(IObserverable o)
-    //{
-    //    observerList.Remove(o);
-    //}
-

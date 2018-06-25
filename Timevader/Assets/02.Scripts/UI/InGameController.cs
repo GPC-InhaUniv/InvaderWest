@@ -27,6 +27,8 @@ public class InGameController : MonoBehaviour
     Image[] lifeImage;
     [SerializeField]
     Slider bosshpBar;
+    [SerializeField]
+    Text winResultScoreText;
 
     [SerializeField]
     int playerRestTime;
@@ -38,7 +40,10 @@ public class InGameController : MonoBehaviour
     float bossLife;
     [SerializeField]
     float maxBossLife;
-
+    [SerializeField]
+    int levelOfDifficulty;
+    [SerializeField]
+    int myFuel;
     void Awake()
     {
         Vector3 startPosition = new Vector3(0.0f, -4.0f, 0.0f);
@@ -56,16 +61,16 @@ public class InGameController : MonoBehaviour
         StartCoroutine(IncreaseHpBar());
 
         stageData = int.Parse(AccountInfo.Instance.StageData);
+        levelOfDifficulty = int.Parse(AccountInfo.Instance.LevelOfDifficulty);
+        myFuel = int.Parse(AccountInfo.Instance.Fuel);
+
     }
     //보스 라이프 업데이트//
     public void UpdateBossLife(float bossLife, float maxBossLife)
     {
         this.bossLife = bossLife;
         if (this.bossLife > 0)
-        {
             bosshpBar.value = bossLife / maxBossLife;
-            //Debug.Log("BossHp / MaxHp  " + bossLife / maxBossLife);
-        }
         else
         {
             bosshpBar.value = bossLife / maxBossLife;
@@ -78,9 +83,7 @@ public class InGameController : MonoBehaviour
     {
         float hpValue = 0.03f;
         if(bosshpBar.value < 1.0f)
-        {
             bosshpBar.value += hpValue;
-        }
 
         yield return new WaitForSeconds(0.05f);
         if (bosshpBar.value != 1)
@@ -107,6 +110,27 @@ public class InGameController : MonoBehaviour
         }
         yield return new WaitForSeconds(1.0f);
         gameWinResultPanel.gameObject.SetActive(true);
+        if (levelOfDifficulty == 1)
+        {
+            int resultScore = playerRestTime / 50;
+            winResultScoreText.text = resultScore+ "";
+            int resultFuel = myFuel + resultScore;
+            AccountInfo.ChangeFuelData(resultFuel);
+        }
+        else if (levelOfDifficulty == 2)
+        {
+            int resultScore = playerRestTime / 10;
+            winResultScoreText.text = resultScore + "";
+            int resultFuel = myFuel + resultScore;
+            AccountInfo.ChangeFuelData(resultFuel);
+        }
+        else
+        {
+            int resultScore = playerRestTime / 2;
+            winResultScoreText.text = resultScore + "";
+            int resultFuel = myFuel + resultScore;
+            AccountInfo.ChangeFuelData(resultFuel);
+        }
     }
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)

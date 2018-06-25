@@ -12,7 +12,7 @@ public enum DataBoolean
 
 public class StoreFacade : MonoBehaviour
 {
-    enum itemPrice
+    enum ItemPrice
     {
         AddMissileItemPrice = 250,
         AssistantItemPrice = 300,
@@ -75,7 +75,7 @@ public class StoreFacade : MonoBehaviour
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
             if (addMissileItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.AddMissileItemPrice + " 지금 바로 구입하세요";
+                BuyExPlainText.text = "필요한 연료량 " + (int)ItemPrice.AddMissileItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -91,7 +91,7 @@ public class StoreFacade : MonoBehaviour
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
             if (assistantItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.AssistantItemPrice + " 지금 바로 구입하세요";
+                BuyExPlainText.text = "필요한 연료량 " + (int)ItemPrice.AssistantItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -107,7 +107,7 @@ public class StoreFacade : MonoBehaviour
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
             if (lastBombItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.LastBombItemPrice + " 지금 바로 구입하세요";
+                BuyExPlainText.text = "필요한 연료량 " + (int)ItemPrice.LastBombItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -119,40 +119,14 @@ public class StoreFacade : MonoBehaviour
         else if (ItemScrollRect.horizontalNormalizedPosition >= THIRDITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
         {
-            //ItemExplain.text = "Item4 Will be added later";
-            //ItemScrollRect.horizontalNormalizedPosition = 0.75f;
-            //if (raptor == (int)DataBoolean.FALSE)
-            //{
-            //    BuyExPlainText.text = "Item4 Will be added later";
-            //    BuyButton.interactable = true;
-            //}
-            //else
-            //{
-            //    BuyExPlainText.text = "이미 보유중 입니다.";
-            //    BuyButton.interactable = false;
-            //}
             ItemExplain.text = "추후 아이템 추가 예정 입니다.";
             BuyExPlainText.text = "추후 아이템 추가 예정 입니다.";
-
         }
         else
         {
-            //ItemExplain.text = "Item5 Will be added later";
-            //ItemScrollRect.horizontalNormalizedPosition = 1.0f;
-            //if (blackHawk == (int)DataBoolean.FALSE)
-            //{
-            //    BuyExPlainText.text = "Item5 Will be added later";
-            //    BuyButton.interactable = true;
-            //}
-            //else
-            //{
-            //    BuyExPlainText.text = "이미 보유중 입니다.";
-            //    BuyButton.interactable = false;
-            //}
             ItemExplain.text = "추후 아이템 추가 예정 입니다.";
             BuyExPlainText.text = "추후 아이템 추가 예정 입니다.";
         }
-        //Debug.Log(ItemScrollRect.horizontalNormalizedPosition);
     }
 
     public void OnBoughtItem()
@@ -161,7 +135,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (addMissileItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyAddMissileItem((int)itemPrice.AddMissileItemPrice, (int)DataBoolean.TRUE);
+                BuyAddMissileItem((int)ItemPrice.AddMissileItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -172,7 +146,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (assistantItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyAssistantItem((int)itemPrice.AssistantItemPrice, (int)DataBoolean.TRUE);
+                BuyAssistantItem((int)ItemPrice.AssistantItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -183,7 +157,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (lastBombItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyLastBombItem((int)itemPrice.LastBombItemPrice, (int)DataBoolean.TRUE);
+                BuyLastBombItem((int)ItemPrice.LastBombItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -207,7 +181,6 @@ public class StoreFacade : MonoBehaviour
     }
     void CheckInventory()
     {
-
         MyFuelText.text = myFuel.ToString();
         MyTimeText.text = restTime.ToString();
 
