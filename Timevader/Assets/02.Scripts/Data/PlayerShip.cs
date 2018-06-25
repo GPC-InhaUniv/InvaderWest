@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class Boundary1
+public class Boundary
 {
     public float xMin, xMax, yMin, yMax;
 }

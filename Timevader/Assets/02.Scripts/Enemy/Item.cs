@@ -8,7 +8,7 @@ public enum ItemList
 }
 
 public class Item : MonoBehaviour {
-    protected Player player;
+    protected PlayerShip playerShip;
     public ItemList kind;
 
     float moveSpeed = 1.0f;
@@ -17,7 +17,7 @@ public class Item : MonoBehaviour {
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
     }
 
 
@@ -38,7 +38,7 @@ public class Item : MonoBehaviour {
     void UseItem()
     {
         Debug.Log("아이템 효과 적용");
-        player.GetItem(kind);
+        playerShip.GetItem(kind);
         Destroy(gameObject);
     }
 }
