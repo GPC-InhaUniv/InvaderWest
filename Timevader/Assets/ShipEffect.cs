@@ -11,6 +11,6 @@ public class ShipEffect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        //RenderTextureReadWrite.sRGB = new Color(255, 255, 255);
 	}
 }
