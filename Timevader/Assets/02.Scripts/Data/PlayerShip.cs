@@ -71,10 +71,7 @@ public class PlayerShip : MonoBehaviour
   
         StartCoroutine(CheckItem());
 
-
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
-
-   
 
         addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
         assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
@@ -91,18 +88,19 @@ public class PlayerShip : MonoBehaviour
         if (addMissileItem == (int)DataBoolean.TRUE) 
         {
             UseAddMissileItem();
-            Debug.Log("UseAddMissileItem");
         }
         if (assistantItem == (int)DataBoolean.TRUE)
         {
             UseAssistantItem();
-            Debug.Log("UseAssistantItem");
         }
-        //Delegate 사용해서 InGameController에 Life,RestTime 이미지 갱신//
+   
+
         notifyLifeToObserver = new NotifyObserver(inGameController.UpdatePlayerLife);
         if (notifyLifeToObserver != null) 
             notifyLifeToObserver(playerLife);
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
+
+        destroyAudio = transform.gameObject.GetComponent<AudioSource>();
 
         GamePlayManager.OnChangeGamestate += CheckGameState;
         StartCoroutine(LoseTime());
@@ -115,17 +113,15 @@ public class PlayerShip : MonoBehaviour
         {
             Shoot();
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && lastBombItem == (int)DataBoolean.TRUE) 
             {
                 UseLastBombItem();
-                Debug.Log("UseLastBombItem");
             }
 
             if (playerLife <= 0)
             {
                 playerLife = 0;
                 GamePlayManager.Instance.ChangeGameStateLose();
-                Debug.LogError("nononono");
                 Explode();
             }
         }
@@ -246,6 +242,9 @@ public class PlayerShip : MonoBehaviour
     /* 지용 */
     void Explode()
     {
+        destroyAudio = transform.gameObject.GetComponent<AudioSource>();
+        destroyAudio.clip = Resources.Load("Explosion4") as AudioClip;
+        destroyAudio.Play();
         //Explode될때 소리 추가//
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
         if (explosion != null)
