@@ -54,7 +54,7 @@ public class MiniP : MonoBehaviour
         {
             nextFire = myTime + fireDelta;
             GameObject shot = PoolController.instance.GetFromPool(PoolType.BoltPool);
-            
+            shot.transform.position = transform.position;
 
             nextFire = nextFire - myTime;
             myTime = 0.0f;
