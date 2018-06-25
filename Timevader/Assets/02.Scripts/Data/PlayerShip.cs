@@ -43,7 +43,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     GameState nowGameState;
     [SerializeField]
-    AudioSource shotAudioSource;
+    AudioSource shotAudioSource, destroyAudio;
     [SerializeField]
     InGameController inGameController;
 
@@ -150,27 +150,46 @@ public class PlayerShip : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (nowGameState == GameState.Started)
         {
-            if (assistant == true)
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                assistant = false;
-                Debug.Log(assistant);
-            }
-            else
-            {
-                playerLife = playerLife - 1;
-                if (AddMissileItem.activeSelf == true)
-                {
-                    AddMissileItem.gameObject.SetActive(false);
-                }
-                if (notifyLifeToObserver != null && playerLife >= 0) 
-                {
-                    notifyLifeToObserver(playerLife);
-                }
+                if (assistant == true) assistant = false;
+                else GetDemage();
             }
         }
     }
+    /* 지용 */
+    void GetDemage()
+    {
+        playerLife = playerLife - 1;
+
+        if (AddMissileItem.activeSelf == true)
+            AddMissileItem.gameObject.SetActive(false);
+
+        if (notifyLifeToObserver != null && playerLife >= 0)
+            notifyLifeToObserver(playerLife);
+
+        if (playerLife > 0)
+        {
+            GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
+            if (explosion != null) explosion.transform.position = transform.position;
+        }
+        else Explode();
+    }
+    /* 지용 */
+    void Explode()
+    {
+        //Explode될때 소리 추가//
+        GameObject explosion = PoolController.instance.GetFromPool(PoolType.ExplosionPool);
+        if (explosion != null)
+        {
+            destroyAudio.Play();
+            explosion.transform.position = transform.position;
+            Destroy(gameObject);
+        }
+    }
+
     void Update()
     {
         if (nowGameState == GameState.Started)
@@ -179,7 +198,6 @@ public class PlayerShip : MonoBehaviour
             {
                 Shoot(shotSpawn);
                 Shoot(addedSpawn);
-
             }
             else
                 Shoot(shotSpawn);
@@ -188,8 +206,7 @@ public class PlayerShip : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F)) 
             {
                 UseLastBombItem();
-                Debug.Log("UseLastBombItem");
-                
+                Debug.Log("UseLastBombItem");  
             }
 
             if (playerLife <= 0)

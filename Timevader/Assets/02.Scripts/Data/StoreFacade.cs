@@ -9,8 +9,15 @@ public enum DataBoolean
     TRUE = 1,
 }
 
+
 public class StoreFacade : MonoBehaviour
 {
+    enum itemPrice
+    {
+        AddMissileItemPrice = 250,
+        AssistantItemPrice = 300,
+        LastBombItemPrice = 500,
+    }
     float FIRSTITEMRANGE = 0.125f;
     float SECONDITEMRANGE = 0.375f;
     float THIRDITEMRANGE = 0.625f;
@@ -67,11 +74,11 @@ public class StoreFacade : MonoBehaviour
 
         if (ItemScrollRect.horizontalNormalizedPosition < FIRSTITEMRANGE)
         {
-            ItemExplain.text = "Item1 is AddMissileItem";
+            ItemExplain.text = "비행선에 보조 미사일을 추가합니다.";
             ItemScrollRect.horizontalNormalizedPosition = 0.0f;
             if (addMissileItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "Item1 is very good to you";
+                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.AddMissileItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -83,11 +90,11 @@ public class StoreFacade : MonoBehaviour
         else if (ItemScrollRect.horizontalNormalizedPosition >= FIRSTITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < SECONDITEMRANGE)
         {
-            ItemExplain.text = "Item2 is AssistantItem";
+            ItemExplain.text = "비행선에 보조 함선을 추가해 피해를 막아줍니다.";
             ItemScrollRect.horizontalNormalizedPosition = 0.25f;
             if (assistantItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "Item2 is very good to you";
+                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.AssistantItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -99,11 +106,11 @@ public class StoreFacade : MonoBehaviour
         else if (ItemScrollRect.horizontalNormalizedPosition >= SECONDITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < THIRDITEMRANGE)
         {
-            ItemExplain.text = "Item3 is LastBombItem";
+            ItemExplain.text = "보스를 제외한 모든 적을 섬멸 합니다.";
             ItemScrollRect.horizontalNormalizedPosition = 0.5f;
             if (lastBombItem == (int)DataBoolean.FALSE)
             {
-                BuyExPlainText.text = "Item3 is very good to you";
+                BuyExPlainText.text = "필요한 연료량 " + (int)itemPrice.LastBombItemPrice + " 지금 바로 구입하세요";
                 BuyButton.interactable = true;
             }
             else
@@ -115,33 +122,38 @@ public class StoreFacade : MonoBehaviour
         else if (ItemScrollRect.horizontalNormalizedPosition >= THIRDITEMRANGE
                  && ItemScrollRect.horizontalNormalizedPosition < FOURTHITEMRANGE)
         {
-            ItemExplain.text = "Item4 Will be added later";
-            ItemScrollRect.horizontalNormalizedPosition = 0.75f;
-            if (raptor == (int)DataBoolean.FALSE)
-            {
-                BuyExPlainText.text = "Item4 Will be added later";
-                BuyButton.interactable = true;
-            }
-            else
-            {
-                BuyExPlainText.text = "이미 보유중 입니다.";
-                BuyButton.interactable = false;
-            }
+            //ItemExplain.text = "Item4 Will be added later";
+            //ItemScrollRect.horizontalNormalizedPosition = 0.75f;
+            //if (raptor == (int)DataBoolean.FALSE)
+            //{
+            //    BuyExPlainText.text = "Item4 Will be added later";
+            //    BuyButton.interactable = true;
+            //}
+            //else
+            //{
+            //    BuyExPlainText.text = "이미 보유중 입니다.";
+            //    BuyButton.interactable = false;
+            //}
+            ItemExplain.text = "추후 아이템 추가 예정 입니다.";
+            BuyExPlainText.text = "추후 아이템 추가 예정 입니다.";
+
         }
         else
         {
-            ItemExplain.text = "Item5 Will be added later";
-            ItemScrollRect.horizontalNormalizedPosition = 1.0f;
-            if (blackHawk == (int)DataBoolean.FALSE)
-            {
-                BuyExPlainText.text = "Item5 Will be added later";
-                BuyButton.interactable = true;
-            }
-            else
-            {
-                BuyExPlainText.text = "이미 보유중 입니다.";
-                BuyButton.interactable = false;
-            }
+            //ItemExplain.text = "Item5 Will be added later";
+            //ItemScrollRect.horizontalNormalizedPosition = 1.0f;
+            //if (blackHawk == (int)DataBoolean.FALSE)
+            //{
+            //    BuyExPlainText.text = "Item5 Will be added later";
+            //    BuyButton.interactable = true;
+            //}
+            //else
+            //{
+            //    BuyExPlainText.text = "이미 보유중 입니다.";
+            //    BuyButton.interactable = false;
+            //}
+            ItemExplain.text = "추후 아이템 추가 예정 입니다.";
+            BuyExPlainText.text = "추후 아이템 추가 예정 입니다.";
         }
         //Debug.Log(ItemScrollRect.horizontalNormalizedPosition);
     }
@@ -152,7 +164,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (addMissileItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyAddMissileItem(50, 1);
+                BuyAddMissileItem((int)itemPrice.AddMissileItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -163,7 +175,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (assistantItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyAssistantItem(50, 1);
+                BuyAssistantItem((int)itemPrice.AssistantItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -174,7 +186,7 @@ public class StoreFacade : MonoBehaviour
         {
             if (lastBombItem == (int)DataBoolean.FALSE && myFuel >= 50)
             {
-                BuyLastBombItem(50, 1);
+                BuyLastBombItem((int)itemPrice.LastBombItemPrice, (int)DataBoolean.TRUE);
                 ChangeValue();
             }
             else
@@ -257,5 +269,9 @@ public class StoreFacade : MonoBehaviour
     public void OnBackToMenu()
     {
         ConfirmationPanal.gameObject.SetActive(false);
+    }
+    public void OnItemClicked()
+    {
+        //MyInventroy1.color = Color.rgb;
     }
 }

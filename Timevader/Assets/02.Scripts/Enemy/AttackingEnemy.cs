@@ -112,9 +112,9 @@ public class AttackingEnemy : Enemy{
         PoolController.instance.ReturnToPool(PoolType.AttackingPool, this.gameObject);
     }
 
-    override protected void GetDemage(int damage)
+    override protected void GetDemage()
     {
-        hp -= damage;
+        hp -= 1;
         GameObject explosion = PoolController.instance.GetFromPool(PoolType.HitEffectPool);
         explosion.transform.position = transform.position;
         //Debug.Log(gameObject.name + "Damage " + damage);
