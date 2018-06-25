@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
 public class NormalEnemy : Enemy {
-    int maxHp = 1, hp;
+    [SerializeField]
+    InvaderType type;
+    [SerializeField]
+    int maxHp = 1;
+    int hp;
     float seta = 0;
     float t = 0;
     Direction moveDirection;
@@ -10,7 +14,6 @@ public class NormalEnemy : Enemy {
     void Start()
     {
         hp = maxHp;
-        Items = enemy.Items;
         destroyAudio = enemy.destroyAudio;
         ItemDropProbability = enemy.ItemDropProbability; // 20%
     }
@@ -93,7 +96,11 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
         t = 0;
-        PoolController.instance.ReturnToPool(PoolType.NormalPool, this.gameObject);
+
+        if(type == InvaderType.Enemy1)
+            PoolController.instance.ReturnToPool(PoolType.Enemy1Pool, this.gameObject);
+        if(type == InvaderType.Enemy2)
+            PoolController.instance.ReturnToPool(PoolType.Enemy2Pool, this.gameObject);
     }
 
     override protected void GetDemage()
