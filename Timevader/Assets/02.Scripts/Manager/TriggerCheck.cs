@@ -29,11 +29,6 @@ public class TriggerCheck : MonoBehaviour {
             StageLv.text = "Stage" + info.GetStageLv();
             StageInfo.text = info.GetStageInfo();
         }
-
-        int stageNumber;
-        if (!int.TryParse(info.GetStageLv(), out stageNumber))
-            Debug.Log("Stage Lv을 받아오는데 실패");
-        stageLoad.StageNumber = stageNumber;
     }
 
     void OnTriggerExit(Collider other)

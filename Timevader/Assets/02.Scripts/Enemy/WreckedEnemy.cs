@@ -22,9 +22,9 @@ public class WreckedEnemy : Enemy{
         transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
     }
 
-    override protected void GetDemage(int damage)
+    override protected void GetDemage()
     {
-        hp -= damage;
+        hp -= 1;
         //Debug.Log(gameObject.name + "Damage " + damage);
         if (hp <= 0) Destroy(gameObject);
     }
