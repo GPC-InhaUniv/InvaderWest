@@ -12,6 +12,8 @@ public class BossStatus : MonoBehaviour {
     public float MaxHp;
 
     [SerializeField]
+    float bossMoveDownSpeed;
+    [SerializeField]
     GameState nowGameState;
     [SerializeField]
     int decreaseHp, ScoreValue;
@@ -52,9 +54,9 @@ public class BossStatus : MonoBehaviour {
 
     void AppearBoss() //보스가 서서히 등장
     {
-        if(transform.position.y > 4.0f)
+        if(transform.position.y > 3.8f)
         {
-            transform.Translate(new Vector3(0, -0.07f, 0));
+            transform.Translate(new Vector3(0, -bossMoveDownSpeed, 0));
         }
     }
 
