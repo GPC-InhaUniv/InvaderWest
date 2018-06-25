@@ -140,7 +140,6 @@ public class StoryUIController : MonoBehaviour {
             enemyship.transform.position -= Vector3.Lerp(new Vector3(0, enemySpeed, 0), new Vector3(0, enemySpeed, 0), Time.deltaTime);
             storyButton4.interactable = true;
         }
-    }
-    
+    }    
     
 }

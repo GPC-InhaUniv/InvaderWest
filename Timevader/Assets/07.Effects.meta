@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Timevader/Assets/07.Effects.meta
 guid: 0839837ffb3f69048801dce051e220e0
 folderAsset: yes
 timeCreated: 1526742726
+=======
+guid: a8cb1c53cfa9e674e9934b4386ad3f47
+folderAsset: yes
+timeCreated: 1529897836
+>>>>>>> 0749c493a7bc6ae92e80b580701c47b325f11d71:Timevader/Assets/Test_Assets.meta
 licenseType: Free
 DefaultImporter:
   userData: 
