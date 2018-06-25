@@ -3,7 +3,7 @@
 public enum ItemList
 {
     AddMissileItem = 0,
-    AssistantItem,
+    RunBarrier,
     IncreasingShotSpeedItem,
 }
 
