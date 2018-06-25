@@ -7,6 +7,9 @@ public class CameraEffect : MonoBehaviour
     public delegate void NotifyObserver();
     NotifyObserver notifyGameStart;
 
+    public delegate void NotifyGameState();
+    public static event NotifyGameState OnChangeGamestate;
+
     [SerializeField]
     GameState nowGameState;
 
@@ -94,6 +97,7 @@ public class CameraEffect : MonoBehaviour
     void ChangeGameState()
     {
         GamePlayManager.Instance.NowGameState += 1;
+        OnChangeGamestate();
         nowGameState = GamePlayManager.Instance.NowGameState;
     }
 

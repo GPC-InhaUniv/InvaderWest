@@ -9,18 +9,14 @@ public class BossStatus : MonoBehaviour {
     public InGameController InGameController;
 
     public float BossHp;
-
     public float MaxHp;
 
     [SerializeField]
     GameState nowGameState;
-
     [SerializeField]
     int decreaseHp, ScoreValue;
-
     [SerializeField]
     bool isdead;
-
     [SerializeField]
     GameObject explosion;
 
@@ -32,7 +28,6 @@ public class BossStatus : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine("checkGameState");
 
         leftRightMover = GetComponent<LeftRightMover>();
 
@@ -43,9 +38,8 @@ public class BossStatus : MonoBehaviour {
 
         //게임컨트롤러에게 알리기 보스가 맞았다고//
         notifyLifeToObserver = new NotifyObserver(InGameController.UpdateBossLife);
-        //if (notifyLifeToObserver != null)
-        //    notifyLifeToObserver(BossHp, MaxHp);
-        Debug.Log(BossHp / MaxHp);
+        CameraEffect.OnChangeGamestate += CheckGameState;
+
     }
 
     void FixedUpdate()
@@ -94,12 +88,8 @@ public class BossStatus : MonoBehaviour {
             }
         }
     }
-
-    IEnumerator checkGameState()
+    public void CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
-        Debug.Log(nowGameState);
-        yield return new WaitForSeconds(1.0f);
-        StartCoroutine("checkGameState");
     }
 }

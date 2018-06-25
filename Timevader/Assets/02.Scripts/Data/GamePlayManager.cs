@@ -65,8 +65,8 @@ public class GamePlayManager : MonoBehaviour {
         Debug.Log(playerShipNum);
         Debug.Log(PlayerShipNum);
     }
-    public void changeGameState(GameState gamestate)
+    public void ChangeGameState()
     {
-        NowGameState = gamestate;
+        NowGameState += 1;
     }
 }

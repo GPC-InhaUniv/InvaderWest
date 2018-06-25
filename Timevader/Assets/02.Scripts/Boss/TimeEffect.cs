@@ -18,8 +18,9 @@ public class TimeEffect : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine("checkGameState");
         spawnPositionVector = spawnPosition.transform.position;
+
+        CameraEffect.OnChangeGamestate += CheckGameState;
     }
 
     void Update()
@@ -40,16 +41,12 @@ public class TimeEffect : MonoBehaviour {
             effect.transform.position = spawnPositionVector;
         }
     }
-
     public void HideEffect(GameObject obj)
     {
         PoolController.instance.ReturnToPool(PoolType.DrainPool, obj);
     }
-    IEnumerator checkGameState()
+    public void CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
-        Debug.Log(nowGameState);
-        yield return new WaitForSeconds(1.0f);
-        StartCoroutine("checkGameState");
     }
 }

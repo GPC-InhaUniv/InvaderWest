@@ -9,7 +9,7 @@ public class ControlTimeEffect : MonoBehaviour {
     Transform bossVector3;
 
     GameObject targetObject;
-
+    [SerializeField]
     GameState nowGameState;
 
     float moveSpeed, rotateSpeed;
@@ -23,11 +23,12 @@ public class ControlTimeEffect : MonoBehaviour {
 
         moveSpeed = Random.Range(1f, 5f);
         rotateSpeed = Random.Range(0.01f, 0.2f);
+        nowGameState = GamePlayManager.Instance.NowGameState;
+        CameraEffect.OnChangeGamestate += CheckGameState;
     }
 
     void FixedUpdate()
     {
-        nowGameState = GamePlayManager.Instance.NowGameState;
         if (nowGameState == GameState.Started)
             MoveEffect();
     }
@@ -52,5 +53,9 @@ public class ControlTimeEffect : MonoBehaviour {
         {
             effectPool.HideEffect(gameObject);
         }
+    }
+    public void CheckGameState()
+    {
+        nowGameState = GamePlayManager.Instance.NowGameState;
     }
 }

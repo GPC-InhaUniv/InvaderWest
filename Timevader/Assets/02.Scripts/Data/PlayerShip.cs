@@ -59,17 +59,14 @@ public class PlayerShip : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        StartCoroutine(CheckGameState());
 
         inGameController = GameObject.Find("GameController").GetComponent<InGameController>();
 
-        //Test 끝나면 주석제거하기//
         addMissileItem = int.Parse(AccountInfo.Instance.AddMissileItem);
         assistantItem = int.Parse(AccountInfo.Instance.AssistantItem);
         lastBombItem = int.Parse(AccountInfo.Instance.LastBombItem);
         playerRestTime = int.Parse(AccountInfo.Instance.RestTime);
 
-        //Test 플레이어//
         if (GamePlayManager.Instance.PlayerShipNum == 1)
             playerLife = 3;
         else if (GamePlayManager.Instance.PlayerShipNum == 2)
@@ -92,6 +89,8 @@ public class PlayerShip : MonoBehaviour
         if (notifyLifeToObserver != null) 
             notifyLifeToObserver(playerLife);
         notifyRestTimeObserver = new NotifyObserver(inGameController.UpdatePlayerRestTime);
+
+        CameraEffect.OnChangeGamestate += CheckGameState;
         StartCoroutine("LoseTime");
     }
 
@@ -280,14 +279,12 @@ public class PlayerShip : MonoBehaviour
     {
         if (AddMissileItem.gameObject.activeSelf != true)
             AddMissileItem.gameObject.SetActive(true);
-
         AccountInfo.ChangeAddMissileItemData((int)DataBoolean.FALSE);
-
     }
     void UseAssistantItem()
     {
         assistant = true;
-        AccountInfo.ChangeAssistantItemData(0);
+        AccountInfo.ChangeAssistantItemData((int)DataBoolean.FALSE);
     }
     void UseLastBombItem()
     {
@@ -295,11 +292,9 @@ public class PlayerShip : MonoBehaviour
         lastBombItem = 0;
         AccountInfo.ChangeLastBombItemData((int)DataBoolean.FALSE);
     }
-    IEnumerator CheckGameState()
+    public void CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
-        yield return new WaitForSeconds(1.0f);
-        StartCoroutine(CheckGameState());
     }
 }
 
