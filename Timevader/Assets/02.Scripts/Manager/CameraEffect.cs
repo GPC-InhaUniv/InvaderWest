@@ -14,7 +14,7 @@ public class CameraEffect : MonoBehaviour
     float ZoomSpeed = 1.5f;
 
     [SerializeField]
-    GameObject camRotater, player, boss;
+    GameObject camRotater, player, boss, cloud;
 
     Spawner spawner;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
@@ -29,6 +29,7 @@ public class CameraEffect : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         boss = GameObject.FindGameObjectWithTag("Boss");
+        cloud = GameObject.FindGameObjectWithTag("Cloud");
         spawner = GameObject.Find("EnemyFactory").GetComponent<Spawner>();
         notifyGameStart = new NotifyObserver(spawner.StartSpawn);
         GamePlayManager.OnChangeGamestate += CheckGameState;
@@ -86,7 +87,10 @@ public class CameraEffect : MonoBehaviour
         {
             ZoomOutCamera();
             if (Camera.main.fieldOfView >= INITVALUE) // 줌아웃 완료
+            {
                 RotateCamera();
+                if (cloud.gameObject.activeSelf) cloud.gameObject.SetActive(false);
+            }
         }
     }
 
