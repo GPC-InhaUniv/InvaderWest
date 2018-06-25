@@ -61,13 +61,8 @@ public class CameraEffect : MonoBehaviour
                 camPos = new Vector3(player.transform.position.x, player.transform.position.y + 1.5f, Camera.main.transform.position.z);
                 t = 0;
 
-                // ???????????????
-                if (notifyGameStart != null && startSpawnCheck == false)
-                {
+                if (notifyGameStart != null) 
                     notifyGameStart();
-                    startSpawnCheck = true;
-                    Debug.Log(startSpawnCheck);
-                }
             }
             else
             {

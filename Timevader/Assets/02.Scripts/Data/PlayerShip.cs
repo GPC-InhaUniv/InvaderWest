@@ -150,23 +150,19 @@ public class PlayerShip : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (nowGameState == GameState.Started)
         {
-            if (assistant == true)
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                assistant = false;
-                Debug.Log(assistant);
-            }
-            else
-            {
-                playerLife = playerLife - 1;
-                if (AddMissileItem.activeSelf == true)
+                if (assistant == true)
+                    assistant = false;
+                else
                 {
-                    AddMissileItem.gameObject.SetActive(false);
-                }
-                if (notifyLifeToObserver != null && playerLife >= 0) 
-                {
-                    notifyLifeToObserver(playerLife);
+                    playerLife = playerLife - 1;
+                    if (AddMissileItem.activeSelf == true)
+                        AddMissileItem.gameObject.SetActive(false);
+                    if (notifyLifeToObserver != null && playerLife >= 0)
+                        notifyLifeToObserver(playerLife);
                 }
             }
         }
