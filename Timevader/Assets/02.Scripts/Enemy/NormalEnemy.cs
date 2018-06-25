@@ -2,9 +2,10 @@
 
 public class NormalEnemy : Enemy {
     [SerializeField]
-    int enemyType;
+    InvaderType type;
     [SerializeField]
-    int maxHp = 1, hp;
+    int maxHp = 1;
+    int hp;
     float seta = 0;
     float t = 0;
     Direction moveDirection;
@@ -95,7 +96,11 @@ public class NormalEnemy : Enemy {
         seta = 0;
         hp = maxHp;
         t = 0;
-        PoolController.instance.ReturnToPool(PoolType.Enemy1Pool, this.gameObject);
+
+        if(type == InvaderType.Enemy1)
+            PoolController.instance.ReturnToPool(PoolType.Enemy1Pool, this.gameObject);
+        if(type == InvaderType.Enemy2)
+            PoolController.instance.ReturnToPool(PoolType.Enemy2Pool, this.gameObject);
     }
 
     override protected void GetDemage()
