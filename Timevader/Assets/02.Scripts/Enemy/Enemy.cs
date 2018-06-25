@@ -19,8 +19,6 @@ public enum InvaderType
     Enemy3, // 공격하는 적
 }
 
-/*  FlyWeghit Pattern
- *  GameManager에 배치할 것 */
 public class Enemy : MonoBehaviour
 {
     public AudioSource destroyAudio;
@@ -40,12 +38,6 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        //if (enemy == null)
-        //    enemy = this;
-        //else if (enemy != this)
-        //    Destroy(gameObject);
-        //DontDestroyOnLoad(gameObject);
-
         moveSpeed = 5.0f;
         moveHeight = 6.0f; // Zigzag, Curve에서 사용하는 높이 변화량
         radius = 5.0f; // Circle

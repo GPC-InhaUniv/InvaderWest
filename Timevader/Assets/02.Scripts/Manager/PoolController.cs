@@ -16,13 +16,16 @@ public enum PoolType
 }
 
 public class PoolController : MonoBehaviour {
-    Queue<GameObject> enemy1Pool, enemy2Pool, enemy3Pool, boltPool, enemyBoltPool, item1Pool, item2Pool, hitEffectPool, explosionPool, drainPool;
+    Queue<GameObject> enemy1Pool = null, enemy2Pool = null, enemy3Pool = null, boltPool = null, enemyBoltPool = null, 
+        item1Pool = null, item2Pool = null, hitEffectPool = null, explosionPool = null, drainPool = null;
 
     [SerializeField]
-    int enemy1PoolSize, enemy2PoolSize, enemy3PoolSize, boltPoolSize, enemyBoltPoolSize, itemPoolSize, hitEffectPoolSize, explosionPoolSize, drainPoolSize;
+    int enemy1PoolSize = 10, enemy2PoolSize = 10, enemy3PoolSize = 10, boltPoolSize = 10, enemyBoltPoolSize = 10, 
+        itemPoolSize = 10, hitEffectPoolSize = 10, explosionPoolSize = 10, drainPoolSize = 10;
 
     [SerializeField]
-    GameObject enemy1Prefab, enemy2Prefab, enemy3Prefab, boltPrefab, enemyBoltPrefab, item1Prefab, item2Prefab, hitEffectPrefab, explosionPrefab, drainPrefab;
+    GameObject enemy1Prefab = null, enemy2Prefab = null, enemy3Prefab = null, boltPrefab = null, enemyBoltPrefab = null, 
+        item1Prefab = null, item2Prefab = null, hitEffectPrefab = null, explosionPrefab = null, drainPrefab = null;
 
     public static PoolController instance = null;
 

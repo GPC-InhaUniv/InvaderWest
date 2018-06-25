@@ -11,21 +11,11 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     int spawnCount = 5;
     int stageLevel = 1;
-    Random random;
 
     [SerializeField]
-    float SPAWNDELAY = 0.3f, WAVEDELAY = 0.5f;
+    float SpawnDelay = 0.3f, waveDelay = 0.5f;
 
     public static Spawner instance = null;
-
-    //void Awake()
-    //{
-    //    if (instance == null)
-    //        instance = this;
-    //    else if (instance != this)
-    //        Destroy(gameObject);
-    //    DontDestroyOnLoad(gameObject);
-    //}
 
     void Start()
     {
@@ -78,46 +68,46 @@ public class Spawner : MonoBehaviour {
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[1].position, Direction.Zigzag_LeftToRight);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[2].position, Direction.Curve_LeftDown);
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[3].position, Direction.Curve_LeftDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[3].position, Direction.Zigzag_RightToLeft);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[0].position, Direction.Line_LeftToRight);
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[3].position, Direction.Line_RightToLeft);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[1].position, Direction.Curve_LeftDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[0].position, Direction.Curve_RightDown);
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[1].position, Direction.Curve_RightDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
         
         StartSpawn();
     }
@@ -126,63 +116,63 @@ public class Spawner : MonoBehaviour {
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[4].position, Direction.Circle_Clockwise);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[1].position, Direction.Curve_RightDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[0].position, Direction.Curve_RightDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy2, spawnPoint[4].position, Direction.Circle_CounterClockwise);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[3].position, Direction.Zigzag_RightToLeft);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[1].position, Direction.Zigzag_LeftToRight);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY);
+        yield return new WaitForSeconds(waveDelay);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[1].position, Direction.Line_LeftToRight);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[0].position, Direction.Line_LeftToRight);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[2].position, Direction.Curve_LeftDown);
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[3].position, Direction.Curve_LeftDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         StartSpawn();
     }
@@ -191,48 +181,48 @@ public class Spawner : MonoBehaviour {
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[4].position, Direction.Circle_Clockwise);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[0].position, Direction.Line_LeftToRight);
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[3].position, Direction.Line_RightToLeft);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy3, spawnPoint[1].position, Direction.Curve_RightDown);
             SpawnEnemy(InvaderType.Enemy3, spawnPoint[3].position, Direction.Curve_LeftDown);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy(InvaderType.Enemy2, spawnPoint[5].position, Direction.Circle_Clockwise);
             SpawnEnemy(InvaderType.Enemy1, spawnPoint[2].position, Direction.Zigzag_RightToLeft);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[4].position, Direction.Circle_CounterClockwise);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEnemy((InvaderType)Random.Range(0, 3), spawnPoint[5].position, Direction.Circle_CounterClockwise);
             SpawnEnemy(InvaderType.Enemy3, spawnPoint[0].position, Direction.Zigzag_LeftToRight);
-            yield return new WaitForSeconds(SPAWNDELAY);
+            yield return new WaitForSeconds(SpawnDelay);
         }
-        yield return new WaitForSeconds(WAVEDELAY * 2);
+        yield return new WaitForSeconds(waveDelay * 2);
 
         StartSpawn();
     }
