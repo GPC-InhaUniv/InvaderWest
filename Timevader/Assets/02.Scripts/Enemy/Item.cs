@@ -7,15 +7,16 @@ public enum ItemList
 }
 
 public class Item : MonoBehaviour {
-    protected PlayerShip playerShip;
     public ItemList kind;
 
+    PlayerShip playerShip;
+    GameState nowGameState;
     float moveSpeed = 3.0f;
-    [SerializeField]
-    float RotateValue = 1.0f;
-
+    float RotateValue = 4.0f;
+    
     void Start()
     {
+        GamePlayManager.OnChangeGamestate += CheckGameState;
         playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
     }
 
@@ -27,7 +28,7 @@ public class Item : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || nowGameState == GameState.Started)
         {
             UseItem();
         }
@@ -52,5 +53,10 @@ public class Item : MonoBehaviour {
             PoolController.instance.ReturnToPool(PoolType.Item1Pool, this.gameObject);
         else if(kind == ItemList.RunBarrier)
             PoolController.instance.ReturnToPool(PoolType.Item1Pool, this.gameObject);
+    }
+
+    public void CheckGameState()
+    {
+        nowGameState = GamePlayManager.Instance.NowGameState;
     }
 }

@@ -32,7 +32,6 @@ public class PoolController : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
 
         CreateAllPools();
     }
@@ -67,14 +66,9 @@ public class PoolController : MonoBehaviour {
         Queue<GameObject> pool = FindPool(type);
         if (pool.Count != 0)
         {
-            Debug.Log(type.ToString() + pool.Count);
             GameObject obj = pool.Dequeue();
-            if (obj != null)
-            {
-                obj.SetActive(true);
-                return obj;
-            }
-            else Debug.Log("오브젝트 널");
+            obj.SetActive(true);
+            return obj;
         }
         Debug.Log("Pool에 남은 오브젝트가 부족합니다.");
         return null;
