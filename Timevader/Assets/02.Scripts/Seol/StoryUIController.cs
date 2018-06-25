@@ -49,8 +49,8 @@ public class StoryUIController : MonoBehaviour {
     // 시작시 스토리 자동 스킵 여부 확인
     void Start()
     {
-        restTime = int.Parse(AccountInfo.Instance.RestTime);
-        SkipStory();
+        //restTime = int.Parse(AccountInfo.Instance.RestTime);
+        //SkipStory();
     }
     
     void FixedUpdate()
