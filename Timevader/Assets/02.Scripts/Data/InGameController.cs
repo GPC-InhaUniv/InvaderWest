@@ -20,6 +20,8 @@ public class InGameController : MonoBehaviour
     [SerializeField]
     GameObject gameLoseResultPanel;
     [SerializeField]
+    GameObject gameOverResultPanel;
+    [SerializeField]
     Text restTimeScoreText;
     [SerializeField]
     Image[] lifeImage;
@@ -109,20 +111,15 @@ public class InGameController : MonoBehaviour
     //플레이어 남은 라이프 업데이트//
     public void UpdatePlayerLife(int playerLife)
     {
-        Debug.Log(playerLife);
         this.playerLife = playerLife;
 
         if (this.playerLife > 0)
-        {
-            Debug.Log("Observer Success  " + playerLife);
             DisPlayPlayerLifeImage(this.playerLife);
-        }
         else
         {
             playerLife = 0;
             DisPlayPlayerLifeImage(playerLife);
             gameLoseResultPanel.gameObject.SetActive(true);
-            Debug.Log("UpdatePlayerLife");
         }
     }
 
@@ -137,8 +134,8 @@ public class InGameController : MonoBehaviour
         }
         else
         {
-            gameLoseResultPanel.gameObject.SetActive(true);
-            Debug.Log("UpdatePlayerRestTime");
+            GamePlayManager.Instance.ChangeGameStateLose();
+            gameOverResultPanel.gameObject.SetActive(true);
         }
     }
     //남은시간 보여주기//
@@ -151,7 +148,7 @@ public class InGameController : MonoBehaviour
     void DisPlayPlayerLifeImage(int life)
     {
         int maxLifeImage = lifeImage.Length;
-        Debug.Log(lifeImage.Length);
+        //Debug.Log(lifeImage.Length);
         if (life < lifeImage.Length)
             lifeImage[life].gameObject.SetActive(false);
     }
@@ -174,6 +171,11 @@ public class InGameController : MonoBehaviour
     {
         GamePlayManager.Instance.NowGameState = GameState.Ready;
         SceneManager.LoadScene("Shop");
+    }
+    public void OnGoToStroy()
+    {
+        GamePlayManager.Instance.NowGameState = GameState.Ready;
+        SceneManager.LoadScene("Story");
     }
 
     public void OnPaused()
