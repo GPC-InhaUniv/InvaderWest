@@ -18,6 +18,11 @@ public class Item : MonoBehaviour {
     {
         GamePlayManager.OnChangeGamestate += CheckGameState;
         playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
+        if(!playerShip)
+        {
+            Debug.Log("Player를 찾을 수 없습니다.");
+            return;
+        }
     }
 
     void FixedUpdate()

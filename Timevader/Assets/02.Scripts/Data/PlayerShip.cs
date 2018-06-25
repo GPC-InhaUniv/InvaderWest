@@ -120,12 +120,14 @@ public class PlayerShip : MonoBehaviour
             if (playerLife <= 0)
             {
                 playerLife = 0;
-                GamePlayManager.Instance.NowGameState = GameState.Lose;
+                GamePlayManager.Instance.ChangeGameStateLose();
+                Debug.LogError("nononono");
+                Explode();
             }
         }
         if (nowGameState == GameState.Win)
         {
-            StartCoroutine("isGameOver");
+            StartCoroutine(IsGameOver());
         }
     }
 
@@ -223,7 +225,7 @@ public class PlayerShip : MonoBehaviour
             //if (explosion != null) explosion.transform.position = transform.position;     
             StartCoroutine(AttackedEffect());
         }
-        else Explode();
+        //else Explode();
     }
     /* 지용 */
     void Explode()
@@ -375,11 +377,12 @@ public class PlayerShip : MonoBehaviour
     }
     void UseLastBombItem()
     {
-        OnUseItem();
+        if (OnUseItem != null)
+            OnUseItem();
         lastBombItem = 0;
         AccountInfo.ChangeLastBombItemData((int)DataBoolean.FALSE);
     }
-    public void CheckGameState()
+    void CheckGameState()
     {
         nowGameState = GamePlayManager.Instance.NowGameState;
     }
