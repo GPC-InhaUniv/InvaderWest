@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour {
     {
         switch (stageLevel)
         {
-            case 1: StartCoroutine("Stage2"); break;
+            case 1: StartCoroutine("Stage1"); break;
             case 2: StartCoroutine("Stage2"); break;
             case 3: StartCoroutine("Stage3"); break;
         }

@@ -14,7 +14,7 @@ public class CameraEffect : MonoBehaviour
     float ZoomSpeed = 1.5f;
 
     [SerializeField]
-    GameObject camRotater, clearInfoPanel, player, boss;
+    GameObject camRotater, player, boss;
 
     Spawner spawner;
     Vector3 camPos; // 카메라가 위치할 좌표. Zoom에 사용
