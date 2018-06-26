@@ -23,8 +23,6 @@ public class CameraEffect : MonoBehaviour
     const float ZOONVALUE = 40.0f, INITVALUE = 60.0f;
     float moveSpeed = 0f, t = 0;
 
-    bool startSpawnCheck = false; // 임시로 사용
-
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");

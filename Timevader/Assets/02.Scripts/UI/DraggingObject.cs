@@ -90,7 +90,7 @@ public class DraggingObject : MonoBehaviour
         {
             GameObject playershipObj = playershipResults[0].gameObject;
 
-            if (playershipObj.CompareTag("Playership"))
+            if (playershipObj.CompareTag("Player"))
             {
                 ClickorDrag();
             }
