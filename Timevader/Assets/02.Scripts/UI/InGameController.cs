@@ -29,6 +29,8 @@ public class InGameController : MonoBehaviour
     Slider bosshpBar;
     [SerializeField]
     Text winResultScoreText;
+    [SerializeField]
+    Text loseResultScoreText;
 
     [SerializeField]
     int playerRestTime;
@@ -143,7 +145,30 @@ public class InGameController : MonoBehaviour
         {
             playerLife = 0;
             DisPlayPlayerLifeImage(playerLife);
+            AccountInfo.ChangeStageData(1);
             gameLoseResultPanel.gameObject.SetActive(true);
+
+            if (levelOfDifficulty == 1)
+            {
+                int resultScore = playerRestTime / 50;
+                loseResultScoreText.text = resultScore + "";
+                int resultFuel = myFuel + resultScore;
+                AccountInfo.ChangeFuelData(resultFuel);
+            }
+            else if (levelOfDifficulty == 2)
+            {
+                int resultScore = playerRestTime / 10;
+                loseResultScoreText.text = resultScore + "";
+                int resultFuel = myFuel + resultScore;
+                AccountInfo.ChangeFuelData(resultFuel);
+            }
+            else
+            {
+                int resultScore = playerRestTime / 2;
+                loseResultScoreText.text = resultScore + "";
+                int resultFuel = myFuel + resultScore;
+                AccountInfo.ChangeFuelData(resultFuel);
+            }
         }
     }
 
@@ -189,7 +214,7 @@ public class InGameController : MonoBehaviour
     public void OnBackToMain()
     {
         GamePlayManager.Instance.NowGameState = GameState.Ready;
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Story");
     }
     public void OnGoToShop()
     {
