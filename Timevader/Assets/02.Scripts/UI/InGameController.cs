@@ -152,22 +152,17 @@ public class InGameController : MonoBehaviour
             {
                 int resultScore = playerRestTime / 50;
                 loseResultScoreText.text = resultScore + "";
-                int resultFuel = myFuel + resultScore;
-                AccountInfo.ChangeFuelData(resultFuel);
             }
             else if (levelOfDifficulty == 2)
             {
                 int resultScore = playerRestTime / 10;
                 loseResultScoreText.text = resultScore + "";
-                int resultFuel = myFuel + resultScore;
-                AccountInfo.ChangeFuelData(resultFuel);
             }
             else
             {
                 int resultScore = playerRestTime / 2;
                 loseResultScoreText.text = resultScore + "";
-                int resultFuel = myFuel + resultScore;
-                AccountInfo.ChangeFuelData(resultFuel);
+
             }
         }
     }
