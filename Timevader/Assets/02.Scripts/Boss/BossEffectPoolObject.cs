@@ -49,9 +49,13 @@ public class BossEffectPoolObject : MonoBehaviour {
 
     public void ReturnToPool(GameObject obj)
     {
+        obj.SetActive(false);
+<<<<<<< HEAD
+=======
+
 
         PoolObjsEffect.Enqueue(obj);
-
-        obj.SetActive(false);
+        
+>>>>>>> d9bf4262da837228b84a2e47c9b2bc1d4e629750
     }
 }
