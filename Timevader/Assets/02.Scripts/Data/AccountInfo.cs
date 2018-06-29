@@ -106,7 +106,7 @@ public class AccountInfo : MonoBehaviour
             Data = new Dictionary<string, string>()
             {
                 //재화//
-                {"Fuel" , "1000" },
+                {"Fuel" , "500" },
                 {"LevelOfDifficulty" , "0" },
                 //소모성 아이템 종류//
                 {"AddMissileItem" , "0" },

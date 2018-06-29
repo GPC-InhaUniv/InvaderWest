@@ -51,7 +51,6 @@ public class PlayerShip : MonoBehaviour
 
     [SerializeField]
     float fireDelta = 0.2f;
-
     float myTime = 0.0f;
     Rigidbody rigid;
     Vector3 movement, prevPosition, currentPosition;
