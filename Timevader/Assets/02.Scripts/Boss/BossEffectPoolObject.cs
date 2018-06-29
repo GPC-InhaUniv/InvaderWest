@@ -20,37 +20,6 @@ public class BossEffectPoolObject : MonoBehaviour {
         CreateEffectPool();
     }
 
-    int logCount = 500;
-    string testStr;
-
-    [System.Diagnostics.Conditional("UNITY_EDITOR")]
-    void DebugLogWarp(string str)
-    {
-        Debug.Log("str");
-    }
-
-    void Update()
-    {
-        for (int i =0; i<logCount; i++)
-        {
-            DebugLogWarp("TestLog : " + testStr);
-        }
-    }
-
-    [System.Diagnostics.Conditional("UNITY_ANDROID"), System.Diagnostics.Conditional("UNITY_EDITOR")]
-    void PlayOnAndroid()
-    {
-        Debug.Log("안드로이드 또는 에디터에서 플레이시 호출되는 함수");
-    }
-
-    [System.Diagnostics.Conditional("UNITY_ANDROID")]
-    void PlayOnAndroidOREditor()
-    {
-        Debug.Log("안드로이드 플랫폼에서만 호출되는 함수, ex. 터치");
-    }
-
-
-
     void CreateEffectPool()
     {
         PoolObjsEffect = new Queue<GameObject>();
@@ -80,12 +49,10 @@ public class BossEffectPoolObject : MonoBehaviour {
 
     public void ReturnToPool(GameObject obj)
     {
-
-        PoolObjsEffect.Enqueue(obj);
-
         obj.SetActive(false);
 
 
+        PoolObjsEffect.Enqueue(obj);
         
     }
 
