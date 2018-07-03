@@ -11,7 +11,7 @@ public class CameraEffect : MonoBehaviour
     GameState nowGameState;
 
     [SerializeField]
-    float ZoomSpeed = 1.5f;
+    float zoomSpeed = 1.5f;
 
     [SerializeField]
     GameObject camRotater, player, boss, cloud;
@@ -100,7 +100,7 @@ public class CameraEffect : MonoBehaviour
     void ZoomCamera() // 카메라 줌
     {
         Camera.main.fieldOfView = Mathf.Lerp(INITVALUE, ZOONVALUE, t);
-        t += ZoomSpeed * Time.deltaTime;
+        t += zoomSpeed * Time.deltaTime;
     }
 
     void ChaseCameraTarget() // target 추적
@@ -111,7 +111,7 @@ public class CameraEffect : MonoBehaviour
     void ZoomOutCamera()
     {
         Camera.main.fieldOfView = Mathf.Lerp(ZOONVALUE, INITVALUE, t);
-        t += ZoomSpeed * Time.deltaTime;
+        t += zoomSpeed * Time.deltaTime;
     }
 
     void ResetCameraPos()
